@@ -8,6 +8,8 @@ create table users
     username   varchar(20) not null,
     password   varchar(20) not null,
     is_blocked tinyint(1)  not null,
+    is_deleted tinyint(1)  not null,
+    is_admin   tinyint(1)  null,
     constraint email
         unique (email),
     constraint username
@@ -26,22 +28,24 @@ create table admins
 
 create table posts
 (
-    post_id         int auto_increment
+    post_id    int auto_increment
         primary key,
-    title           varchar(64)   not null,
-    content         varchar(8192) not null,
-    comment_id      int           not null,
-    number_of_likes int           null,
-    author_id       int           not null,
+    title      varchar(64)   not null,
+    content    varchar(8192) not null,
+    time_stamp datetime      not null,
+    is_deleted tinyint(1)    not null,
+    author_id  int           not null,
     constraint author_id
         foreign key (author_id) references users (user_id)
 );
 
 create table comments
 (
-    comment_id int           not null
+    comment_id int auto_increment
         primary key,
     content    varchar(8192) not null,
+    time_stamp datetime      not null,
+    is_deleted tinyint(1)    not null,
     author_id  int           not null,
     post_id    int           not null,
     constraint comment_author_id
