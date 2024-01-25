@@ -4,7 +4,9 @@ import com.telerikacademy.web.sportforumgroup10.exceptions.AuthorizationExceptio
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
 import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
 import com.telerikacademy.web.sportforumgroup10.models.User;
+import com.telerikacademy.web.sportforumgroup10.models.UserDTO;
 import com.telerikacademy.web.sportforumgroup10.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -88,6 +90,20 @@ public class UserController {
             return userService.getByUsername(firstName);
         } catch (EntityNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+    @PostMapping
+    public User create(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserDTO userDTO){
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            //TODO need to check the information
+        }
+    }
+    @PutMapping("/{id}")
+    public User update(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody UserDTO userDTO){
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            //TODO double check how to change the information
         }
     }
 
