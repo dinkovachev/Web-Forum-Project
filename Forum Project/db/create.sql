@@ -1,3 +1,8 @@
+drop database if exists forum;
+
+create database forum;
+
+use forum;
 create table users
 (
     user_id    int auto_increment
@@ -6,10 +11,10 @@ create table users
     last_name  varchar(32) not null,
     email      varchar(50) not null,
     username   varchar(20) not null,
-    password   varchar(20) not null,
+    password   varchar(200) not null,
     is_blocked tinyint(1)  not null,
     is_deleted tinyint(1)  not null,
-    is_admin   tinyint(1)  null,
+    is_admin   tinyint(1)  not null default 0,
     constraint email
         unique (email),
     constraint username

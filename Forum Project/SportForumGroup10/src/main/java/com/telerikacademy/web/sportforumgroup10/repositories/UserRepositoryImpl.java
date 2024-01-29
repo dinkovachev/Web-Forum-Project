@@ -72,6 +72,7 @@ public class UserRepositoryImpl implements UserRepository {
             Query<User> query = session.createQuery("from User where username = :username", User.class);
             query.setParameter("username", username);
             List<User> result = query.list();
+
             if (result.isEmpty()){
                 throw new EntityNotFoundException("User", "username", username);
             }

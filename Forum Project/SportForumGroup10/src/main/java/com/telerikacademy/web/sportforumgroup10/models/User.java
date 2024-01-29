@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -29,6 +30,9 @@ public class User {
     private boolean isDeleted;
     @Column(name = "is_admin")
     private boolean isAdmin;
+
+//    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+//    private Set<Post> usersPosts;
 
     public User() {
     }
@@ -127,16 +131,25 @@ public class User {
         isAdmin = admin;
     }
 
+//    public Set<Post> getUsersPosts() {
+//        return usersPosts;
+//    }
+//
+//    public void setUsersPosts(Set<Post> usersPosts) {
+//        this.usersPosts = usersPosts;
+//    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && Objects.equals(email, user.email) && Objects.equals(username, user.username);
+        return id == user.id;
+//        && Objects.equals(email, user.email) && Objects.equals(username, user.username);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, username);
+        return Objects.hash(id);
     }
 }
