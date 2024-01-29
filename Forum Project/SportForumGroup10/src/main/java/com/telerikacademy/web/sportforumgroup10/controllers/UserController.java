@@ -33,6 +33,7 @@ public class UserController {
     public List<User> getAllUsers(@RequestHeader HttpHeaders headers) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
+            // TODO maybe the logic can be in the service layer
             if (!user.isAdmin()) {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE);
             }
