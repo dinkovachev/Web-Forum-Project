@@ -33,6 +33,7 @@ public class UserController {
     public List<User> getAllUsers(@RequestHeader HttpHeaders headers) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
+            // TODO maybe the logic can be in the service layer
             if (!user.isAdmin()) {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE);
             }
@@ -92,20 +93,20 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
-    @PostMapping
-    public User create(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserDTO userDTO){
-        try {
-            User user = authenticationHelper.tryGetUser(headers);
-            //TODO need to check the information
-        }
-    }
-    @PutMapping("/{id}")
-    public User update(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody UserDTO userDTO){
-        try {
-            User user = authenticationHelper.tryGetUser(headers);
-            //TODO double check how to change the information
-        }
-    }
+//    @PostMapping
+//    public User create(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserDTO userDTO){
+//        try {
+//            User user = authenticationHelper.tryGetUser(headers);
+//            //TODO need to check the information
+//        }
+//    }
+//    @PutMapping("/{id}")
+//    public User update(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody UserDTO userDTO){
+//        try {
+//            User user = authenticationHelper.tryGetUser(headers);
+//            //TODO double check how to change the information
+//        }
+//    }
 
     private void checkAccessPermission(int id, User requestingUser) {
         if (!requestingUser.isAdmin() && requestingUser.getId() != id) {
