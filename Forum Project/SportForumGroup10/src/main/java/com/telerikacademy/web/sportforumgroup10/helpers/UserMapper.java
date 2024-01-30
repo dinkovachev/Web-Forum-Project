@@ -1,8 +1,8 @@
 package com.telerikacademy.web.sportforumgroup10.helpers;
 
 import com.telerikacademy.web.sportforumgroup10.models.User;
-import com.telerikacademy.web.sportforumgroup10.models.UserDTO;
-import com.telerikacademy.web.sportforumgroup10.services.UserService;
+import com.telerikacademy.web.sportforumgroup10.models.Dto.UserDTO;
+import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
 import org.springframework.stereotype.Component;
 
 @Component

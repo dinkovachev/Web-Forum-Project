@@ -1,13 +1,14 @@
 package com.telerikacademy.web.sportforumgroup10.services;
 
 import com.telerikacademy.web.sportforumgroup10.models.User;
-import com.telerikacademy.web.sportforumgroup10.repositories.UserRepository;
+import com.telerikacademy.web.sportforumgroup10.repositories.Contracts.UserRepository;
+import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {

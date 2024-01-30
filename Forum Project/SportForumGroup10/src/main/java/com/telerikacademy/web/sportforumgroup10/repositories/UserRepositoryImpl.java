@@ -2,6 +2,7 @@ package com.telerikacademy.web.sportforumgroup10.repositories;
 
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
 import com.telerikacademy.web.sportforumgroup10.models.User;
+import com.telerikacademy.web.sportforumgroup10.repositories.Contracts.UserRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;

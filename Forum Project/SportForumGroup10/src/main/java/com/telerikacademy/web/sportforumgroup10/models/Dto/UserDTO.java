@@ -1,8 +1,7 @@
-package com.telerikacademy.web.sportforumgroup10.models;
+package com.telerikacademy.web.sportforumgroup10.models.Dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.checkerframework.common.aliasing.qual.Unique;
 
 import java.util.Objects;
 
