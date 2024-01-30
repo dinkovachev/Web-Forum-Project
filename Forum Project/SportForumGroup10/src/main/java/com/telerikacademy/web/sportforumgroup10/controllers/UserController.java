@@ -33,7 +33,7 @@ public class UserController {
     public List<User> getAllUsers(@RequestHeader HttpHeaders headers) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            // TODO maybe the logic can be in the service layer
+            // TODO maybe this logic can be in the service layer
             if (!user.isAdmin()) {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE);
             }
@@ -96,7 +96,9 @@ public class UserController {
 //    @PostMapping
 //    public User create(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserDTO userDTO){
 //        try {
-//            User user = authenticationHelper.tryGetUser(headers);
+//            //User user = authenticationHelper.tryGetUser(headers);
+//        User user = userMapper.fr
+//            userService.create(user)
 //            //TODO need to check the information
 //        }
 //    }
