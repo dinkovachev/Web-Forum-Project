@@ -3,7 +3,8 @@ package com.telerikacademy.web.sportforumgroup10.helpers;
 import com.telerikacademy.web.sportforumgroup10.exceptions.AuthorizationException;
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
 import com.telerikacademy.web.sportforumgroup10.models.User;
-import com.telerikacademy.web.sportforumgroup10.services.UserService;
+import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ public class AuthenticationHelper {
     private static final String AUTHORIZATION_HEADER_NAME = "Authorization";
     private static final String INVALID_AUTHENTICATION_ERROR = "Invalid authentication";
 
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public AuthenticationHelper(UserService userService) {
@@ -25,11 +26,38 @@ public class AuthenticationHelper {
         if (!headers.containsKey(AUTHORIZATION_HEADER_NAME)) {
             throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
         }
-        String userInfo = headers.getFirst(AUTHORIZATION_HEADER_NAME);
-        String username = getUsername(userInfo);
-        String password = getPassword(userInfo);
-        return verifyAuthentication(username, password);
+        try {
+            String userInfo = headers.getFirst(AUTHORIZATION_HEADER_NAME);
+            assert userInfo != null;
+            String username = getUsername(userInfo);
+            String password = getPassword(userInfo);
+            User user = userService.getByUsername(username);
+
+            if (!user.getPassword().equals(password)) {
+                throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
+            }
+
+            return user;
+        } catch (EntityNotFoundException e) {
+            throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
+        }
     }
+//        String userInfo = headers.getFirst(AUTHORIZATION_HEADER_NAME);
+//        String username = getUsername(userInfo);
+//        String password = getPassword(userInfo);
+//        return verifyAuthentication(username, password);
+//    }
+
+    public User tryGetCurrentUser(HttpSession session) {
+        String currentUsername = (String) session.getAttribute("currentUser");
+
+        if (currentUsername == null) {
+            throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
+        }
+
+        return userService.getByUsername(currentUsername);
+    }
+
 
     private String getUsername(String userInfo) {
         int firstSpace = userInfo.indexOf(" ");

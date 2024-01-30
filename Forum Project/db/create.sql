@@ -12,13 +12,9 @@ create table users
     email      varchar(50) not null,
     username   varchar(20) not null,
     password   varchar(200) not null,
-    is_blocked tinyint(1)  not null,
+    is_blocked tinyint(1)  not null default 0,
     is_deleted tinyint(1)  not null,
-    is_admin   tinyint(1)  not null default 0,
-    constraint email
-        unique (email),
-    constraint username
-        unique (username)
+    is_admin   tinyint(1)  not null default 0
 );
 
 create table admins

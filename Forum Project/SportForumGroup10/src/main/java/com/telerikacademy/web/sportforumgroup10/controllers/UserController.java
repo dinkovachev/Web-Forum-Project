@@ -4,9 +4,7 @@ import com.telerikacademy.web.sportforumgroup10.exceptions.AuthorizationExceptio
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
 import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
 import com.telerikacademy.web.sportforumgroup10.models.User;
-import com.telerikacademy.web.sportforumgroup10.models.UserDTO;
-import com.telerikacademy.web.sportforumgroup10.services.UserService;
-import jakarta.validation.Valid;
+import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
