@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -25,7 +24,7 @@ public class User {
     @JsonIgnore
     @Column(name = "password")
     private String password;
-    
+
     @Column(name = "is_blocked")
     private boolean isBlocked;
 

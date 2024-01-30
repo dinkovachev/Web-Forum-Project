@@ -91,4 +91,14 @@ public class UserRepositoryImpl implements UserRepository {
         }
         return user;
     }
+
+    @Override
+    public User update(User user) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.merge(user);
+            session.getTransaction().commit();
+        }
+        return user;
+    }
 }

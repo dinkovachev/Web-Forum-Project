@@ -105,13 +105,17 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
-//    @PutMapping("/{id}")
-//    public User update(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody UserDTO userDTO){
-//        try {
-//            User user = authenticationHelper.tryGetUser(headers);
-//            //TODO double check how to change the information
-//        }
-//    }
+    @PutMapping("/{id}")
+    public User update(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody UserDTO userDTO){
+        try {
+            User userModifier = authenticationHelper.tryGetUser(headers);
+            User userToBeModified = userMapper.fromDto(id, userDTO);
+            checkAccessPermission(id, userModifier);
+            return userService.update(userToBeModified);
+        } catch (AuthorizationException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
 
     private void checkAccessPermission(int id, User requestingUser) {
         if (!requestingUser.isAdmin() && requestingUser.getId() != id) {
