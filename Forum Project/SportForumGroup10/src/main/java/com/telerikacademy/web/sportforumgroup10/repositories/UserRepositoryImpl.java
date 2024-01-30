@@ -101,4 +101,16 @@ public class UserRepositoryImpl implements UserRepository {
         }
         return user;
     }
+
+    @Override
+    public User delete(int id) {
+        User userToDelete = getById(id);
+        userToDelete.setDeleted(true);
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.merge(userToDelete);
+            session.getTransaction().commit();
+        }
+        return userToDelete;
+    }
 }

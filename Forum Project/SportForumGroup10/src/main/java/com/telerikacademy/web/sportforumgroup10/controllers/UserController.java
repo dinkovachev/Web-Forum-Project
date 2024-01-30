@@ -72,6 +72,7 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+
     @GetMapping("/username:{username}")
     public User getUserByUsername(@RequestHeader HttpHeaders headers, @PathVariable String username) {
         try {
@@ -101,19 +102,34 @@ public class UserController {
         try {
             User user = userMapper.fromDto(userDTO);
             return userService.create(user);
-        } catch (EntityDuplicateException e){
+        } catch (EntityDuplicateException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
+
     @PutMapping("/{id}")
-    public User update(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody UserDTO userDTO){
+    public User update(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody UserDTO userDTO) {
         try {
             User userModifier = authenticationHelper.tryGetUser(headers);
             User userToBeModified = userMapper.fromDto(id, userDTO);
             checkAccessPermission(id, userModifier);
             return userService.update(userToBeModified);
-        } catch (AuthorizationException e){
+        } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public User delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User userModifier = authenticationHelper.tryGetUser(headers);
+           // User userToBeDeleted = userMapper.fromDto(id);
+            checkAccessPermission(id, userModifier);
+            return userService.delete(id);
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 

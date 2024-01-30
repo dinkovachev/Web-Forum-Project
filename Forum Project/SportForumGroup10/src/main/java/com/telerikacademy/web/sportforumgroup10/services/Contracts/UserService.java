@@ -12,4 +12,5 @@ public interface UserService {
     User getByUsername(String username);
     User create(User user);
     User update(User user);
+    User delete(int id);
 }
