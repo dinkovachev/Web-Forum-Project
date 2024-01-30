@@ -2,6 +2,7 @@ package com.telerikacademy.web.sportforumgroup10.models.Dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
@@ -45,7 +46,7 @@ public class UserDTO {
         return firstName;
     }
 
-    private void setFirstName(String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
@@ -53,7 +54,7 @@ public class UserDTO {
         return lastName;
     }
 
-    private void setLastName(String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
@@ -61,7 +62,7 @@ public class UserDTO {
         return email;
     }
 
-    private void setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -69,7 +70,7 @@ public class UserDTO {
         return username;
     }
 
-    private void setUsername(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -77,7 +78,7 @@ public class UserDTO {
         return password;
     }
 
-    private void setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 

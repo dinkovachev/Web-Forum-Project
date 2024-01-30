@@ -1,5 +1,7 @@
 package com.telerikacademy.web.sportforumgroup10.services;
 
+import com.telerikacademy.web.sportforumgroup10.exceptions.EntityDuplicateException;
+import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.repositories.Contracts.UserRepository;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
@@ -7,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -42,6 +46,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
-        return userRepository.create(user);
+        boolean duplicateUserExists = true;
+        try {
+            userRepository.getByUsername(user.getUsername());
+        } catch (EntityNotFoundException e){
+            duplicateUserExists = false;
+        }
+        if (duplicateUserExists){
+            throw new EntityDuplicateException("User", "username", user.getUsername());
+        }
+            return userRepository.create(user);
     }
 }
