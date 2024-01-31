@@ -17,14 +17,14 @@ public class Comment {
     private String content;
     @Column(name = "time_stamp")
     private LocalDateTime createdAt;
-//    @Column(name = "is_deleted")
-//    private boolean isDeleted;
+    @Column(name = "is_deleted")
+    private boolean isDeleted = false;
 
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
 
@@ -40,12 +40,12 @@ public class Comment {
     }
 
 //    public String getTitle() {
-//        return title;
+//        return post.getTitle();
 //    }
-//
-//    public void setTitle(String title) {
-//        this.title = title;
-//    }
+
+ //   public void setTitle(String title) {
+ //       this.post.getTitle() = title;
+ //   }
 
     public String getContent() {
         return content;
@@ -63,13 +63,13 @@ public class Comment {
         this.createdAt = createdAdd;
     }
 
-//    public boolean isDeleted() {
-//        return isDeleted;
-//    }
-//
-//    public void setDeleted(boolean deleted) {
-//        isDeleted = deleted;
-//    }
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
 
     public User getAuthor() {
         return author;
@@ -79,8 +79,8 @@ public class Comment {
         this.author = author;
     }
 
-    public Post getPost() {
-        return post;
+    public int getPost() {
+        return post.getId();
     }
 
     public void setPost(Post post) {

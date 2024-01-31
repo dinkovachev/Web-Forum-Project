@@ -21,38 +21,55 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api/posts")
+@RequestMapping("/api/comments")
 public class CommentController {
 
+    public static final String PERMISSION_ERROR = "You don't have permission.";
+
+
+
     private final CommentService commentService;
-    private final AuthenticationHelper helper;
+    private final AuthenticationHelper authenticationHelper;
     private final CommentMapper commentMapper;
 
+
+
+
     @Autowired
-    public CommentController(CommentService commentService, AuthenticationHelper helper, CommentMapper commentMapper) {
+    public CommentController(CommentService commentService, AuthenticationHelper authenticationHelper, CommentMapper commentMapper) {
         this.commentService = commentService;
-        this.helper = helper;
         this.commentMapper = commentMapper;
+        this.authenticationHelper = authenticationHelper;
+
     }
 
-    @GetMapping()
-    public List<Comment> getAll(
-            @RequestParam(required = false) String createdBy,
-            @RequestParam(required = false) String post,
-            @RequestParam(required = false) String content,
-            @RequestParam(required = false) String category,
-            @RequestParam(required = false) String minDate,
-            @RequestParam(required = false) String maxDate,
-            @RequestParam(required = false) String sortBy,
-            @RequestParam(required = false) String sortOrder) {
-        FilterOptions filterOptions = new FilterOptions(createdBy, post, content, category, minDate, maxDate, sortBy, sortOrder);
-        return commentService.getAll(filterOptions);
-    }
+//    @GetMapping()
+//    public List<Comment> getAllByUser(
+//        @RequestParam(required = false) String createdBy,
+//        @RequestParam(required = false) String title,
+//        @RequestParam(required = false) String content,
+//        @RequestParam(required = false) String category,
+//        @RequestParam(required = false) String minDate,
+//        @RequestParam(required = false) String maxDate,
+//        @RequestParam(required = false) String sortBy,
+//        @RequestParam(required = false) String sortOrder) {
+//        FilterOptions filterOptions = new FilterOptions(createdBy, title, content, category,minDate, maxDate, sortBy, sortOrder);
+//        return commentService.getAllByUser(filterOptions);
+//    }
 
-    @GetMapping("/{id}")
-    Comment getByPost(@PathVariable int id) {
+    @GetMapping("/postId:{postId}")
+    List<Comment> getByPost(@PathVariable int postId) {
         try {
-            return commentService.getByPost(id);
+            return commentService.getByPost(postId);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+
+        }
+    }
+    @GetMapping("/authorId:{authorId}")
+    List<Comment> getByAuthor(@PathVariable int authorId) {
+        try {
+            return commentService.getByAuthor(authorId);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 
@@ -62,10 +79,11 @@ public class CommentController {
     @PostMapping()
     public Comment create(@RequestHeader HttpHeaders headers, @Valid @RequestBody CommentDto commentDto) {
         try {
-            User creator = helper.tryGetUser(headers);
-            Comment comment = commentMapper.fromDtoIn(commentDto, creator);
-            commentService.create(comment, creator);
-            return comment;
+            User user =  authenticationHelper.tryGetUser(headers);
+            checkIsUserBlocked(user);
+            Comment comment = commentMapper.fromDtoIn(commentDto);
+            comment.setAuthor(user);
+            return commentService.create(comment, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (EntityDuplicateException e) {
@@ -76,29 +94,35 @@ public class CommentController {
     }
 
     @PutMapping("/{commentId}")
-    public Comment update(@RequestHeader HttpHeaders headers, @Valid @RequestBody CommentDto commentDto, @PathVariable int postId) {
+    public Comment update(@RequestHeader HttpHeaders headers, @Valid @RequestBody CommentDto commentDto, @PathVariable int commentId) {
         try {
-            User user = helper.tryGetUser(headers);
-            return commentService.update(commentDto, user, postId);
+            User user = authenticationHelper.tryGetUser(headers);
+            checkIsUserBlocked(user);
+            return commentService.update(commentDto, user, commentId);
         } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+           throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
 
     @DeleteMapping("/{commentId}")
-    public void delete(@RequestHeader HttpHeaders headers, @PathVariable int commentId) {
+    public Comment delete(@RequestHeader HttpHeaders headers, @PathVariable int commentId) {
         try {
-            User user = helper.tryGetUser(headers);
-            commentService.delete(commentId, user);
+            User user = authenticationHelper.tryGetUser(headers);
+            checkIsUserBlocked(user);
+            return  commentService.delete(commentId, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
+    private void checkIsUserBlocked(User user) {
+        if (user.isBlocked()) {
+            throw new AuthorizationException(PERMISSION_ERROR);
 
-
+        }
+    }
 }
 

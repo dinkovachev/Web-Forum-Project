@@ -2,7 +2,7 @@ package com.telerikacademy.web.sportforumgroup10.helpers;
 
 import com.telerikacademy.web.sportforumgroup10.models.Comment;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.CommentDto;
-import com.telerikacademy.web.sportforumgroup10.models.User;
+import com.telerikacademy.web.sportforumgroup10.services.Contracts.PostService;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -10,11 +10,17 @@ import java.time.LocalDateTime;
 
 @Component
 public class CommentMapper {
-    public Comment fromDtoIn(CommentDto commentDto, User creator) {
+
+    private final PostService postService;
+
+    public CommentMapper(PostService postService) {
+        this.postService = postService;
+    }
+
+    public Comment fromDtoIn(CommentDto commentDto) {
         Comment comment = new Comment();
-        //           comment.setTitle(commentDto.getTitle());
+        comment.setPost(postService.getById(commentDto.getPostId()));
         comment.setContent(commentDto.getContent());
-        comment.setAuthor(creator);
         comment.setCreatedAt(LocalDateTime.now());
         return comment;
 

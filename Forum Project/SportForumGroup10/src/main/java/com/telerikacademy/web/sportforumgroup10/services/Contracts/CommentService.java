@@ -10,20 +10,22 @@ import java.util.List;
 public interface CommentService {
 
 
-    List<Comment> getAll(FilterOptions filterOptions);
+ //   List<Comment> getAllByUser(FilterOptions filterOptions);
 
 
-    Comment getByAuthor(String name);
+    List<Comment> getByAuthor(int id);
     //todo ??
 
-    Comment getByPost(int id);
+    List<Comment> getByPost(int id);
     //todo ??
 
-    void create(Comment comment, User creator);
+    Comment getById(int id);
 
-    Comment update(CommentDto commentDto, User user, int postId);
+    Comment create(Comment comment, User user);
 
-    void delete(int id, User user);
+    Comment update(CommentDto commentDto, User user,  int commentId);
+
+    Comment delete(int commentId, User user);
 
 
 }
