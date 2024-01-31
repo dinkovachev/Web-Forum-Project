@@ -1,6 +1,7 @@
 package com.telerikacademy.web.sportforumgroup10.controllers;
 
 import com.telerikacademy.web.sportforumgroup10.exceptions.AuthorizationException;
+import com.telerikacademy.web.sportforumgroup10.exceptions.EntityDeletedException;
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityDuplicateException;
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
 import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
@@ -52,8 +53,7 @@ public class UserController {
     public User getUserById(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            checkAccessPermission(id, user);
-            return userService.getById(id);
+            return userService.getById(id, user);
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         } catch (EntityNotFoundException e) {
@@ -65,9 +65,10 @@ public class UserController {
     public User getUserByEmail(@RequestHeader HttpHeaders headers, @PathVariable String email) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            checkAccessPermission(user.getId(), user);
-            return userService.getByEmail(email);
+            return userService.getByEmail(email, user);
             //TODO check if need to catch authorization exception
+        }  catch (AuthorizationException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
@@ -77,9 +78,10 @@ public class UserController {
     public User getUserByUsername(@RequestHeader HttpHeaders headers, @PathVariable String username) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            checkAccessPermission(user.getId(), user);
-            return userService.getByUsername(username);
-            //TODO check if need to catch authorization exception
+            return userService.getByUsername(username, user);
+
+        }  catch (AuthorizationException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
@@ -89,9 +91,9 @@ public class UserController {
     public User getUserByFirstName(@RequestHeader HttpHeaders headers, @PathVariable String firstName) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            checkAccessPermission(user.getId(), user);
-            return userService.getByFirstName(firstName);
-            //TODO check if need to catch authorization exception
+            return userService.getByFirstName(firstName, user);
+        }  catch (AuthorizationException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
@@ -112,7 +114,7 @@ public class UserController {
         try {
             User userModifier = authenticationHelper.tryGetUser(headers);
             User userToBeModified = userMapper.fromDto(id, userDTO);
-            checkAccessPermission(id, userModifier);
+
             return userService.update(userToBeModified);
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
@@ -123,9 +125,7 @@ public class UserController {
     public User delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User userModifier = authenticationHelper.tryGetUser(headers);
-           // User userToBeDeleted = userMapper.fromDto(id);
-            checkAccessPermission(id, userModifier);
-            return userService.delete(id);
+            return userService.delete(id, userModifier);
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         } catch (EntityNotFoundException e) {
@@ -133,10 +133,6 @@ public class UserController {
         }
     }
 
-    private void checkAccessPermission(int id, User requestingUser) {
-        if (!requestingUser.isAdmin() && requestingUser.getId() != id) {
-            throw new AuthorizationException(ERROR_MESSAGE);
-        }
-    }
+
 
 }

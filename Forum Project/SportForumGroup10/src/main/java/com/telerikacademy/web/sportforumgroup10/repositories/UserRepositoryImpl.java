@@ -1,5 +1,6 @@
 package com.telerikacademy.web.sportforumgroup10.repositories;
 
+import com.telerikacademy.web.sportforumgroup10.exceptions.EntityDeletedException;
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.repositories.Contracts.UserRepository;
@@ -106,6 +107,9 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User delete(int id) {
         User userToDelete = getById(id);
+        if (userToDelete.isDeleted()){
+            throw new EntityDeletedException("User", "username", userToDelete.getUsername());
+        }
         userToDelete.setDeleted(true);
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();

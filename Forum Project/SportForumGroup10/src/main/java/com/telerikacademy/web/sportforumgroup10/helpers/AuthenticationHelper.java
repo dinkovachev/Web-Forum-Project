@@ -33,6 +33,7 @@ public class AuthenticationHelper {
     }
 
 
+
     public User tryGetCurrentUser(HttpSession session) {
         String currentUsername = (String) session.getAttribute("currentUser");
 
@@ -40,7 +41,7 @@ public class AuthenticationHelper {
             throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
         }
 
-        return userService.getByUsername(currentUsername);
+        return userService.getByUsernameAuthentication(currentUsername);
     }
 
 
@@ -62,7 +63,7 @@ public class AuthenticationHelper {
 
     private User verifyAuthentication(String username, String password) {
         try {
-            User user = userService.getByUsername(username);
+            User user = userService.getByUsernameAuthentication(username);
             if (!user.getPassword().equals(password)){
                 throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
             }

@@ -17,7 +17,7 @@ public class UserMapper {
     public User fromDto(int id, UserDTO userDTO) {
         User user = fromDto(userDTO);
         user.setId(id);
-        User repositoryUser = userService.getById(id);
+        User repositoryUser = userService.getById(id, user);
         return user;
     }
 
