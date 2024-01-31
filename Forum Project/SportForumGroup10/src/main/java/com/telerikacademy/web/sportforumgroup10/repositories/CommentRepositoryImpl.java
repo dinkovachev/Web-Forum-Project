@@ -142,10 +142,11 @@ public class CommentRepositoryImpl implements CommentRepository {
             Query<Comment> query = session.createQuery("from Comment where post.id =:id", Comment.class);
             query.setParameter("id", id);
             List<Comment> result = query.list();
-
             if (result.isEmpty()) {
                 throw new EntityNotFoundException("Comment", id);
             }
+
+
             return result;
         }
     }

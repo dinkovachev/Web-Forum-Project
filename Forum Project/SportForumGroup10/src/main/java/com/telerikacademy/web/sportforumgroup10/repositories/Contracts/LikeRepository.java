@@ -8,12 +8,14 @@ import java.util.List;
 public interface LikeRepository {
 
 
-    void create (Like like);
+    Like create (Like like);
 
-    List<Like> allPostLikes(int id);
+    List<Like> postLikes(int id);
+
+    Like getByLikeId(int id);
 
 
     int  countLikes (int id);
 
-    void remove(int id);
+    Like remove(int id);
 }

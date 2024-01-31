@@ -28,25 +28,34 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public void addLike(Post post, User user) {
+    public Like addLike(Like like, User user) {
+        return likeRepository.create(like);
+
 
     }
     @Override
-    public void removeLike(Post post, User user) {
+    public Like removeLike(int likeId, User user){
+    Like like = getById(likeId);
+    checkModifyPermission(like, user);
+        return likeRepository.remove(likeId);
+    }
+
+    public Like getById(int likeId) {
+        return likeRepository.getByLikeId(likeId);
     }
 
     @Override
-    public int countLikes(Post post, User user) {
-        return 0;
+    public int countLikes(int id) {
+        return  likeRepository.countLikes(id);
     }
 
-//    @Override
-//    public List<Like> allPostLikes(Post post, User user) {
-//        return List<Like>;
-//    }
+    @Override
+    public List<Like> allPostLikes(int id) {
+        return  likeRepository.postLikes(id);
+    }
 
-    private void checkModifyPermission(Comment comment, User requestUser) {
-        if (!requestUser.isAdmin() && comment.getAuthor().getId() != requestUser.getId()) {
+    private void checkModifyPermission(Like like, User requestUser) {
+        if (!requestUser.isAdmin() && like.getAuthor_id().getId() != requestUser.getId()) {
             throw new AuthorizationException(LIKE_POST);
         }
     }

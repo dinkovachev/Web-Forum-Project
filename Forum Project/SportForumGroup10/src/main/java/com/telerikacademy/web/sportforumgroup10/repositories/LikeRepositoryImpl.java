@@ -31,28 +31,30 @@ public class LikeRepositoryImpl implements LikeRepository {
         }
 
     @Override
-    public void create(Like like) {
+    public Like create(Like like) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.persist(like);
             session.getTransaction().commit();
         }
+        return like;
     }
 
 
 
     @Override
-    public void remove(int id) {
+    public Like remove(int id) {
         Like like = getByLikeId(id);
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.remove(like);
             session.getTransaction().commit();
         }
+        return like;
     }
 
     @Override
-    public List<Like> allPostLikes(int id) {
+    public List<Like> postLikes(int id) {
         return null;
     }
 
