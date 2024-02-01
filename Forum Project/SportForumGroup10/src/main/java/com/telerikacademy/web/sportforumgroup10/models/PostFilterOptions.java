@@ -1,7 +1,7 @@
 package com.telerikacademy.web.sportforumgroup10.models;
 
 import java.util.Optional;
-public class FilterOptions {
+public class PostFilterOptions {
     private Optional<String> createdBy;
     private Optional<String> title;
     private Optional<String> content;
@@ -11,7 +11,7 @@ public class FilterOptions {
     private Optional<String> sortBy;
     private Optional<String> sortOrder;
 
-    public FilterOptions(
+    public PostFilterOptions(
             String createdBy,
             String title,
             String content,

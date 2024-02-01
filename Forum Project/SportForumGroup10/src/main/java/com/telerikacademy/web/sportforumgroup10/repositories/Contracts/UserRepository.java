@@ -1,12 +1,13 @@
 package com.telerikacademy.web.sportforumgroup10.repositories.Contracts;
 
 import com.telerikacademy.web.sportforumgroup10.models.User;
+import com.telerikacademy.web.sportforumgroup10.models.UserFilterOptions;
 
 import java.util.List;
 
 public interface UserRepository {
 
-    List<User> getAllUsers();
+    List<User> getAllUsers(UserFilterOptions filterOptions);
 
     User getById(int id);
 
