@@ -45,7 +45,7 @@ public class AuthenticationHelper {
     }
 
 
-    private String getUsername(String userInfo) {
+    public String getUsername(String userInfo) {
         int firstSpace = userInfo.indexOf(" ");
         if (firstSpace == -1) {
             throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
