@@ -7,7 +7,7 @@ import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
 import com.telerikacademy.web.sportforumgroup10.helpers.CommentMapper;
 import com.telerikacademy.web.sportforumgroup10.models.Comment;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.CommentDto;
-import com.telerikacademy.web.sportforumgroup10.models.FilterOptions;
+//import com.telerikacademy.web.sportforumgroup10.models.FilterOptions;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.CommentService;
 import jakarta.validation.Valid;
@@ -26,13 +26,9 @@ public class CommentController {
 
     public static final String PERMISSION_ERROR = "You don't have permission.";
 
-
-
     private final CommentService commentService;
     private final AuthenticationHelper authenticationHelper;
     private final CommentMapper commentMapper;
-
-
 
 
     @Autowired
