@@ -1,11 +1,12 @@
 package com.telerikacademy.web.sportforumgroup10.services.Contracts;
 
 import com.telerikacademy.web.sportforumgroup10.models.User;
+import com.telerikacademy.web.sportforumgroup10.models.UserFilterOptions;
 
 import java.util.List;
 
 public interface UserService {
-    List<User> getAllUsers();
+    List<User> getAllUsers(UserFilterOptions filterOptions);
     User getById(int id, User user);
     User getByFirstName(String firstName, User user);
     User getByEmail(String email, User user);
