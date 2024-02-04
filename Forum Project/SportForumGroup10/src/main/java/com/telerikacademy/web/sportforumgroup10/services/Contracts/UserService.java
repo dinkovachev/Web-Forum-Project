@@ -15,6 +15,6 @@ public interface UserService {
     User create(User user);
     User update(User user);
     User delete(int id, User userModifier);
-
     User makeUserAdmin(int id, User userModifier);
+    User unmakeUserAdmin(int id, User userModifier);
 }

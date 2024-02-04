@@ -162,6 +162,18 @@ public class UserRepositoryImpl implements UserRepository {
         return userToMakeAdmin;
     }
 
+    @Override
+    public User unmakeUserAdmin(int id) {
+        User userToMakeAdmin = getById(id);
+        userToMakeAdmin.setAdmin(false);
+        try(Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.merge(userToMakeAdmin);
+            session.getTransaction().commit();
+        }
+        return userToMakeAdmin;
+    }
+
     private String generateOrderBy(UserFilterOptions filterOptions) {
         if (filterOptions.getSortBy().isEmpty()) {
             return "";

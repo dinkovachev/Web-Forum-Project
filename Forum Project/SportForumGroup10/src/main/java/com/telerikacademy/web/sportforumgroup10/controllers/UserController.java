@@ -137,22 +137,33 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        } catch (EntityAlreadyAdminException e){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
 
     @PutMapping("/makeAdmin:{id}")
-    public User makeUserAdmin(@RequestHeader HttpHeaders headers, @PathVariable int id){
+    public User makeUserAdmin(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User userModifier = authenticationHelper.tryGetUser(headers);
             return userService.makeUserAdmin(id, userModifier);
-        } catch (AuthorizationException e){
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (EntityAlreadyAdminException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
+    }
+
+    @PutMapping("/unmakeAdmin:{id}")
+    public User unmakeUserAdmin(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User userModifier = authenticationHelper.tryGetUser(headers);
+            return userService.unmakeUserAdmin(id, userModifier);
+        } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
+
     }
-
-
 }
