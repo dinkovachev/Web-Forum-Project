@@ -1,5 +1,6 @@
 package com.telerikacademy.web.sportforumgroup10.repositories;
 
+import com.telerikacademy.web.sportforumgroup10.exceptions.EntityAlreadyAdminException;
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityDeletedException;
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
 import com.telerikacademy.web.sportforumgroup10.models.User;
@@ -144,6 +145,21 @@ public class UserRepositoryImpl implements UserRepository {
             session.getTransaction().commit();
         }
         return userToDelete;
+    }
+
+    @Override
+    public User makeUserAdmin(int id) {
+        User userToMakeAdmin = getById(id);
+        if (userToMakeAdmin.isAdmin()){
+            throw new EntityAlreadyAdminException("User", "username", userToMakeAdmin.getUsername());
+        }
+        userToMakeAdmin.setAdmin(true);
+        try(Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.merge(userToMakeAdmin);
+            session.getTransaction().commit();
+        }
+        return userToMakeAdmin;
     }
 
     private String generateOrderBy(UserFilterOptions filterOptions) {

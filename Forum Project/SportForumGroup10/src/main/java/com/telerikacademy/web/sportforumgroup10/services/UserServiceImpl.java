@@ -91,6 +91,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.delete(id);
     }
 
+    @Override
+    public User makeUserAdmin(int id, User userModifier) {
+        checkAccessPermissionId(id, userModifier);
+        return userRepository.makeUserAdmin(id);
+    }
+
     private void checkAccessPermissionId(int id, User requestingUser) {
         if (!requestingUser.isAdmin()) {
             if (requestingUser.getId() != id) {
