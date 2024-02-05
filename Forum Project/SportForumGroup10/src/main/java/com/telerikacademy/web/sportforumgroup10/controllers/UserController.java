@@ -1,9 +1,6 @@
 package com.telerikacademy.web.sportforumgroup10.controllers;
 
-import com.telerikacademy.web.sportforumgroup10.exceptions.AuthorizationException;
-import com.telerikacademy.web.sportforumgroup10.exceptions.EntityDeletedException;
-import com.telerikacademy.web.sportforumgroup10.exceptions.EntityDuplicateException;
-import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
+import com.telerikacademy.web.sportforumgroup10.exceptions.*;
 import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
 import com.telerikacademy.web.sportforumgroup10.helpers.PostMapper;
 import com.telerikacademy.web.sportforumgroup10.helpers.UserMapper;
@@ -143,5 +140,30 @@ public class UserController {
         }
     }
 
+    @PutMapping("/makeAdmin:{id}")
+    public User makeUserAdmin(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User userModifier = authenticationHelper.tryGetUser(headers);
+            return userService.makeUserAdmin(id, userModifier);
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (EntityAlreadyAdminException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
+    }
 
+    @PutMapping("/unmakeAdmin:{id}")
+    public User unmakeUserAdmin(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User userModifier = authenticationHelper.tryGetUser(headers);
+            return userService.unmakeUserAdmin(id, userModifier);
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+
+    }
 }

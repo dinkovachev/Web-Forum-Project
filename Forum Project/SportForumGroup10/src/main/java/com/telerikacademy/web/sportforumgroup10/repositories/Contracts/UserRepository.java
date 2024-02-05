@@ -20,4 +20,8 @@ public interface UserRepository {
     User create(User user);
     User update(User user);
     User delete(int id);
+    User makeUserAdmin(int id);
+    User unmakeUserAdmin(int id);
+
+
 }
