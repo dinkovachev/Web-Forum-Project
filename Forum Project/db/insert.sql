@@ -47,7 +47,7 @@ INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_
 INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (12, 'Comment 2 for post 6...', '2024-01-24 11:45:52', 0, 10, 1);
 
 INSERT INTO forum.users_posts(user_id, post_id) VALUES(1,11);
-INSERT INTO forum.users_posts(user_id, post_id) VALUES(2,6);
+INSERT INTO forum.users_posts(user_id, post_id) VALUES(2,7);
 INSERT INTO forum.users_posts(user_id, post_id) VALUES(3,8);
 INSERT INTO forum.users_posts(user_id, post_id) VALUES(4,10);
 INSERT INTO forum.users_posts(user_id, post_id) VALUES(5,12);

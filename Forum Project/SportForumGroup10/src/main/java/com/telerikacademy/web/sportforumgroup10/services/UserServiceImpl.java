@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     // as it is mentioned in the requirements admin section
     @Override
     public User getById(int id, User user) {
-        checkAccessPermissionId(id, user);
+//        checkAccessPermissionId(id, user);
         return userRepository.getById(id);
     }
 

@@ -5,6 +5,7 @@ import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
 import com.telerikacademy.web.sportforumgroup10.helpers.PostMapper;
 import com.telerikacademy.web.sportforumgroup10.helpers.UserMapper;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.UserDTO;
+import com.telerikacademy.web.sportforumgroup10.models.Post;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.models.UserFilterOptions;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -107,6 +109,17 @@ public class UserController {
         }
     }
 
+    @GetMapping("{id}/userPosts")
+    public List<Post> getUserPosts(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User requestingUser = authenticationHelper.tryGetUser(headers);
+            User userToGetPosts = userService.getById(id, requestingUser);
+            return new ArrayList<>(userToGetPosts.getUsersPosts());
+        } catch (EntityNotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
     @PostMapping
     public User create(@Valid @RequestBody UserDTO userDTO) {
         try {
@@ -166,6 +179,7 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+
     @PutMapping("/blockUser:{id}")
     public User blockUser(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {

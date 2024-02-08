@@ -3,6 +3,7 @@ package com.telerikacademy.web.sportforumgroup10.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name="posts")
@@ -73,4 +74,18 @@ public class Post {
     public void setAuthor(User author) {
         this.author = author;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post = (Post) o;
+        return id == post.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
+

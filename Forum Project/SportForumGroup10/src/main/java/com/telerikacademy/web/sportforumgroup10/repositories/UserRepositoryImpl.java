@@ -23,7 +23,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     private static final String USER_CONSTANT = "User";
     private final SessionFactory sessionFactory;
-
     private final PostRepository postRepository;
 
     @Autowired
