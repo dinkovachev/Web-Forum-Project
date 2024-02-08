@@ -229,7 +229,8 @@ public class UserRepositoryImpl implements UserRepository {
 
         orderBy = String.format(" order by %s", orderBy);
 
-        if (filterOptions.getOrderBy().isPresent() && filterOptions.getOrderBy().get().equalsIgnoreCase("desc")) {
+        if (filterOptions.getOrderBy().isPresent()
+                && filterOptions.getOrderBy().get().equalsIgnoreCase("desc")) {
             orderBy = String.format("%s desc", orderBy);
         }
         return orderBy;
