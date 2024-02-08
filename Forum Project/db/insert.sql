@@ -45,3 +45,16 @@ INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_
 INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (10, 'Comment 2 for post 5...', '2024-01-24 11:45:52', 0, 7, 10);
 INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (11, 'Comment 1 for post 6...', '2024-01-24 11:45:52', 0, 9, 1);
 INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (12, 'Comment 2 for post 6...', '2024-01-24 11:45:52', 0, 10, 1);
+
+INSERT INTO forum.users_posts(user_id, post_id) VALUES(1,11);
+INSERT INTO forum.users_posts(user_id, post_id) VALUES(2,6);
+INSERT INTO forum.users_posts(user_id, post_id) VALUES(3,8);
+INSERT INTO forum.users_posts(user_id, post_id) VALUES(4,10);
+INSERT INTO forum.users_posts(user_id, post_id) VALUES(5,12);
+INSERT INTO forum.users_posts(user_id, post_id) VALUES(6,4);
+INSERT INTO forum.users_posts(user_id, post_id) VALUES(7,9);
+INSERT INTO forum.users_posts(user_id, post_id) VALUES(8,1);
+INSERT INTO forum.users_posts(user_id, post_id) VALUES(10,3);
+INSERT INTO forum.users_posts(user_id, post_id) VALUES(11,2);
+INSERT INTO forum.users_posts(user_id, post_id) VALUES(11,5);
+INSERT INTO forum.users_posts(user_id, post_id) VALUES(12,6);
