@@ -40,11 +40,17 @@ public class UserController {
                                   @RequestParam(required = false) String firstName,
                                   @RequestParam(required = false) String email,
                                   @RequestParam(required = false) String username,
-                                  @RequestParam(required = false) Integer postId,
+                                  ////TODO double check this since there is no post.id field in User to search from here
+//                                  @RequestParam(required = false) Integer postId,
                                   @RequestParam(required = false) String sortBy,
                                   @RequestParam(required = false) String sortOrder) {
-        UserFilterOptions filterOptions = new UserFilterOptions(firstName, email, username, postId, sortBy, sortOrder);
-        return userService.getAllUsers(filterOptions);
+        try {
+            UserFilterOptions filterOptions = new UserFilterOptions(firstName, email, username, sortBy, sortOrder);
+            return userService.getAllUsers(filterOptions);
+        } catch (EntityNotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+
         // TODO need to discuss if there is need for admin to search all users(probably not)
 //        try {
 //            User user = authenticationHelper.tryGetUser(headers);

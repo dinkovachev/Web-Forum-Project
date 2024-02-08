@@ -21,14 +21,12 @@ import java.util.Map;
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
-    private static final String USER_CONSTANT = "User";
+    private static final String USER_CONSTANT = "User not found";
     private final SessionFactory sessionFactory;
-    private final PostRepository postRepository;
 
     @Autowired
     public UserRepositoryImpl(SessionFactory sessionFactory, PostRepository postRepository) {
         this.sessionFactory = sessionFactory;
-        this.postRepository = postRepository;
     }
 
     @Override
@@ -50,11 +48,11 @@ public class UserRepositoryImpl implements UserRepository {
                 filters.add(" username like :username ");
                 params.put("username", String.format("%%%s%%", value));
             });
-
-            filterOptions.getPostId().ifPresent(value -> {
-                filters.add(" post.id = :postId ");
-                params.put("postId", value);
-            });
+//TODO double check this since there is no post.id field in User to search from here
+//            filterOptions.getPostId().ifPresent(value -> {
+//                filters.add(" post.id = :postId ");
+//                params.put("postId", value);
+//            });
 
             if (!filters.isEmpty()) {
                 queryString.append("where").append(String.join(" and ", filters));
@@ -64,6 +62,9 @@ public class UserRepositoryImpl implements UserRepository {
             Query<User> query = session.createQuery(queryString.toString(), User.class);
             query.setProperties(params);
             return query.list();
+            //TODO how to implement exception if the result of the query doesn't find user with the requested information
+        } catch (EntityNotFoundException e){
+            throw new EntityNotFoundException(USER_CONSTANT);
         }
     }
 
@@ -72,7 +73,7 @@ public class UserRepositoryImpl implements UserRepository {
         try (Session session = sessionFactory.openSession()) {
             User user = session.get(User.class, id);
             if (user == null) {
-                throw new EntityNotFoundException(USER_CONSTANT, id);
+                throw new EntityNotFoundException("User", id);
             }
             return user;
         }
