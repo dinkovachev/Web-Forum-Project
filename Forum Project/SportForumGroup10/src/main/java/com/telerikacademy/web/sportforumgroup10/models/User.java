@@ -27,7 +27,6 @@ public class User {
     @Column(name = "password")
     private String password;
 
-
     @Column(name = "is_blocked")
     private boolean isBlocked;
 
@@ -37,15 +36,19 @@ public class User {
     @Column(name = "is_admin")
     private boolean isAdmin;
 
-    @OneToMany(mappedBy = "author_id", fetch = FetchType.EAGER)
-    private Set<Post> usersPosts;
+//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "post_id")
+//    @JoinColumn(name = "post_id")
+//    private Post usersPosts;
+
+//    @OneToMany(mappedBy = "author_id", fetch = FetchType.EAGER)
+//    private Set<Post> usersPosts;
 
     public User() {
     }
 
 
     public User(int id, String firstName, String lastName, String email, String username,
-                String password, boolean isBlocked, boolean isDeleted, boolean isAdmin, Set<Post> usersPosts) {
+                String password, boolean isBlocked, boolean isDeleted, boolean isAdmin, Post usersPosts) {
 //        setId(id);
 //        setFirstName(firstName);
 //        setLastName(lastName);
@@ -65,7 +68,7 @@ public class User {
         this.isBlocked = isBlocked;
         this.isDeleted = isDeleted;
         this.isAdmin = isAdmin;
-        this.usersPosts = new HashSet<>();
+//        this.usersPosts = usersPosts;
     }
 
     public int getId() {
@@ -140,13 +143,13 @@ public class User {
         isAdmin = admin;
     }
 
-    public Set<Post> getUsersPosts() {
-        return usersPosts;
-    }
-
-    public void setUsersPosts(Set<Post> usersPosts) {
-        this.usersPosts = usersPosts;
-    }
+//    public Set<Post> getUsersPosts() {
+//        return usersPosts;
+//    }
+//
+//    public void setUsersPosts(Set<Post> usersPosts) {
+//        this.usersPosts = usersPosts;
+//    }
 
 
     @Override

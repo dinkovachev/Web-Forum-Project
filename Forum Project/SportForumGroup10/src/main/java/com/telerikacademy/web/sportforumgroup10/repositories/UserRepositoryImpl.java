@@ -5,6 +5,7 @@ import com.telerikacademy.web.sportforumgroup10.exceptions.EntityDeletedExceptio
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.models.UserFilterOptions;
+import com.telerikacademy.web.sportforumgroup10.repositories.Contracts.PostRepository;
 import com.telerikacademy.web.sportforumgroup10.repositories.Contracts.UserRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -23,9 +24,12 @@ public class UserRepositoryImpl implements UserRepository {
     private static final String USER_CONSTANT = "User";
     private final SessionFactory sessionFactory;
 
+    private final PostRepository postRepository;
+
     @Autowired
-    public UserRepositoryImpl(SessionFactory sessionFactory) {
+    public UserRepositoryImpl(SessionFactory sessionFactory, PostRepository postRepository) {
         this.sessionFactory = sessionFactory;
+        this.postRepository = postRepository;
     }
 
     @Override
@@ -46,6 +50,11 @@ public class UserRepositoryImpl implements UserRepository {
             filterOptions.getUsername().ifPresent(value -> {
                 filters.add(" username like :username ");
                 params.put("username", String.format("%%%s%%", value));
+            });
+
+            filterOptions.getPostId().ifPresent(value -> {
+                filters.add(" post.id = :postId ");
+                params.put("postId", value);
             });
 
             if (!filters.isEmpty()) {
@@ -172,6 +181,30 @@ public class UserRepositoryImpl implements UserRepository {
             session.getTransaction().commit();
         }
         return userToMakeAdmin;
+    }
+
+    @Override
+    public User blockUser(int id) {
+        User userToBlock = getById(id);
+        userToBlock.setBlocked(true);
+        try(Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.merge(userToBlock);
+            session.getTransaction().commit();
+        }
+        return userToBlock;
+    }
+
+    @Override
+    public User unblockUser(int id) {
+        User userToBlock = getById(id);
+        userToBlock.setBlocked(false);
+        try(Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.merge(userToBlock);
+            session.getTransaction().commit();
+        }
+        return userToBlock;
     }
 
     private String generateOrderBy(UserFilterOptions filterOptions) {

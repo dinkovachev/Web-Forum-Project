@@ -102,6 +102,18 @@ public class UserServiceImpl implements UserService {
         checkAccessPermissionId(id, userModifier);
         return userRepository.unmakeUserAdmin(id);    }
 
+    @Override
+    public User blockUser(int id, User userModifier) {
+        checkAccessPermissionId(id, userModifier);
+        return userRepository.blockUser(id);
+    }
+
+    @Override
+    public User unblockUser(int id, User userModifier) {
+        checkAccessPermissionId(id, userModifier);
+        return userRepository.unblockUser(id);
+    }
+
     private void checkAccessPermissionId(int id, User requestingUser) {
         if (!requestingUser.isAdmin()) {
             if (requestingUser.getId() != id) {

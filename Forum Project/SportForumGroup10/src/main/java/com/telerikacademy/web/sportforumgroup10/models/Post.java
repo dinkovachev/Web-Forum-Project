@@ -19,7 +19,6 @@ public class Post {
     private LocalDateTime createdAt;
     @Column(name = "is_deleted")
     private boolean isDeleted;
-
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;

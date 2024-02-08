@@ -38,9 +38,10 @@ public class UserController {
                                   @RequestParam(required = false) String firstName,
                                   @RequestParam(required = false) String email,
                                   @RequestParam(required = false) String username,
+                                  @RequestParam(required = false) Integer postId,
                                   @RequestParam(required = false) String sortBy,
                                   @RequestParam(required = false) String sortOrder) {
-        UserFilterOptions filterOptions = new UserFilterOptions(firstName, email, username, sortBy, sortOrder);
+        UserFilterOptions filterOptions = new UserFilterOptions(firstName, email, username, postId, sortBy, sortOrder);
         return userService.getAllUsers(filterOptions);
         // TODO need to discuss if there is need for admin to search all users(probably not)
 //        try {
@@ -164,6 +165,28 @@ public class UserController {
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
+    }
+    @PutMapping("/blockUser:{id}")
+    public User blockUser(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User userModifier = authenticationHelper.tryGetUser(headers);
+            return userService.blockUser(id, userModifier);
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
 
+    @PutMapping("/unblockUser:{id}")
+    public User unblockUser(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User userModifier = authenticationHelper.tryGetUser(headers);
+            return userService.unblockUser(id, userModifier);
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 }
