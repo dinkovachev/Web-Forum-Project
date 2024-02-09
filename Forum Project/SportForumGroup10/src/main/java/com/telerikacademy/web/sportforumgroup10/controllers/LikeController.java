@@ -35,23 +35,24 @@ public class LikeController {
         this.authenticationHelper = authenticationHelper;
     }
 
-    @GetMapping("/{postId}")
+    @PostMapping
     public Like addLike(@PathVariable int postId, @RequestHeader HttpHeaders headers) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             checkIsUserBlocked(user);
-            Post post = post.getId(postId);
-            return likeService.addLike(post, user);
+            likeService.getById(postId);
+            return likeService.addLike(postId, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
+    @DeleteMapping
     public Like removeLike(@PathVariable int postId, @RequestHeader HttpHeaders headers) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             checkIsUserBlocked(user);
-            return likeService.removeLike();
+            return likeService.removeLike(postId, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
@@ -67,7 +68,7 @@ public class LikeController {
         }
     }
 
-    @GetMapping("/{Id}")
+    @GetMapping("/countLikes:{Id}")
     public int countLikes(@PathVariable int Id) {
         try {
             return likeService.countLikes(Id);

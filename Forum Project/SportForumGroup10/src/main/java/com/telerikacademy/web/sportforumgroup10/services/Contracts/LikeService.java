@@ -10,7 +10,7 @@ import java.util.List;
 public interface LikeService {
 
 
-    Like addLike(Post postId, User user);
+    Like addLike(int postId, User user);
 
     Like removeLike(int like, User user);
 

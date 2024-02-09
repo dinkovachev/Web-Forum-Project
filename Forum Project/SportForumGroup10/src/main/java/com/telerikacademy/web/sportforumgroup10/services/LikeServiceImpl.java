@@ -28,7 +28,7 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public Like addLike(Post postId, User user) {
+    public Like addLike(int postId, User user) {
         Like like = new Like();
         return likeRepository.create(like);
 
