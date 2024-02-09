@@ -4,6 +4,7 @@ import com.telerikacademy.web.sportforumgroup10.exceptions.AuthorizationExceptio
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityDuplicateException;
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
 import com.telerikacademy.web.sportforumgroup10.models.User;
+import com.telerikacademy.web.sportforumgroup10.models.UserFilterOptions;
 import com.telerikacademy.web.sportforumgroup10.repositories.Contracts.UserRepository;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers(UserFilterOptions filterOptions) {
 
-        return userRepository.getAllUsers();
+        return userRepository.getAllUsers(filterOptions);
     }
 
     //TODO maybe no need only admins to search by id, firstName, email, username
@@ -89,6 +90,17 @@ public class UserServiceImpl implements UserService {
         checkAccessPermissionId(id, userModifier);
         return userRepository.delete(id);
     }
+
+    @Override
+    public User makeUserAdmin(int id, User userModifier) {
+        checkAccessPermissionId(id, userModifier);
+        return userRepository.makeUserAdmin(id);
+    }
+
+    @Override
+    public User unmakeUserAdmin(int id, User userModifier) {
+        checkAccessPermissionId(id, userModifier);
+        return userRepository.unmakeUserAdmin(id);    }
 
     private void checkAccessPermissionId(int id, User requestingUser) {
         if (!requestingUser.isAdmin()) {

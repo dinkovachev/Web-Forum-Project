@@ -1,7 +1,7 @@
 package com.telerikacademy.web.sportforumgroup10.repositories;
 
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
-import com.telerikacademy.web.sportforumgroup10.models.FilterOptions;
+import com.telerikacademy.web.sportforumgroup10.models.PostFilterOptions;
 import com.telerikacademy.web.sportforumgroup10.models.Post;
 import com.telerikacademy.web.sportforumgroup10.repositories.Contracts.PostRepository;
 import org.hibernate.Session;
@@ -28,7 +28,7 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public List<Post> getAll(FilterOptions filterOptions) {
+    public List<Post> getAll(PostFilterOptions postFilterOptions) {
         try (Session session = sessionFactory.openSession()) {
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
@@ -40,32 +40,32 @@ public class PostRepositoryImpl implements PostRepository {
                     .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
                     .toFormatter();
 
-            filterOptions.getTitle().ifPresent(value -> {
+            postFilterOptions.getTitle().ifPresent(value -> {
                 filters.add("title like :title");
                 params.put("title", String.format("%%%s%%", value));
             });
 
 
-            filterOptions.getContent().ifPresent(value -> {
+            postFilterOptions.getContent().ifPresent(value -> {
                 filters.add("content like :content");
                 params.put("content", String.format("%%%s%%", value));
             });
 
 
 
-            filterOptions.getCreatedBy().ifPresent(value -> {
+            postFilterOptions.getCreatedBy().ifPresent(value -> {
                 filters.add("createdBy.username like :createdBy");
                 params.put("createdBy", String.format("%%%s%%", value));
             });
 
-            filterOptions.getMinDate().ifPresent(value -> {
+            postFilterOptions.getMinDate().ifPresent(value -> {
                 if (!value.isEmpty()) {
                     filters.add("createdAt >= :minDate");
                     params.put("minDate", LocalDateTime.parse(value, formatter));
                 }
             });
 
-            filterOptions.getMaxDate().ifPresent(value -> {
+            postFilterOptions.getMaxDate().ifPresent(value -> {
                 if (!value.isEmpty()) {
                     filters.add("createdAt <= :maxDate");
                     params.put("maxDate", LocalDateTime.parse(value, formatter));
@@ -79,9 +79,9 @@ public class PostRepositoryImpl implements PostRepository {
                 queryString.append(" where ").append(String.join(" and ", filters));
             }
 
-            if (filterOptions.getSortBy().isPresent()) {
-                if (!filterOptions.getSortBy().get().isEmpty()) {
-                    queryString.append(generateOrderBy(filterOptions));
+            if (postFilterOptions.getSortBy().isPresent()) {
+                if (!postFilterOptions.getSortBy().get().isEmpty()) {
+                    queryString.append(generateOrderBy(postFilterOptions));
                 }
             }
             Query<Post> query = session.createQuery(queryString.toString(), Post.class);
@@ -90,7 +90,7 @@ public class PostRepositoryImpl implements PostRepository {
         }
     }
 
-    public String generateOrderBy(FilterOptions postFilterOptions) {
+    public String generateOrderBy(PostFilterOptions postFilterOptions) {
         if (postFilterOptions.getSortBy().isEmpty()) {
             return "";
         }

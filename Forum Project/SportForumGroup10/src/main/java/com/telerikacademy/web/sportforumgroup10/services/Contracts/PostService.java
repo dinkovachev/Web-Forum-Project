@@ -1,7 +1,7 @@
 package com.telerikacademy.web.sportforumgroup10.services.Contracts;
 
 import com.telerikacademy.web.sportforumgroup10.models.Dto.PostDto;
-import com.telerikacademy.web.sportforumgroup10.models.FilterOptions;
+import com.telerikacademy.web.sportforumgroup10.models.PostFilterOptions;
 import com.telerikacademy.web.sportforumgroup10.models.Post;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface PostService {
 
-    List<Post> getAll(FilterOptions filterOptions);
+    List<Post> getAll(PostFilterOptions postFilterOptions);
 
     Post getById(int id);
     void create (Post post, User creator);

@@ -3,7 +3,9 @@ package com.telerikacademy.web.sportforumgroup10.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -25,6 +27,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
+
     @Column(name = "is_blocked")
     private boolean isBlocked;
 
@@ -34,32 +37,35 @@ public class User {
     @Column(name = "is_admin")
     private boolean isAdmin;
 
-//    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
-//    private Set<Post> usersPosts;
+    @OneToMany(mappedBy = "author_id", fetch = FetchType.EAGER)
+    private Set<Post> usersPosts;
 
     public User() {
     }
 
+
     public User(int id, String firstName, String lastName, String email, String username,
-                String password, boolean isBlocked, boolean isDeleted, boolean isAdmin) {
-        setId(id);
-        setFirstName(firstName);
-        setLastName(lastName);
-        setEmail(email);
-        setUsername(username);
-        setPassword(password);
-        setBlocked(isBlocked);
-        setBlocked(isDeleted);
-        setAdmin(isAdmin);
-//        this.id = id;
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.email = email;
-//        this.username = username;
-//        this.password = password;
-//        this.isBlocked = isBlocked;
-//        this.isDeleted = isDeleted;
-//        this.isAdmin = isAdmin;
+                String password, boolean isBlocked, boolean isDeleted, boolean isAdmin, Set<Post> usersPosts) {
+//        setId(id);
+//        setFirstName(firstName);
+//        setLastName(lastName);
+//        setEmail(email);
+//        setUsername(username);
+//        setPassword(password);
+//        setBlocked(isBlocked);
+//        setBlocked(isDeleted);
+//        setAdmin(isAdmin);
+
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.isBlocked = isBlocked;
+        this.isDeleted = isDeleted;
+        this.isAdmin = isAdmin;
+        this.usersPosts = new HashSet<>();
     }
 
     public int getId() {
@@ -134,13 +140,14 @@ public class User {
         isAdmin = admin;
     }
 
-//    public Set<Post> getUsersPosts() {
-//        return usersPosts;
-//    }
-//
-//    public void setUsersPosts(Set<Post> usersPosts) {
-//        this.usersPosts = usersPosts;
-//    }
+    public Set<Post> getUsersPosts() {
+        return usersPosts;
+    }
+
+    public void setUsersPosts(Set<Post> usersPosts) {
+        this.usersPosts = usersPosts;
+    }
+
 
     @Override
     public boolean equals(Object o) {

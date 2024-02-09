@@ -6,7 +6,7 @@ import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundExcepti
 import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
 import com.telerikacademy.web.sportforumgroup10.helpers.PostMapper;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.PostDto;
-import com.telerikacademy.web.sportforumgroup10.models.FilterOptions;
+import com.telerikacademy.web.sportforumgroup10.models.PostFilterOptions;
 import com.telerikacademy.web.sportforumgroup10.models.Post;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.PostService;
@@ -14,12 +14,10 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -46,8 +44,8 @@ public class PostController {
             @RequestParam(required = false) String maxDate,
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String sortOrder) {
-        FilterOptions filterOptions = new FilterOptions(createdBy, title, content, category,minDate, maxDate, sortBy, sortOrder);
-        return service.getAll(filterOptions);
+        PostFilterOptions postFilterOptions = new PostFilterOptions(createdBy, title, content, category,minDate, maxDate, sortBy, sortOrder);
+        return service.getAll(postFilterOptions);
     }
 
     @GetMapping("/{id}")

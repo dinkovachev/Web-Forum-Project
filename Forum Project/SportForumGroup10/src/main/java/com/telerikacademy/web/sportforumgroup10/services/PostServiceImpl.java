@@ -3,7 +3,7 @@ package com.telerikacademy.web.sportforumgroup10.services;
 
 import com.telerikacademy.web.sportforumgroup10.exceptions.AuthorizationException;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.PostDto;
-import com.telerikacademy.web.sportforumgroup10.models.FilterOptions;
+import com.telerikacademy.web.sportforumgroup10.models.PostFilterOptions;
 import com.telerikacademy.web.sportforumgroup10.models.Post;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.repositories.Contracts.PostRepository;
@@ -26,8 +26,8 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
-    public List<Post> getAll(FilterOptions filterOptions) {
-        return repository.getAll(filterOptions);
+    public List<Post> getAll(PostFilterOptions postFilterOptions) {
+        return repository.getAll(postFilterOptions);
     }
 
     @Override

@@ -24,13 +24,9 @@ public class CommentController {
 
     public static final String PERMISSION_ERROR = "You don't have permission.";
 
-
-
     private final CommentService commentService;
     private final AuthenticationHelper authenticationHelper;
     private final CommentMapper commentMapper;
-
-
 
 
     @Autowired

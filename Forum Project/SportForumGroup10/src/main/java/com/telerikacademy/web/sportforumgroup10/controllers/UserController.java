@@ -1,14 +1,12 @@
 package com.telerikacademy.web.sportforumgroup10.controllers;
 
-import com.telerikacademy.web.sportforumgroup10.exceptions.AuthorizationException;
-import com.telerikacademy.web.sportforumgroup10.exceptions.EntityDeletedException;
-import com.telerikacademy.web.sportforumgroup10.exceptions.EntityDuplicateException;
-import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
+import com.telerikacademy.web.sportforumgroup10.exceptions.*;
 import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
 import com.telerikacademy.web.sportforumgroup10.helpers.PostMapper;
 import com.telerikacademy.web.sportforumgroup10.helpers.UserMapper;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.UserDTO;
 import com.telerikacademy.web.sportforumgroup10.models.User;
+import com.telerikacademy.web.sportforumgroup10.models.UserFilterOptions;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,17 +34,26 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAllUsers(@RequestHeader HttpHeaders headers) {
-        try {
-            User user = authenticationHelper.tryGetUser(headers);
-            // TODO maybe this logic can be in the service layer
-            if (!user.isAdmin()) {
-                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE);
-            }
-            return userService.getAllUsers();
-        } catch (AuthorizationException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-        }
+    public List<User> getAllUsers(@RequestHeader HttpHeaders headers,
+                                  @RequestParam(required = false) String firstName,
+                                  @RequestParam(required = false) String email,
+                                  @RequestParam(required = false) String username,
+                                  @RequestParam(required = false) String sortBy,
+                                  @RequestParam(required = false) String sortOrder) {
+        UserFilterOptions filterOptions = new UserFilterOptions(firstName, email, username, sortBy, sortOrder);
+        return userService.getAllUsers(filterOptions);
+        // TODO need to discuss if there is need for admin to search all users(probably not)
+//        try {
+//            User user = authenticationHelper.tryGetUser(headers);
+//            ;
+////
+////            if (!user.isAdmin()) {
+////                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE);
+////            }
+//            return userService.getAllUsers();
+//        } catch (AuthorizationException e) {
+//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+//        }
     }
 
     @GetMapping("/{id}")
@@ -67,7 +74,7 @@ public class UserController {
             User user = authenticationHelper.tryGetUser(headers);
             return userService.getByEmail(email, user);
             //TODO check if need to catch authorization exception
-        }  catch (AuthorizationException e){
+        } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -80,7 +87,7 @@ public class UserController {
             User user = authenticationHelper.tryGetUser(headers);
             return userService.getByUsername(username, user);
 
-        }  catch (AuthorizationException e){
+        } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -92,7 +99,7 @@ public class UserController {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             return userService.getByFirstName(firstName, user);
-        }  catch (AuthorizationException e){
+        } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -133,6 +140,30 @@ public class UserController {
         }
     }
 
+    @PutMapping("/makeAdmin:{id}")
+    public User makeUserAdmin(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User userModifier = authenticationHelper.tryGetUser(headers);
+            return userService.makeUserAdmin(id, userModifier);
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (EntityAlreadyAdminException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
+    }
 
+    @PutMapping("/unmakeAdmin:{id}")
+    public User unmakeUserAdmin(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User userModifier = authenticationHelper.tryGetUser(headers);
+            return userService.unmakeUserAdmin(id, userModifier);
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
 
+    }
 }
