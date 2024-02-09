@@ -17,4 +17,6 @@ public interface UserService {
     User delete(int id, User userModifier);
     User makeUserAdmin(int id, User userModifier);
     User unmakeUserAdmin(int id, User userModifier);
+    User blockUser(int id, User userModifier);
+    User unblockUser(int id, User userModifier);
 }

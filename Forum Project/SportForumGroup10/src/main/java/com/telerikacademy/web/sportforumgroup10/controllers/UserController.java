@@ -5,6 +5,7 @@ import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
 import com.telerikacademy.web.sportforumgroup10.helpers.PostMapper;
 import com.telerikacademy.web.sportforumgroup10.helpers.UserMapper;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.UserDTO;
+import com.telerikacademy.web.sportforumgroup10.models.Post;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.models.UserFilterOptions;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -38,10 +40,17 @@ public class UserController {
                                   @RequestParam(required = false) String firstName,
                                   @RequestParam(required = false) String email,
                                   @RequestParam(required = false) String username,
+                                  ////TODO double check this since there is no post.id field in User to search from here
+//                                  @RequestParam(required = false) Integer postId,
                                   @RequestParam(required = false) String sortBy,
                                   @RequestParam(required = false) String sortOrder) {
-        UserFilterOptions filterOptions = new UserFilterOptions(firstName, email, username, sortBy, sortOrder);
-        return userService.getAllUsers(filterOptions);
+        try {
+            UserFilterOptions filterOptions = new UserFilterOptions(firstName, email, username, sortBy, sortOrder);
+            return userService.getAllUsers(filterOptions);
+        } catch (EntityNotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+
         // TODO need to discuss if there is need for admin to search all users(probably not)
 //        try {
 //            User user = authenticationHelper.tryGetUser(headers);
@@ -106,6 +115,17 @@ public class UserController {
         }
     }
 
+    @GetMapping("/userPosts:{id}")
+    public List<Post> getUserPosts(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User requestingUser = authenticationHelper.tryGetUser(headers);
+            User userToGetPosts = userService.getById(id, requestingUser);
+            return new ArrayList<>(userToGetPosts.getUsersPosts());
+        } catch (EntityNotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
     @PostMapping
     public User create(@Valid @RequestBody UserDTO userDTO) {
         try {
@@ -164,6 +184,29 @@ public class UserController {
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
+    }
 
+    @PutMapping("/blockUser:{id}")
+    public User blockUser(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User userModifier = authenticationHelper.tryGetUser(headers);
+            return userService.blockUser(id, userModifier);
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @PutMapping("/unblockUser:{id}")
+    public User unblockUser(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User userModifier = authenticationHelper.tryGetUser(headers);
+            return userService.unblockUser(id, userModifier);
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 }

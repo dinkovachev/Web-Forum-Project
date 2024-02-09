@@ -5,6 +5,7 @@ import com.telerikacademy.web.sportforumgroup10.exceptions.EntityDeletedExceptio
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.models.UserFilterOptions;
+import com.telerikacademy.web.sportforumgroup10.repositories.Contracts.PostRepository;
 import com.telerikacademy.web.sportforumgroup10.repositories.Contracts.UserRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,11 +21,11 @@ import java.util.Map;
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
-    private static final String USER_CONSTANT = "User";
+    private static final String USER_CONSTANT = "User not found";
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public UserRepositoryImpl(SessionFactory sessionFactory) {
+    public UserRepositoryImpl(SessionFactory sessionFactory, PostRepository postRepository) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -47,6 +48,11 @@ public class UserRepositoryImpl implements UserRepository {
                 filters.add(" username like :username ");
                 params.put("username", String.format("%%%s%%", value));
             });
+//TODO double check this since there is no post.id field in User to search from here
+//            filterOptions.getPostId().ifPresent(value -> {
+//                filters.add(" post.id = :postId ");
+//                params.put("postId", value);
+//            });
 
             if (!filters.isEmpty()) {
                 queryString.append("where").append(String.join(" and ", filters));
@@ -56,6 +62,9 @@ public class UserRepositoryImpl implements UserRepository {
             Query<User> query = session.createQuery(queryString.toString(), User.class);
             query.setProperties(params);
             return query.list();
+            //TODO how to implement exception if the result of the query doesn't find user with the requested information
+        } catch (EntityNotFoundException e){
+            throw new EntityNotFoundException(USER_CONSTANT);
         }
     }
 
@@ -64,7 +73,7 @@ public class UserRepositoryImpl implements UserRepository {
         try (Session session = sessionFactory.openSession()) {
             User user = session.get(User.class, id);
             if (user == null) {
-                throw new EntityNotFoundException(USER_CONSTANT, id);
+                throw new EntityNotFoundException("User", id);
             }
             return user;
         }
@@ -174,6 +183,30 @@ public class UserRepositoryImpl implements UserRepository {
         return userToMakeAdmin;
     }
 
+    @Override
+    public User blockUser(int id) {
+        User userToBlock = getById(id);
+        userToBlock.setBlocked(true);
+        try(Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.merge(userToBlock);
+            session.getTransaction().commit();
+        }
+        return userToBlock;
+    }
+
+    @Override
+    public User unblockUser(int id) {
+        User userToBlock = getById(id);
+        userToBlock.setBlocked(false);
+        try(Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.merge(userToBlock);
+            session.getTransaction().commit();
+        }
+        return userToBlock;
+    }
+
     private String generateOrderBy(UserFilterOptions filterOptions) {
         if (filterOptions.getSortBy().isEmpty()) {
             return "";
@@ -196,7 +229,8 @@ public class UserRepositoryImpl implements UserRepository {
 
         orderBy = String.format(" order by %s", orderBy);
 
-        if (filterOptions.getOrderBy().isPresent() && filterOptions.getOrderBy().get().equalsIgnoreCase("desc")) {
+        if (filterOptions.getOrderBy().isPresent()
+                && filterOptions.getOrderBy().get().equalsIgnoreCase("desc")) {
             orderBy = String.format("%s desc", orderBy);
         }
         return orderBy;
