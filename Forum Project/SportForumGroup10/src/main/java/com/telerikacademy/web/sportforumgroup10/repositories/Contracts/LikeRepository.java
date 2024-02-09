@@ -17,5 +17,5 @@ public interface LikeRepository {
 
     int  countLikes (int id);
 
-    Like remove(int id);
+    Like remove(Like like);
 }

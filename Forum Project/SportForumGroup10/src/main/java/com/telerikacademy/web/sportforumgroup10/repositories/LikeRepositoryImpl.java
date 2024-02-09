@@ -1,10 +1,12 @@
 package com.telerikacademy.web.sportforumgroup10.repositories;
 
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
+import com.telerikacademy.web.sportforumgroup10.models.Comment;
 import com.telerikacademy.web.sportforumgroup10.models.Like;
 import com.telerikacademy.web.sportforumgroup10.repositories.Contracts.LikeRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -43,8 +45,7 @@ public class LikeRepositoryImpl implements LikeRepository {
 
 
     @Override
-    public Like remove(int id) {
-        Like like = getByLikeId(id);
+    public Like remove(Like like) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.remove(like);
@@ -55,11 +56,25 @@ public class LikeRepositoryImpl implements LikeRepository {
 
     @Override
     public List<Like> postLikes(int id) {
-        return null;
+        try (Session session = sessionFactory.openSession()) {
+            Query<Like> query = session.createQuery("SELECT COUNT(*) FROM Like where likeId = :id", Like.class);
+            query.setParameter("id", id);
+            List<Like> result = query.list();
+            if (result.isEmpty()) {
+                throw new EntityNotFoundException("Like", id);
+            } return result;
+        }
     }
 
     @Override
     public int countLikes(int id) {
-        return 0;
+        try (Session session = sessionFactory.openSession()) {
+            Query<Like> query = session.createQuery("SELECT COUNT(*) FROM Like where likeId = :id", Like.class);
+            query.setParameter("id", id);
+            List<Like> result = query.list();
+            if (result.isEmpty()) {
+                throw new EntityNotFoundException("Like", id);
+            } return result.size();
+        }
     }
 }

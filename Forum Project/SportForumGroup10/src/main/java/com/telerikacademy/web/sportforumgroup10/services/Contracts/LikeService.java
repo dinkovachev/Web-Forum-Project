@@ -10,11 +10,14 @@ import java.util.List;
 public interface LikeService {
 
 
-    Like addLike(Like like, User user);
+    Like addLike(Post postId, User user);
 
     Like removeLike(int like, User user);
 
+    Like getById(int likeId);
+
     int countLikes(int id);
+
     List<Like> allPostLikes(int id);
 
 }

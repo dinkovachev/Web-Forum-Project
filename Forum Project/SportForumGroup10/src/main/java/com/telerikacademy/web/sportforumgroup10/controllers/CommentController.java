@@ -7,20 +7,18 @@ import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
 import com.telerikacademy.web.sportforumgroup10.helpers.CommentMapper;
 import com.telerikacademy.web.sportforumgroup10.models.Comment;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.CommentDto;
-import com.telerikacademy.web.sportforumgroup10.models.FilterOptions;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.CommentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/api/comments")
 public class CommentController {
 

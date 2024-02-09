@@ -28,7 +28,8 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public Like addLike(Like like, User user) {
+    public Like addLike(Post postId, User user) {
+        Like like = new Like();
         return likeRepository.create(like);
 
 
@@ -37,9 +38,10 @@ public class LikeServiceImpl implements LikeService {
     public Like removeLike(int likeId, User user){
     Like like = getById(likeId);
     checkModifyPermission(like, user);
-        return likeRepository.remove(likeId);
+        return likeRepository.remove(like);
     }
 
+    @Override
     public Like getById(int likeId) {
         return likeRepository.getByLikeId(likeId);
     }
