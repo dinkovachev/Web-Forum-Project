@@ -2,6 +2,8 @@ package com.telerikacademy.web.sportforumgroup10.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -15,18 +17,22 @@ public class User {
     @Column(name = "user_id")
     @JsonIgnore
     private int id;
+    @NotNull(message = "Can't be empty")
     @Column(name = "first_name")
     private String firstName;
+    @NotNull(message = "Can't be empty")
     @Column(name = "last_name")
     private String lastName;
+    @NotNull(message = "Can't be empty")
     @Column(name = "email")
     private String email;
+    @NotNull(message = "Can't be empty")
     @Column(name = "username")
     private String username;
+    @NotNull(message = "Can't be empty")
     @JsonIgnore
     @Column(name = "password")
     private String password;
-
 
     @Column(name = "is_blocked")
     private boolean isBlocked;
@@ -37,15 +43,18 @@ public class User {
     @Column(name = "is_admin")
     private boolean isAdmin;
 
-    @OneToMany(mappedBy = "author_id", fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_posts",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id"))
     private Set<Post> usersPosts;
 
     public User() {
     }
 
-
     public User(int id, String firstName, String lastName, String email, String username,
-                String password, boolean isBlocked, boolean isDeleted, boolean isAdmin, Set<Post> usersPosts) {
+                String password, boolean isBlocked, boolean isDeleted, boolean isAdmin) {
 //        setId(id);
 //        setFirstName(firstName);
 //        setLastName(lastName);
@@ -65,7 +74,6 @@ public class User {
         this.isBlocked = isBlocked;
         this.isDeleted = isDeleted;
         this.isAdmin = isAdmin;
-        this.usersPosts = new HashSet<>();
     }
 
     public int getId() {
@@ -148,14 +156,12 @@ public class User {
         this.usersPosts = usersPosts;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return id == user.id;
-//        && Objects.equals(email, user.email) && Objects.equals(username, user.username);
     }
 
     @Override

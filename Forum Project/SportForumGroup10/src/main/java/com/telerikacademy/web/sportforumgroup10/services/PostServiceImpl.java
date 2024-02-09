@@ -68,7 +68,6 @@ public class PostServiceImpl implements PostService {
     private void isUserBlocked(User creator) {
         if (creator.isBlocked()) {
             throw new AuthorizationException(PERMISSION_ERROR);
-
         }
     }
 
