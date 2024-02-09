@@ -115,7 +115,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("{id}/userPosts")
+    @GetMapping("/userPosts:{id}")
     public List<Post> getUserPosts(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User requestingUser = authenticationHelper.tryGetUser(headers);
