@@ -3,15 +3,12 @@ package com.telerikacademy.web.sportforumgroup10.controllers;
 import com.telerikacademy.web.sportforumgroup10.exceptions.AuthorizationException;
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
 import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
-import com.telerikacademy.web.sportforumgroup10.models.Comment;
 import com.telerikacademy.web.sportforumgroup10.models.Like;
-import com.telerikacademy.web.sportforumgroup10.models.Post;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -35,43 +32,41 @@ public class LikeController {
         this.authenticationHelper = authenticationHelper;
     }
 
-    @PostMapping
+    @PostMapping("/{postId}")
     public Like addLike(@PathVariable int postId, @RequestHeader HttpHeaders headers) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             checkIsUserBlocked(user);
-            likeService.getById(postId);
-            return likeService.addLike(postId, user);
+            return likeService.createLike(postId, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
-    @DeleteMapping
-    public Like removeLike(@PathVariable int postId, @RequestHeader HttpHeaders headers) {
+    @DeleteMapping("/{likeId}")
+    public Like removeLike(@PathVariable int likeId, @RequestHeader HttpHeaders headers) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             checkIsUserBlocked(user);
-            return likeService.removeLike(postId, user);
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
-
-    }
-
-    @GetMapping("/{Id}")
-    public List<Like> allPostLikes(@PathVariable int Id) {
-        try {
-            return likeService.allPostLikes(Id);
+            return likeService.removeLike(likeId, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
-    @GetMapping("/countLikes:{Id}")
-    public int countLikes(@PathVariable int Id) {
+    @GetMapping("/{postId}")
+    public List<Like> getAllPostLikes(@PathVariable int postId) {
         try {
-            return likeService.countLikes(Id);
+            return likeService.allPostLikes(postId);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @GetMapping("/countLikes:{postId}")
+    public int countLikes(@PathVariable int postId) {
+        try {
+            return likeService.countLikes(postId);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
