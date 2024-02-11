@@ -37,22 +37,9 @@ public class CommentController {
 
     }
 
-//    @GetMapping()
-//    public List<Comment> getAllByUser(
-//        @RequestParam(required = false) String createdBy,
-//        @RequestParam(required = false) String title,
-//        @RequestParam(required = false) String content,
-//        @RequestParam(required = false) String category,
-//        @RequestParam(required = false) String minDate,
-//        @RequestParam(required = false) String maxDate,
-//        @RequestParam(required = false) String sortBy,
-//        @RequestParam(required = false) String sortOrder) {
-//        FilterOptions filterOptions = new FilterOptions(createdBy, title, content, category,minDate, maxDate, sortBy, sortOrder);
-//        return commentService.getAllByUser(filterOptions);
-//    }
 
     @GetMapping("/postId:{postId}")
-    List<Comment> getByPost(@PathVariable int postId) {
+    public List<Comment> getByPost(@PathVariable int postId) {
         try {
             return commentService.getByPost(postId);
         } catch (EntityNotFoundException e) {
@@ -61,7 +48,7 @@ public class CommentController {
         }
     }
     @GetMapping("/authorId:{authorId}")
-    List<Comment> getByAuthor(@PathVariable int authorId) {
+    public List<Comment> getByAuthor(@PathVariable int authorId) {
         try {
             return commentService.getByAuthor(authorId);
         } catch (EntityNotFoundException e) {
