@@ -23,6 +23,5 @@ public class CommentMapper {
         comment.setContent(commentDto.getContent());
         comment.setCreatedAt(LocalDateTime.now());
         return comment;
-
     }
 }

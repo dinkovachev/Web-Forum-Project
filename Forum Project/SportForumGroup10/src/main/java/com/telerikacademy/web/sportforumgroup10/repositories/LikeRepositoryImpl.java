@@ -1,7 +1,6 @@
 package com.telerikacademy.web.sportforumgroup10.repositories;
 
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
-import com.telerikacademy.web.sportforumgroup10.models.Comment;
 import com.telerikacademy.web.sportforumgroup10.models.Like;
 import com.telerikacademy.web.sportforumgroup10.repositories.Contracts.LikeRepository;
 import org.hibernate.Session;
@@ -22,7 +21,7 @@ public class LikeRepositoryImpl implements LikeRepository {
     }
 
 
-    public Like getByLikeId(int id) {
+    public Like getById(int id) {
         try (Session session = sessionFactory.openSession()) {
             Like like = session.get(Like.class, id);
             if (like == null) {
@@ -30,18 +29,18 @@ public class LikeRepositoryImpl implements LikeRepository {
             }
             return like;
         }
-        }
+    }
+
 
     @Override
-    public Like create(Like like) {
+    public Like save(Like like) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.persist(like);
             session.getTransaction().commit();
+            return like;
         }
-        return like;
     }
-
 
 
     @Override
@@ -54,27 +53,31 @@ public class LikeRepositoryImpl implements LikeRepository {
         return like;
     }
 
+
     @Override
-    public List<Like> postLikes(int id) {
+    public List<Like> getPostLikes(int postId) {
         try (Session session = sessionFactory.openSession()) {
-            Query<Like> query = session.createQuery("SELECT COUNT(*) FROM Like where likeId = :id", Like.class);
-            query.setParameter("id", id);
+            Query<Like> query = session.createQuery("FROM Like where likedPost.id = :postId", Like.class);
+            query.setParameter("postId", postId);
             List<Like> result = query.list();
             if (result.isEmpty()) {
-                throw new EntityNotFoundException("Like", id);
-            } return result;
+                throw new EntityNotFoundException("Like", "likedPostId", postId);
+            }
+            return result;
         }
     }
 
+
     @Override
-    public int countLikes(int id) {
+    public int countByPost(int postId) {
         try (Session session = sessionFactory.openSession()) {
-            Query<Like> query = session.createQuery("SELECT COUNT(*) FROM Like where likeId = :id", Like.class);
-            query.setParameter("id", id);
+            Query<Like> query = session.createQuery("SELECT COUNT(*) FROM Like where likedPost.id = :postId", Like.class);
+            query.setParameter("postId", postId);
             List<Like> result = query.list();
             if (result.isEmpty()) {
-                throw new EntityNotFoundException("Like", id);
-            } return result.size();
+                throw new EntityNotFoundException("Like", "likedPostId", postId);
+            }
+            return result.size();
         }
     }
 }

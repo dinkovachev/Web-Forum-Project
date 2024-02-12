@@ -32,43 +32,41 @@ public class LikeController {
         this.authenticationHelper = authenticationHelper;
     }
 
-    @PostMapping
+    @PostMapping("/{postId}")
     public Like addLike(@PathVariable int postId, @RequestHeader HttpHeaders headers) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             checkIsUserBlocked(user);
-            likeService.getById(postId);
-            return likeService.addLike(postId, user);
+            return likeService.createLike(postId, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
-    @DeleteMapping
-    public Like removeLike(@PathVariable int postId, @RequestHeader HttpHeaders headers) {
+    @DeleteMapping("/{likeId}")
+    public Like removeLike(@PathVariable int likeId, @RequestHeader HttpHeaders headers) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             checkIsUserBlocked(user);
-            return likeService.removeLike(postId, user);
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
-
-    }
-
-    @GetMapping("/{Id}")
-    public List<Like> allPostLikes(@PathVariable int Id) {
-        try {
-            return likeService.allPostLikes(Id);
+            return likeService.removeLike(likeId, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
-    @GetMapping("/countLikes:{Id}")
-    public int countLikes(@PathVariable int Id) {
+    @GetMapping("/{postId}")
+    public List<Like> getAllPostLikes(@PathVariable int postId) {
         try {
-            return likeService.countLikes(Id);
+            return likeService.allPostLikes(postId);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @GetMapping("/countLikes:{postId}")
+    public int countLikes(@PathVariable int postId) {
+        try {
+            return likeService.countLikes(postId);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
@@ -80,11 +78,6 @@ public class LikeController {
             throw new AuthorizationException(PERMISSION_ERROR);
         }
     }
-//    private void isUserIsAlreadyLiked(User user, Post post) {
-//        if (user.isBlocked()) {
-//            throw new AuthorizationException(PERMISSION_ERROR);
-//        }
-//    }
 }
 
 
