@@ -2,29 +2,30 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>All Users</title>
-    <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <title>Sport Forum | All Users</title>
+    <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 
 <body>
-<div th:if="${users.isEmpty()}">
-    <h2 th:text="#{users.title.empty}">No Users</h2>
-</div>
-<div th:unless="${users.isEmpty()}">
-    <h2 th:text="#{users.title}">All Beers</h2>
-</div>
-
-<!-- TODO update the logic when the user is admin to see all this but if it is not admin to see only FirstName, LastName, Username-->
-<div class="table">
-    <div class="header">
-        <div class="header-cell" th:text="#{user.username}">Username</div>
-        <div class="header-cell" th:text="#{user.firstName}">First Name</div>
-        <div class="header-cell" th:text="#{user.lastName}">Last Name</div>
-        <div class="header-cell" th:text="#{user.email}">Email</div>
-        <div class="header-cell" th:text="#{user.blocked}">Blocked</div>
-        <div class="header-cell" th:text="#{user.deleted}">Deleted</div>
-        <div class="header-cell" th:text="#{user.admin}">Admin</div>
+<div class="body-content">
+    <div th:if="${users.isEmpty()}">
+        <h2 th:text="#{users.title.empty}">No Users</h2>
     </div>
+    <div th:unless="${users.isEmpty()}">
+        <h2 th:text="#{users.title}">All Users</h2>
+    </div>
+
+    <!-- TODO update the logic when the user is admin to see all this but if it is not admin to see only FirstName, LastName, Username-->
+    <div class="table">
+        <div class="header">
+            <div class="header-cell" th:text="#{user.username}">Username</div>
+            <div class="header-cell" th:text="#{user.firstName}">First Name</div>
+            <div class="header-cell" th:text="#{user.lastName}">Last Name</div>
+            <div class="header-cell" th:text="#{user.email}">Email</div>
+            <div class="header-cell" th:text="#{user.blocked}">Blocked</div>
+            <div class="header-cell" th:text="#{user.deleted}">Deleted</div>
+            <div class="header-cell" th:text="#{user.admin}">Admin</div>
+        </div>
 
         <div class="rowGroup" th:each="user : ${users}">
             <div class="cell">
@@ -38,9 +39,9 @@
             <div class="cell" th:text="${user.blocked}">Blocked</div>
             <div class="cell" th:text="${user.deleted}">Deleted</div>
             <div class="cell" th:text="${user.admin}">Admin</div>
+        </div>
+
     </div>
-
-
 </div>
 </body>
 </html>

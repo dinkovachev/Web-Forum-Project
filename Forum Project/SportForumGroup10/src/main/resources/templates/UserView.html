@@ -2,11 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${user.username}">User username</title>
-  <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <title th:text="${user.username}">Sport Forum | Username</title>
+    <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 <body>
-<div>
+
+<div class="body-content">
   <h2 th:text="#{user.username}+': ' + ${user.username}">Username</h2>
     <div class="table">
         <div class="cell" th:text="#{user.firstName}">First Name</div>
@@ -17,7 +18,10 @@
             <div class="cell" th:text="${user.lastName}">Last Name</div>
 
             <!-- TODO this can be changed to a button to show all the users posts-->
-            <div class="cell" th:text="#{user.posts}">User posts</div>
+            <div class="cell">
+                <a class="link-info" href="#" th:href="@{/users/{id}(id=${user.id})}"
+                   th:text="#{user.posts}">User posts</a>
+            </div>
 
 
         </div>

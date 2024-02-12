@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sport Forum | User Posts</title>
+    <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="body-content">
+    <!-- //TODO need to check with the colleagues if we can do it from their implementation-->
+    <div th:if="${posts.isEmpty()}">
+        <h2 th:text="#{posts.title.empty}">No Post</h2>
+    </div>
+    <div th:unless="${posts.isEmpty()}">
+        <h2 th:text="#{posts.title}">All Posts</h2>
+    </div>
+    <div class="table">
+        <div class="header">
+            <div class="header-cell" th:text="#{post.label}">Posts</div>
+        </div>
+        <div class="rowGroup" th:each="post : ${posts}">
+            <div class="cell">
+                <!-- //TODO it doesn't redirect me to the required information-->
+                <a class="link-info" href="#" th:href="@{/users/userPosts:{id}(id=${user.id})}"
+                   th:text="${user.username}">Post names</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

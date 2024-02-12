@@ -1,6 +1,7 @@
 package com.telerikacademy.web.sportforumgroup10.controllers.mvc;
 
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
+import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.models.UserFilterOptions;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserMvcController {
 
     private final UserService userService;
+
 
     @Autowired
     public UserMvcController(UserService userService) {
@@ -39,12 +41,15 @@ public class UserMvcController {
             return "ErrorView";
         }
     }
-    @GetMapping("/{id}/userPosts")
+    //TODO need to check with the colleagues if we can do it from their implementation currently stays on UserView page
+    @GetMapping("/userPosts:{id}")
     public String showSingleUserPosts(@PathVariable int id, Model model){
         try {
-            model.addAttribute("posts", userService.getById(id));
+            User user = userService.getById(id);
+            model.addAttribute("user", user);
+            model.addAttribute("posts", user.getUsersPosts());
             //TODO double check this part need to be redirected correctly when requested
-            return "UserView";
+            return "UserPostsView";
         } catch (EntityNotFoundException e){
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
