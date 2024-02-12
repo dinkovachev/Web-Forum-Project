@@ -19,7 +19,7 @@
 
             <!-- TODO this can be changed to a button to show all the users posts-->
             <div class="cell">
-                <a class="link-info" href="#" th:href="@{/users/{id}(id=${user.id})}"
+                <a class="link-info" href="#" th:href="@{/users/userPosts:{id}(id=${user.id})}"
                    th:text="#{user.posts}">User posts</a>
             </div>
 

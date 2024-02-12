@@ -16,13 +16,13 @@
     </div>
     <div class="table">
         <div class="header">
-            <div class="header-cell" th:text="#{post.label}">Posts</div>
+            <div class="header-cell" th:text="#{user.username}+': ' + ${user.username}">Posts</div>
         </div>
         <div class="rowGroup" th:each="post : ${posts}">
             <div class="cell">
                 <!-- //TODO it doesn't redirect me to the required information-->
                 <a class="link-info" href="#" th:href="@{/users/userPosts:{id}(id=${user.id})}"
-                   th:text="${user.username}">Post names</a>
+                   th:text="${post.title}">Post names</a>
             </div>
         </div>
     </div>
