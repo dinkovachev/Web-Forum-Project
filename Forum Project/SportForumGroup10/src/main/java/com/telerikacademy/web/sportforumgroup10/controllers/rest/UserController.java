@@ -1,8 +1,7 @@
-package com.telerikacademy.web.sportforumgroup10.controllers;
+package com.telerikacademy.web.sportforumgroup10.controllers.rest;
 
 import com.telerikacademy.web.sportforumgroup10.exceptions.*;
 import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
-import com.telerikacademy.web.sportforumgroup10.helpers.PostMapper;
 import com.telerikacademy.web.sportforumgroup10.helpers.UserMapper;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.UserDTO;
 import com.telerikacademy.web.sportforumgroup10.models.Post;

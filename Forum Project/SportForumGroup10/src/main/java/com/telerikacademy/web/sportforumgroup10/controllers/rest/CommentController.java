@@ -1,4 +1,4 @@
-package com.telerikacademy.web.sportforumgroup10.controllers;
+package com.telerikacademy.web.sportforumgroup10.controllers.rest;
 
 import com.telerikacademy.web.sportforumgroup10.exceptions.AuthorizationException;
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityDuplicateException;
