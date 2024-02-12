@@ -3,7 +3,7 @@ package com.telerikacademy.web.sportforumgroup10.services;
 import com.telerikacademy.web.sportforumgroup10.exceptions.AuthorizationException;
 import com.telerikacademy.web.sportforumgroup10.models.Comment;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.CommentDto;
-import com.telerikacademy.web.sportforumgroup10.models.FilterOptions;
+//import com.telerikacademy.web.sportforumgroup10.models.FilterOptions;
 import com.telerikacademy.web.sportforumgroup10.models.Post;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.repositories.Contracts.CommentRepository;

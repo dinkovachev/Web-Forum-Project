@@ -2,7 +2,7 @@ package com.telerikacademy.web.sportforumgroup10.repositories;
 
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
 import com.telerikacademy.web.sportforumgroup10.models.Comment;
-import com.telerikacademy.web.sportforumgroup10.models.FilterOptions;
+//import com.telerikacademy.web.sportforumgroup10.models.FilterOptions;
 import com.telerikacademy.web.sportforumgroup10.models.Post;
 import com.telerikacademy.web.sportforumgroup10.repositories.Contracts.CommentRepository;
 import org.apache.catalina.User;

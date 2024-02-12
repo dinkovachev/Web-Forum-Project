@@ -1,17 +1,14 @@
-package com.telerikacademy.web.sportforumgroup10.controllers;
+package com.telerikacademy.web.sportforumgroup10.controllers.rest;
 
 import com.telerikacademy.web.sportforumgroup10.exceptions.AuthorizationException;
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
 import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
-import com.telerikacademy.web.sportforumgroup10.models.Comment;
 import com.telerikacademy.web.sportforumgroup10.models.Like;
-import com.telerikacademy.web.sportforumgroup10.models.Post;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 

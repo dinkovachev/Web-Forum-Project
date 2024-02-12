@@ -2,7 +2,7 @@ package com.telerikacademy.web.sportforumgroup10.services.Contracts;
 
 import com.telerikacademy.web.sportforumgroup10.models.Comment;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.CommentDto;
-import com.telerikacademy.web.sportforumgroup10.models.FilterOptions;
+//import com.telerikacademy.web.sportforumgroup10.models.FilterOptions;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 
 import java.util.List;
