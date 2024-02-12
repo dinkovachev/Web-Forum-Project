@@ -67,8 +67,10 @@ public class UserController {
     @GetMapping("/{id}")
     public User getUserById(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
+            //TODO probably no need to check if the user is logged in to see only firstName, lastName, username, email
             User user = authenticationHelper.tryGetUser(headers);
-            return userService.getById(id, user);
+            return userService.getById(id);
+            //TODO probably no need for Authorization Exception
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         } catch (EntityNotFoundException e) {
@@ -118,7 +120,7 @@ public class UserController {
     public List<Post> getUserPosts(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User requestingUser = authenticationHelper.tryGetUser(headers);
-            User userToGetPosts = userService.getById(id, requestingUser);
+            User userToGetPosts = userService.getById(id);
             return new ArrayList<>(userToGetPosts.getUsersPosts());
         } catch (EntityNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());

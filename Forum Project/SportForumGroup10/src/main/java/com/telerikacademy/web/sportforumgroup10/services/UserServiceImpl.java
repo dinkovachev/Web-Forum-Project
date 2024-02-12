@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     //TODO maybe no need only admins to search by id, firstName, email, username
     // as it is mentioned in the requirements admin section
     @Override
-    public User getById(int id, User user) {
+    public User getById(int id) {
 //        checkAccessPermissionId(id, user);
         return userRepository.getById(id);
     }
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User update(User user) {
         checkAccessPermissionId(user.getId(), user);
-        User userToUpdate = getById(user.getId(), user);
+        User userToUpdate = getById(user.getId());
         userToUpdate.setFirstName(user.getFirstName());
         userToUpdate.setLastName(user.getLastName());
         userToUpdate.setEmail(user.getEmail());
