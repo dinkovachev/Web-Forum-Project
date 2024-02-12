@@ -10,14 +10,11 @@ import java.util.List;
 public interface CommentService {
 
 
- //   List<Comment> getAllByUser(FilterOptions filterOptions);
 
 
     List<Comment> getByAuthor(int id);
-    //todo ??
 
     List<Comment> getByPost(int id);
-    //todo ??
 
     Comment getById(int id);
 

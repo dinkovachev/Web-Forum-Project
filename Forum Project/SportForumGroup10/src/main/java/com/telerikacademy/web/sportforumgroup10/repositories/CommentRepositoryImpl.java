@@ -18,14 +18,13 @@ public class CommentRepositoryImpl implements CommentRepository {
 
     private final SessionFactory sessionFactory;
 
-    //todo finish methods
+
     @Autowired
     public CommentRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
 
-    //todo get By Author and post
     @Override
     public List<Comment> getByAuthor(int id) {
         try (Session session = sessionFactory.openSession()) {
@@ -87,6 +86,7 @@ public class CommentRepositoryImpl implements CommentRepository {
         }
         return comment;
     }
+
 
     @Override
     public Comment delete(int id) {

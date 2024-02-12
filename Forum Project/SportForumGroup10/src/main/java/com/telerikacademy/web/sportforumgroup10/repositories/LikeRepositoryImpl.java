@@ -1,7 +1,6 @@
 package com.telerikacademy.web.sportforumgroup10.repositories;
 
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
-import com.telerikacademy.web.sportforumgroup10.models.Comment;
 import com.telerikacademy.web.sportforumgroup10.models.Like;
 import com.telerikacademy.web.sportforumgroup10.repositories.Contracts.LikeRepository;
 import org.hibernate.Session;
@@ -32,14 +31,15 @@ public class LikeRepositoryImpl implements LikeRepository {
         }
     }
 
+
     @Override
     public Like save(Like like) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.persist(like);
             session.getTransaction().commit();
+            return like;
         }
-        return like;
     }
 
 
@@ -53,6 +53,7 @@ public class LikeRepositoryImpl implements LikeRepository {
         return like;
     }
 
+
     @Override
     public List<Like> getPostLikes(int postId) {
         try (Session session = sessionFactory.openSession()) {
@@ -65,6 +66,7 @@ public class LikeRepositoryImpl implements LikeRepository {
             return result;
         }
     }
+
 
     @Override
     public int countByPost(int postId) {

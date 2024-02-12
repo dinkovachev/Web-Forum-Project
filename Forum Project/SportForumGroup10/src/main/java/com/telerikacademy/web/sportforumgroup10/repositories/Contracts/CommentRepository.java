@@ -8,14 +8,12 @@ public interface CommentRepository {
 
 
     List<Comment> getByAuthor(int id);
-    //todo ??
 
     List<Comment> getByPost(int id);
-    //todo ??
 
     Comment getByCommentId(int id);
 
-    Comment create (Comment comment);
+    Comment create(Comment comment);
 
     Comment update(Comment comment);
 

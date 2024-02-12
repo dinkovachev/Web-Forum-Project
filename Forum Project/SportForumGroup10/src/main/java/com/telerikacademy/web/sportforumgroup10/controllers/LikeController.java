@@ -78,11 +78,6 @@ public class LikeController {
             throw new AuthorizationException(PERMISSION_ERROR);
         }
     }
-//    private void isUserIsAlreadyLiked(User user, Post post) {
-//        if (user.isBlocked()) {
-//            throw new AuthorizationException(PERMISSION_ERROR);
-//        }
-//    }
 }
 
 

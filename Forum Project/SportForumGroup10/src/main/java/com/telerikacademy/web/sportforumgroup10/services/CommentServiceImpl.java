@@ -16,7 +16,6 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
 
 
-    public static final String PERMISSION_ERROR = "You don't have permission.";
     public static final String MODIFY_THE_POST = "Only Admin or creator can modify the comment.";
     private final CommentRepository commentRepository;
 
@@ -25,20 +24,19 @@ public class CommentServiceImpl implements CommentService {
         this.commentRepository = commentRepository;
     }
 
-//    @Override
-//    public List<Comment> getAllByUser(FilterOptions filterOptions) {
-//        return commentRepository.getAll(filterOptions);
-//    }
+
 
     @Override
     public List<Comment> getByAuthor(int id) {
         return commentRepository.getByAuthor(id);
     }
 
+
     @Override
     public List<Comment> getByPost(int id) {
         return commentRepository.getByPost(id);
     }
+
 
     @Override
     public Comment getById(int id) {
@@ -57,9 +55,9 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = getById(commentId);
         checkModifyPermission(comment, user);
         comment.setContent(commentDto.getContent());
-
         return commentRepository.update(comment);
     }
+
 
     @Override
     public Comment delete(int commentId, User user) {
@@ -68,11 +66,10 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.delete(commentId);
     }
 
+
     private void checkModifyPermission(Comment comment, User requestUser) {
         if (!requestUser.isAdmin() && comment.getAuthor().getId() != requestUser.getId()) {
             throw new AuthorizationException(MODIFY_THE_POST);
         }
     }
-
-
 }
