@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Sport Forum | User Posts</title>
-    <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" />
-</head>
+<form th:replace="~{UserForm.html::head('User Posts')}"></form>
 <body>
+<form th:replace="~{UserForm.html::navigation}"></form>
+<form th:replace="~{UserForm.html::header}"></form>
 <div class="body-content">
     <!-- //TODO need to check with the colleagues if we can do it from their implementation-->
     <div th:if="${posts.isEmpty()}">
@@ -27,5 +25,6 @@
         </div>
     </div>
 </div>
+<form th:replace="~{UserForm.html::footer}"></form>
 </body>
 </html>

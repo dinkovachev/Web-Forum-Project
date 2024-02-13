@@ -1,5 +1,6 @@
 package com.telerikacademy.web.sportforumgroup10.helpers;
 
+import com.telerikacademy.web.sportforumgroup10.models.Dto.RegisterDto;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.UserDTO;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
@@ -9,9 +10,10 @@ import org.springframework.stereotype.Component;
 public class UserMapper {
     private final UserService userService;
 
-    public UserMapper(UserService userService) {
+    public UserMapper(UserService userService ) {
 
         this.userService = userService;
+
     }
 
     public User fromDto(int id, UserDTO userDTO) {
@@ -29,6 +31,14 @@ public class UserMapper {
         user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());
         return user;
+    }
+    public User fromDto(RegisterDto registerDto){
+        User user = new User();
+        user.setUsername(registerDto.getUsername());
+        user.setPassword(registerDto.getPassword());
+        user.setFirstName(registerDto.getFirstName());
+        user.setLastName(registerDto.getLastName());
+        user.setEmail(registerDto.getEmail());
     }
 
 }

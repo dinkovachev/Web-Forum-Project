@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${user.username}">Sport Forum | Username</title>
-    <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" />
-</head>
+<form th:replace="~{UserForm.html::head('Username')}"></form>
 <body>
+<form th:replace="~{UserForm.html::navigation}"></form>
+<form th:replace="~{UserForm.html::header}"></form>
 
 <div class="body-content">
   <h2 th:text="#{user.username}+': ' + ${user.username}">Username</h2>
@@ -22,15 +20,9 @@
                 <a class="link-info" href="#" th:href="@{/users/userPosts:{id}(id=${user.id})}"
                    th:text="#{user.posts}">User posts</a>
             </div>
-
-
         </div>
-
     </div>
-
-
-
-
 </div>
+<form th:replace="~{UserForm.html::footer}"></form>
 </body>
 </html>
