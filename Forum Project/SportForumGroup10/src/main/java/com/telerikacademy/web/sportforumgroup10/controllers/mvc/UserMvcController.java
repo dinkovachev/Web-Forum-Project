@@ -5,11 +5,13 @@ import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.models.UserFilterOptions;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.PostService;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -27,6 +29,15 @@ public class UserMvcController {
         this.userService = userService;
         this.postService = postService;
     }
+    @ModelAttribute("isAuthenticated")
+    public boolean populateIsAuthenticated(HttpSession session){
+        return session.getAttribute("currentUser") != null;
+    }
+    //TODO double check how to implement ModelAttribute is blocked
+//    @ModelAttribute("isBlocked")
+//    public boolean populateIsBlocked(HttpSession session){
+//        return session.getAttribute("currentUser") != false;
+//    }
 
     @GetMapping
     public String showAllUsers(Model model) {
@@ -62,4 +73,6 @@ public class UserMvcController {
             return "ErrorView";
         }
     }
+
+
 }

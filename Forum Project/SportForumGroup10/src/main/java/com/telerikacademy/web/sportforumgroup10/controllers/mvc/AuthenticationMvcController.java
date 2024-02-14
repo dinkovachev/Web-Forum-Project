@@ -1,10 +1,12 @@
 package com.telerikacademy.web.sportforumgroup10.controllers.mvc;
 
 import com.telerikacademy.web.sportforumgroup10.exceptions.AuthorizationException;
+import com.telerikacademy.web.sportforumgroup10.exceptions.EntityDuplicateException;
 import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
 import com.telerikacademy.web.sportforumgroup10.helpers.UserMapper;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.LoginDto;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.RegisterDto;
+import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/auth")
 public class AuthenticationMvcController {
+    public static final String PASSWORD_CONFIRM_NEED_TO_MATCH_WITH_PASSWORD_ERROR = "Password confirm need to match with password";
     private final UserService userService;
     private final AuthenticationHelper authenticationHelper;
 
@@ -73,8 +76,22 @@ public class AuthenticationMvcController {
         if (bindingResult.hasErrors()) {
             return "RegisterView";
         }
-        try {
+        if(!registerDto.getPassword().equals(registerDto.getPasswordConfirm())){
+            bindingResult.rejectValue("password",
+                    "password_error",
+                    PASSWORD_CONFIRM_NEED_TO_MATCH_WITH_PASSWORD_ERROR);
+            return "RegisterView";
+        }
+        User user = userMapper.fromDto(registerDto);
 
-        } catch ()
+        try {
+            userService.create(user);
+            return "redirect:/auth/login";
+        } catch (EntityDuplicateException e){
+            bindingResult.rejectValue("username",
+                    "username_error",
+                    e.getMessage());
+            return "RegisterView";
+        }
     }
 }

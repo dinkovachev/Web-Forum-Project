@@ -2,10 +2,11 @@ package com.telerikacademy.web.sportforumgroup10.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.checkerframework.common.aliasing.qual.Unique;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -18,12 +19,17 @@ public class User {
     @JsonIgnore
     private int id;
     @NotNull(message = "Can't be empty")
+    @Size(min = 4, max = 32, message = "First Name must be between 4 and 32 symbols")
     @Column(name = "first_name")
     private String firstName;
+
     @NotNull(message = "Can't be empty")
+    @Size(min = 4, max = 32, message = "Last Name must be between 4 and 32 symbols")
     @Column(name = "last_name")
     private String lastName;
     @NotNull(message = "Can't be empty")
+    @Email
+    @Unique
     @Column(name = "email")
     private String email;
     @NotNull(message = "Can't be empty")

@@ -17,10 +17,20 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                <li class="nav-item"><a href="#" th:href="@{/home}" class="nav-link px-lg-3 py-3 py-lg-4" >Home</a></li>
-                <li class="nav-item"><a href="#" th:href="@{/about}" class="nav-link px-lg-3 py-3 py-lg-4">About</a></li>
-                <li class="nav-item"><a href="#" th:href="@{/profile}" class="nav-link px-lg-3 py-3 py-lg-4">Profile</a></li>
-                <li class="nav-item"><a href="#" th:href="@{/contact}" class="nav-link px-lg-3 py-3 py-lg-4">Contact</a></li>
+                <li class="nav-item"><a href="#" th:href="@{/home}"
+                                        class="nav-link px-lg-3 py-3 py-lg-4" th:text="#{navigation.home}">Home</a></li>
+                <li class="nav-item"><a href="#" th:href="@{/auth/login}"
+                                        class="nav-link px-lg-3 py-3 py-lg-4" th:text="#{navigation.login}">Login</a></li>
+                <li class="nav-item"><a href="#" th:href="@{/auth/logout}"
+                                        class="nav-link px-lg-3 py-3 py-lg-4" th:text="#{navigation.logout}">Logout</a></li>
+                <li class="nav-item"><a href="#" th:href="@{/auth/register}"
+                                        class="nav-link px-lg-3 py-3 py-lg-4" th:text="#{navigation.register}">Register</a></li>
+                <li class="nav-item"><a href="#" th:href="@{/profile}"
+                                        class="nav-link px-lg-3 py-3 py-lg-4" th:text="#{navigation.profile}">Profile</a></li>
+                <li class="nav-item"><a href="#" th:href="@{/about}"
+                                        class="nav-link px-lg-3 py-3 py-lg-4" th:text="#{navigation.about}">About</a></li>
+                <li class="nav-item"><a href="#" th:href="@{/contact}"
+                                        class="nav-link px-lg-3 py-3 py-lg-4" th:text="#{navigation.contact}">Contact</a></li>
             </ul>
         </div>
     </div>

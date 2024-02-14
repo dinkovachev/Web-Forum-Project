@@ -49,6 +49,14 @@ public class AuthenticationHelper {
         }
     }
 
+    public User tryGetUserFromSession(HttpSession session){
+        try {
+            return userService.getByUsernameAuthentication((String) session.getAttribute("currentUser"));
+        } catch (EntityNotFoundException e){
+            throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
+        }
+    }
+
 
 
     public User tryGetCurrentUser(HttpSession session) {
