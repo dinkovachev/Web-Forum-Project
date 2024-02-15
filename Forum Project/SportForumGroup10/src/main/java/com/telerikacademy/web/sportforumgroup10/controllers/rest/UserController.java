@@ -50,7 +50,7 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
 
-        // TODO need to discuss if there is need for admin to search all users(probably not)
+        // TODO need to discuss if there is need for only admin to search all users(probably not)
 //        try {
 //            User user = authenticationHelper.tryGetUser(headers);
 //            ;
