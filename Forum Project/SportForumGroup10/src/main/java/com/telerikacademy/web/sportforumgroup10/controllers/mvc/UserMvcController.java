@@ -5,6 +5,7 @@ import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.models.UserFilterOptions;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.PostService;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,11 +34,11 @@ public class UserMvcController {
     public boolean populateIsAuthenticated(HttpSession session){
         return session.getAttribute("currentUser") != null;
     }
+    @ModelAttribute("requestURI")
+    public String requestURI(final HttpServletRequest request) {
+        return request.getRequestURI();
+    }
     //TODO double check how to implement ModelAttribute is blocked
-//    @ModelAttribute("isBlocked")
-//    public boolean populateIsBlocked(HttpSession session){
-//        return session.getAttribute("currentUser") != false;
-//    }
 
     @GetMapping
     public String showAllUsers(Model model) {
@@ -65,6 +66,23 @@ public class UserMvcController {
             model.addAttribute("user", user);
             model.addAttribute("posts", user.getUsersPosts());
             return "UserPostsView";
+
+
+        } catch (EntityNotFoundException e){
+            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+            model.addAttribute("error", e.getMessage());
+            return "ErrorView";
+        }
+    }
+    @GetMapping("/userComments:{id}")
+    public String showSingleUserComments(@PathVariable int id, Model model){
+        //TODO double check this part need to be redirected correctly when requested
+        try {
+            User user = userService.getById(id);
+            model.addAttribute("user", user);
+
+            model.addAttribute("comments",user.getUsersComments());
+            return "UserCommentsView";
 
 
         } catch (EntityNotFoundException e){
