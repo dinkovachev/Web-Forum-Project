@@ -33,6 +33,11 @@ public class AuthenticationMvcController {
         this.authenticationHelper = authenticationHelper;
         this.userMapper = userMapper;
     }
+    @ModelAttribute("isAuthenticated")
+    public boolean populateIsAuthenticated(HttpSession session){
+
+        return session.getAttribute("currentUser") != null;
+    }
 
     @GetMapping("/login")
     public String showLoginPage(Model model) {
@@ -52,6 +57,7 @@ public class AuthenticationMvcController {
             session.setAttribute("currentUser", user.getUsername());
             session.setAttribute("isAdmin", user.isAdmin());
             session.setAttribute("isBlocked", user.isBlocked());
+            session.setAttribute("isDeleted",user.isDeleted());
             return "redirect:/";
             //ToDo should be authentication exception
         } catch (AuthorizationException e) {
