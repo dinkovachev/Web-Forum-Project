@@ -1,6 +1,8 @@
 package com.telerikacademy.web.sportforumgroup10.controllers.mvc;
 
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
+import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
+import com.telerikacademy.web.sportforumgroup10.models.Dto.UserFilterDto;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.models.UserFilterOptions;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.PostService;
@@ -24,11 +26,14 @@ public class UserMvcController {
 
     private final PostService postService;
 
+    private final AuthenticationHelper authenticationHelper;
+
 
     @Autowired
-    public UserMvcController(UserService userService, PostService postService) {
+    public UserMvcController(UserService userService, PostService postService, AuthenticationHelper authenticationHelper) {
         this.userService = userService;
         this.postService = postService;
+        this.authenticationHelper = authenticationHelper;
     }
     @ModelAttribute("isAuthenticated")
     public boolean populateIsAuthenticated(HttpSession session){
@@ -41,8 +46,11 @@ public class UserMvcController {
     //TODO double check how to implement ModelAttribute is blocked
 
     @GetMapping
-    public String showAllUsers(Model model) {
-        model.addAttribute("users", userService.getAllUsers(new UserFilterOptions()));
+    public String showAllUsers(@ModelAttribute("userFilterOptions") UserFilterDto userFilterDto, Model model) {
+        UserFilterOptions userFilterOptions = new UserFilterOptions(userFilterDto.getFirstName(),
+                userFilterDto.getUsername(), userFilterDto.getEmail(),
+                userFilterDto.getSortBy(), userFilterDto.getOrderBy());
+        model.addAttribute("users", userService.getAllUsers(userFilterOptions));
         return "UsersView";
     }
 

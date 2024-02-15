@@ -2,9 +2,12 @@ package com.telerikacademy.web.sportforumgroup10.controllers.mvc;
 
 import com.telerikacademy.web.sportforumgroup10.exceptions.AuthorizationException;
 import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
+import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.PostService;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeMvcController {
 
     private final PostService postService;
-    private  final UserService userService;
+    private final UserService userService;
     private final AuthenticationHelper authenticationHelper;
 
+    @Autowired
     public HomeMvcController(PostService postService, UserService userService, AuthenticationHelper authenticationHelper) {
         this.postService = postService;
         this.userService = userService;
@@ -26,19 +30,32 @@ public class HomeMvcController {
     }
 
     @ModelAttribute("isAuthenticated")
-    public boolean populateIsAuthenticated(HttpSession session){
+    public boolean populateIsAuthenticated(HttpSession session) {
 
         return session.getAttribute("currentUser") != null;
     }
 
     @GetMapping
-    public String showHomePage(){
+    public String showHomePage() {
         return "index";
     }
+
     @GetMapping("/admin")
-    public String showAdminPage(){
-        return "AdminPanel";
+    public String showAdminPage(HttpSession session, Model model) {
+        try {
+            User user = authenticationHelper.tryGetCurrentUser(session);
+            if (user.isAdmin()){
+                return "AdminPanel";
+            }
+            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
+            model.addAttribute("error", "Not authorized");
+            return "ErrorView";
+        } catch (AuthorizationException e){
+            return "redirect:/auth/login";
+        }
+
     }
+
     @GetMapping("/about")
     public String showAboutPage(Model model, HttpSession httpSession) {
         try {
@@ -55,7 +72,7 @@ public class HomeMvcController {
 //    }
 
     @GetMapping("/profile")
-    public String showProfilePage(){
+    public String showProfilePage() {
         return "profile";
     }
 
