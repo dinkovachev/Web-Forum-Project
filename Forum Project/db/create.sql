@@ -1,3 +1,10 @@
+drop database if exists forum;
+
+create database forum;
+
+use forum;
+
+
 create table users
 (
     user_id    int auto_increment

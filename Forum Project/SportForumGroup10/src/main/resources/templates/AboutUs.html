@@ -1,26 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Clean Blog - Start Bootstrap Theme</title>
-        <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
-              rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="/css/styles.css" rel="stylesheet" />
-    </head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Sport Forum 10</title>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" />
+</head>
+<body>
+<form th:replace="~{UserForm.html::navigation}"></form>
+
+
+
+
+
     <body>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+                <a class="navbar-brand" th:href="index.html">Sport Forum 10</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
@@ -28,7 +32,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.html">About</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="AboutUs.html">About</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html">Sample Post</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Contact</a></li>
                     </ul>
@@ -41,7 +45,7 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="page-heading">
-                            <h1>About Me</h1>
+                            <h1>About Us</h1>
                             <span class="subheading">This is what I do.</span>
                         </div>
                     </div>
@@ -53,9 +57,30 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius praesentium recusandae illo eaque architecto error, repellendus iusto reprehenderit, doloribus, minus sunt. Numquam at quae voluptatum in officia voluptas voluptatibus, minus!</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut consequuntur magnam, excepturi aliquid ex itaque esse est vero natus quae optio aperiam soluta voluptatibus corporis atque iste neque sit tempora!</p>
+                        <h3><b> About Us</b></h3>
+                        <p>At Sport Forum 10, we're not just fans; we're a community united by our passion for sports.
+                            Founded in 2024, our forum has become a digital hub for sports enthusiasts from around the world.</p>
+                        <h3><b> Our Journey</b></h3>
+                        <p>The story of Sport Forum 10 is one of shared excitement, victories, and the thrill of the game.
+                            It all began with a simple idea: to create a space where fans could connect, discuss, and celebrate their love for sports.
+                            Since then, we've evolved into a thriving community where fans of all sports can come together.</p>
+                        <h3><b> What Makes Us Different</b></h3>
+                        <p><b>Diverse Sports Coverage:</b> Whether you're into football, basketball, soccer, or any other sport,
+                            you'll find a place here. Our forum covers a wide range of sports, ensuring there's something for every fan.</p>
+                        <p><b>Engaging Discussions:</b> We believe in the power of conversations. Our forums are designed to encourage lively discussions,
+                            sharing of insights, and the joy of debating the latest sporting events.</p>
+                        <p><b>Fan-driven Content:</b> Sport Forum 10 is powered by its members. From fan-created content to user-generated discussions,
+                            we celebrate the unique perspectives and voices that make our community special.</p>
+                        <h3><b> Meet the Team</b></h3>
+                        <p>Behind the scenes, a passionate team drives Sport Forum 10. Meet the individuals who work tirelessly to ensure you have
+                            the best experience on our platform. Whether it's moderating discussions, updating content, or fostering a positive community spirit,
+                            our team is here for you.</p>
+                        <h3><b> Join the Community</b></h3>
+                        <p>Become a part of Sport Forum 10 and immerse yourself in the world of sports like never before.
+                            Share your insights, connect with fellow fans, and be a part of a community that lives and breathes the
+                            thrill of victory and the agony of defeat.</p>
+
+
                     </div>
                 </div>
             </div>
@@ -101,4 +126,5 @@
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
     </body>
+</body>
 </html>

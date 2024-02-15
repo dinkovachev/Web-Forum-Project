@@ -3,7 +3,9 @@ package com.telerikacademy.web.sportforumgroup10.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="posts")
@@ -23,6 +25,9 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
+    private Set<Comment> comments = new HashSet<>();
 
     public Post() {
     }

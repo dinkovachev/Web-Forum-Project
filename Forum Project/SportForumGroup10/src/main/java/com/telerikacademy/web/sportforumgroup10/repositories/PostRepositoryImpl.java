@@ -52,7 +52,6 @@ public class PostRepositoryImpl implements PostRepository {
             });
 
 
-
             postFilterOptions.getCreatedBy().ifPresent(value -> {
                 filters.add("createdBy.username like :createdBy");
                 params.put("createdBy", String.format("%%%s%%", value));
@@ -124,6 +123,7 @@ public class PostRepositoryImpl implements PostRepository {
             return post;
         }
     }
+
     @Override
     public void create(Post post) {
         try (Session session = sessionFactory.openSession()) {
@@ -146,8 +146,8 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public void delete(int id) {
         try (Session session = sessionFactory.openSession()) {
-          deleteComments(id);
-          session.getTransaction();
+            deleteComments(id);
+            session.getTransaction();
             session.remove(id);
             session.getTransaction().commit();
         }
@@ -157,10 +157,43 @@ public class PostRepositoryImpl implements PostRepository {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             Query<?> query = session.createNativeQuery("delete from comments where post_id= :id", Post.class);
-            query.setParameter("id",id);
+            query.setParameter("id", id);
             query.executeUpdate();
             session.getTransaction().commit();
         }
     }
 
+    @Override
+    public List<Post> getTop10MostCommentedPost() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Post> query = session.createQuery("SELECT p " +
+                    "FROM Post p " +
+                    "ORDER BY SIZE(p.comments) DESC", Post.class
+            );
+
+            query.setMaxResults(10);
+            return query.list();
+        }
+    }
+
+    @Override
+    public List<Post> get10MostRecentlyCreatedPosts() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Post> query = session.createQuery("SELECT p " +
+                    "FROM Post p " +
+                    "ORDER BY p.createdAt DESC", Post.class
+            );
+            query.setMaxResults(10);
+            return query.list();
+        }
+    }
+
+    @Override
+    public void modifyLike(Post post) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.merge(post);
+            session.getTransaction().commit();
+        }
+    }
 }
