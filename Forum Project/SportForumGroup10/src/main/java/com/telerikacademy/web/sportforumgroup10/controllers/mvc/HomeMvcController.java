@@ -7,11 +7,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/home")
+@RequestMapping("/")
 public class HomeMvcController {
 
     @ModelAttribute("isAuthenticated")
     public boolean populateIsAuthenticated(HttpSession session){
+
         return session.getAttribute("currentUser") != null;
     }
 
@@ -19,7 +20,10 @@ public class HomeMvcController {
     public String showHomePage(){
         return "index";
     }
-
+    @GetMapping("/admin")
+    public String showAdminPage(){
+        return "AdminPanel";
+    }
     @GetMapping("/about")
     public String showAboutPage(){
         return "about";
@@ -28,7 +32,6 @@ public class HomeMvcController {
     public String showContactPage(){
         return "contact";
     }
-
     @GetMapping("/profile")
     public String showProfilePage(){
         return "profile";

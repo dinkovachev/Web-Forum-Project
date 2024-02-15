@@ -86,7 +86,7 @@ public class AuthenticationHelper {
         return userInfo.substring(firstSpace + 1);
     }
 
-    private User verifyAuthentication(String username, String password) {
+    public User verifyAuthentication(String username, String password) {
         try {
             User user = userService.getByUsernameAuthentication(username);
             if (!user.getPassword().equals(password)){

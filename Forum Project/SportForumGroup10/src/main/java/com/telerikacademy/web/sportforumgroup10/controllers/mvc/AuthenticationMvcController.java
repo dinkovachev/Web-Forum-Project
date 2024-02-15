@@ -24,10 +24,11 @@ public class AuthenticationMvcController {
     public static final String PASSWORD_CONFIRM_NEED_TO_MATCH_WITH_PASSWORD_ERROR = "Password confirm need to match with password";
     private final UserService userService;
     private final AuthenticationHelper authenticationHelper;
-
     private final UserMapper userMapper;
 
-    public AuthenticationMvcController(UserService userService, AuthenticationHelper authenticationHelper, UserMapper userMapper) {
+    public AuthenticationMvcController(UserService userService,
+                                       AuthenticationHelper authenticationHelper,
+                                       UserMapper userMapper) {
         this.userService = userService;
         this.authenticationHelper = authenticationHelper;
         this.userMapper = userMapper;
@@ -47,12 +48,15 @@ public class AuthenticationMvcController {
             return "LoginView";
         }
         try {
-            authenticationHelper.tryAuthenticateUser(loginDto);
-            session.setAttribute("currentUser", loginDto.getUsername());
+            User user = authenticationHelper.verifyAuthentication(loginDto.getUsername(), loginDto.getPassword());
+            session.setAttribute("currentUser", user.getUsername());
+            session.setAttribute("isAdmin", user.isAdmin());
+            session.setAttribute("isBlocked", user.isBlocked());
             return "redirect:/";
             //ToDo should be authentication exception
         } catch (AuthorizationException e) {
             bindingResult.rejectValue("username", "auth_error", e.getMessage());
+            bindingResult.rejectValue("password", "auth_error", e.getMessage());
             return "LoginView";
         }
     }
@@ -71,8 +75,7 @@ public class AuthenticationMvcController {
 
     @PostMapping("/register")
     public String handleRegister(@Valid @ModelAttribute("register") RegisterDto registerDto,
-                                 BindingResult bindingResult,
-                                 HttpSession session) {
+                                 BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "RegisterView";
         }
@@ -82,9 +85,10 @@ public class AuthenticationMvcController {
                     PASSWORD_CONFIRM_NEED_TO_MATCH_WITH_PASSWORD_ERROR);
             return "RegisterView";
         }
-        User user = userMapper.fromDto(registerDto);
+
 
         try {
+            User user = userMapper.fromDto(registerDto);
             userService.create(user);
             return "redirect:/auth/login";
         } catch (EntityDuplicateException e){
