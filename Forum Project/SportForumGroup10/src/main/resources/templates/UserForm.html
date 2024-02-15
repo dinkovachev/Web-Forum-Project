@@ -32,7 +32,7 @@
                                         th:text="#{navigation.profile}">Profile</a></li>
                 <li class="nav-item"><a href="#" th:href="@{/about}" class="nav-link px-lg-3 py-3 py-lg-4"
                                         th:text="#{navigation.about}">About</a></li>
-                <li class="nav-item"><a href="#" th:if="${isAuthenticated}"
+                <li class="nav-item"><a href="#" th:if="${isAuthenticated && session.isAdmin}"
                                         th:href="@{/admin}" class="nav-link px-lg-3 py-3 py-lg-4"
                                         th:text="#{home.welcome.admin}">Admin Panel</a></li>
             </ul>
