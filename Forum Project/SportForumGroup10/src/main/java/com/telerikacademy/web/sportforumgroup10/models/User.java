@@ -55,6 +55,14 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "post_id"))
     private Set<Post> usersPosts;
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_comments",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "comment_id"))
+    private Set<Post> usersComments;
+
+
 
     public User() {
     }
@@ -160,6 +168,13 @@ public class User {
 
     public void setUsersPosts(Set<Post> usersPosts) {
         this.usersPosts = usersPosts;
+    }
+    public Set<Post> getUsersComments() {
+        return usersComments;
+    }
+
+    public void setUsersComments(Set<Post> usersComments) {
+        this.usersComments = usersComments;
     }
 
     @Override

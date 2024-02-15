@@ -58,3 +58,16 @@ INSERT INTO forum.users_posts(user_id, post_id) VALUES(10,3);
 INSERT INTO forum.users_posts(user_id, post_id) VALUES(11,2);
 INSERT INTO forum.users_posts(user_id, post_id) VALUES(11,5);
 INSERT INTO forum.users_posts(user_id, post_id) VALUES(12,6);
+
+INSERT INTO forum.users_comments(user_id, comment_id) VALUES(1,4);
+INSERT INTO forum.users_comments(user_id, comment_id) VALUES(3,2);
+INSERT INTO forum.users_comments(user_id, comment_id) VALUES(4,7);
+INSERT INTO forum.users_comments(user_id, comment_id) VALUES(5,9);
+INSERT INTO forum.users_comments(user_id, comment_id) VALUES(6,8);
+INSERT INTO forum.users_comments(user_id, comment_id) VALUES(7,10);
+INSERT INTO forum.users_comments(user_id, comment_id) VALUES(9,11);
+INSERT INTO forum.users_comments(user_id, comment_id) VALUES(10,6);
+INSERT INTO forum.users_comments(user_id, comment_id) VALUES(10,12);
+INSERT INTO forum.users_comments(user_id, comment_id) VALUES(11,1);
+INSERT INTO forum.users_comments(user_id, comment_id) VALUES(11,5);
+INSERT INTO forum.users_comments(user_id, comment_id) VALUES(12,3);
