@@ -2,6 +2,8 @@ package com.telerikacademy.web.sportforumgroup10.helpers;
 
 import com.telerikacademy.web.sportforumgroup10.exceptions.AuthorizationException;
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
+import com.telerikacademy.web.sportforumgroup10.exceptions.UnauthorizedOperationException;
+import com.telerikacademy.web.sportforumgroup10.models.Dto.LoginDto;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -26,10 +28,33 @@ public class AuthenticationHelper {
         if (!headers.containsKey(AUTHORIZATION_HEADER_NAME)) {
             throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
         }
+
             String userInfo = headers.getFirst(AUTHORIZATION_HEADER_NAME);
             String username = getUsername(userInfo);
             String password = getPassword(userInfo);
         return verifyAuthentication(username, password);
+    }
+
+    public User tryAuthenticateUser(LoginDto loginDto){
+        try {
+            User user = userService.getByUsernameAuthentication(loginDto.getUsername());
+            if (!user.getPassword().equals(loginDto.getPassword())){
+                //TODO need to be authentication exception
+                throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
+            }
+            return user;
+        } catch (EntityNotFoundException e){
+            //TODO need to be authentication exception
+            throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
+        }
+    }
+
+    public User tryGetUserFromSession(HttpSession session){
+        try {
+            return userService.getByUsernameAuthentication((String) session.getAttribute("currentUser"));
+        } catch (EntityNotFoundException e){
+            throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
+        }
     }
 
 

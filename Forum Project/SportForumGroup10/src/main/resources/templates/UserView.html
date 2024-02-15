@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<form th:replace="~{UserForm.html::head('Username')}"></form>
+<body>
+<form th:replace="~{UserForm.html::navigation}"></form>
+<form th:replace="~{UserForm.html::header}"></form>
+
+<div class="body-content">
+  <h2 th:text="#{user.username}+': ' + ${user.username}">Username</h2>
+    <div class="table">
+        <div class="cell" th:text="#{user.firstName}">First Name</div>
+        <div class="cell" th:text="#{user.lastName}">Last Name</div>
+        <div class="cell" th:text="#{user.posts}">Posts</div>
+        <div class="rowGroup">
+            <div class="cell" th:text="${user.firstName}">First Name</div>
+            <div class="cell" th:text="${user.lastName}">Last Name</div>
+
+            <!-- TODO this can be changed to a button to show all the users posts-->
+            <div class="cell">
+                <a class="link-info" href="#" th:href="@{/users/userPosts:{id}(id=${user.id})}"
+                   th:text="#{user.posts}">User posts</a>
+            </div>
+        </div>
+    </div>
+</div>
+<form th:replace="~{UserForm.html::footer}"></form>
+</body>
+</html>
