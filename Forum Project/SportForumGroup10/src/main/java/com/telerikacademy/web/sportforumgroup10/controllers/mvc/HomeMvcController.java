@@ -86,8 +86,8 @@ public class HomeMvcController {
     }
 
     @PostMapping("/profile")
-    public String handleProfile(@Valid @ModelAttribute("profile") ProfileDto profileDto,
-                                BindingResult bindingResult, HttpSession session) {
+    public String handleProfileUpdate(@Valid @ModelAttribute("profile") ProfileDto profileDto,
+                                      BindingResult bindingResult, HttpSession session) {
         User user = authenticationHelper.tryGetCurrentUser(session);
         if (bindingResult.hasErrors()) {
             return "ProfileView";
@@ -110,5 +110,13 @@ public class HomeMvcController {
             return "ProfileView";
         }
     }
+
+//    @GetMapping("/profile")
+//    public String handleProfileDelete(@Valid @ModelAttribute("profileDelete") ProfileDto profileDto,
+//                                      BindingResult bindingResult, HttpSession session) {
+//        User user = authenticationHelper.tryGetCurrentUser(session);
+//        userService.delete(user.getId(), user);
+//        return "redirect:/";
+//    }
 }
 
