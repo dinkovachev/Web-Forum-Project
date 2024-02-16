@@ -5,6 +5,7 @@ import com.telerikacademy.web.sportforumgroup10.exceptions.EntityDuplicateExcept
 import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
 import com.telerikacademy.web.sportforumgroup10.helpers.UserMapper;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.LoginDto;
+import com.telerikacademy.web.sportforumgroup10.models.Dto.ProfileDto;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.RegisterDto;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
@@ -55,6 +56,10 @@ public class AuthenticationMvcController {
         try {
             User user = authenticationHelper.verifyAuthentication(loginDto.getUsername(), loginDto.getPassword());
             session.setAttribute("currentUser", user.getUsername());
+            session.setAttribute("userId", user.getId());
+            session.setAttribute("firstName", user.getFirstName());
+            session.setAttribute("lastName", user.getLastName());
+            session.setAttribute("email", user.getEmail());
             session.setAttribute("isAdmin", user.isAdmin());
             session.setAttribute("isBlocked", user.isBlocked());
             session.setAttribute("isDeleted",user.isDeleted());
@@ -92,7 +97,6 @@ public class AuthenticationMvcController {
             return "RegisterView";
         }
 
-
         try {
             User user = userMapper.fromDto(registerDto);
             userService.create(user);
@@ -104,4 +108,6 @@ public class AuthenticationMvcController {
             return "RegisterView";
         }
     }
+
+
 }
