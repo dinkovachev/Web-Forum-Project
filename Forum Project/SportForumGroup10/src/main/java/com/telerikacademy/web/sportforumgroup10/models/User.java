@@ -19,12 +19,12 @@ public class User {
     @JsonIgnore
     private int id;
     @NotNull(message = "Can't be empty")
-    @Size(min = 4, max = 32, message = "First Name must be between 4 and 32 symbols")
+//    @Size(min = 4, max = 32, message = "First Name must be between 4 and 32 symbols")
     @Column(name = "first_name")
     private String firstName;
 
     @NotNull(message = "Can't be empty")
-    @Size(min = 4, max = 32, message = "Last Name must be between 4 and 32 symbols")
+//    @Size(min = 4, max = 32, message = "Last Name must be between 4 and 32 symbols")
     @Column(name = "last_name")
     private String lastName;
     @NotNull(message = "Can't be empty")
