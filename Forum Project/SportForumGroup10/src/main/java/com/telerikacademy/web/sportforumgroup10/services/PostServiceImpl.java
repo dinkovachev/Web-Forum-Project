@@ -79,5 +79,9 @@ public class PostServiceImpl implements PostService {
     public List<Post> get10MostRecentlyCreatedPosts() {
         return repository.get10MostRecentlyCreatedPosts();
     }
+    @Override
+    public long getPostCount() {
+        return repository.getPostCount();
+    }
 
 }

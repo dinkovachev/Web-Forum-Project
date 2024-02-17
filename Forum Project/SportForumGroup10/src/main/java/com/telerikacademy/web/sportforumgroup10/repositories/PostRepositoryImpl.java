@@ -196,4 +196,17 @@ public class PostRepositoryImpl implements PostRepository {
             session.getTransaction().commit();
         }
     }
+    @Override
+    public long getPostCount() {
+        try (Session session = sessionFactory.openSession()) {
+            String hql = "SELECT COUNT(*) FROM Post";
+
+            Query<Long> query = session.createQuery(hql, Long.class);
+
+            List<Long> resultList = query.list();
+
+            return resultList.get(0);
+        }
+    }
+
 }

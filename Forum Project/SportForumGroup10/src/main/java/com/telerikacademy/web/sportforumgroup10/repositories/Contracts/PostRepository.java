@@ -23,4 +23,6 @@ public interface PostRepository {
     List<Post> get10MostRecentlyCreatedPosts();
 
     void modifyLike(Post post);
+
+    long getPostCount();
 }

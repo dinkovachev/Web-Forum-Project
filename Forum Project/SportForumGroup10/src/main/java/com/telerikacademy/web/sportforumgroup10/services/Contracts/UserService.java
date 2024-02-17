@@ -19,4 +19,6 @@ public interface UserService {
     User unmakeUserAdmin(int id, User userModifier);
     User blockUser(int id, User userModifier);
     User unblockUser(int id, User userModifier);
+
+    long getUserCount();
 }

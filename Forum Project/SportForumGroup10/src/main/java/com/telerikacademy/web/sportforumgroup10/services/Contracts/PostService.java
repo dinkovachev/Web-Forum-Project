@@ -21,4 +21,6 @@ public interface PostService {
     List<Post> getTop10MostCommentedPosts();
 
     List<Post> get10MostRecentlyCreatedPosts();
+
+    long getPostCount();
 }

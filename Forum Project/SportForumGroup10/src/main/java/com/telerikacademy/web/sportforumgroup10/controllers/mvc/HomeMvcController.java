@@ -2,6 +2,7 @@ package com.telerikacademy.web.sportforumgroup10.controllers.mvc;
 
 import com.telerikacademy.web.sportforumgroup10.exceptions.AuthorizationException;
 import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
+import com.telerikacademy.web.sportforumgroup10.models.Post;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.PostService;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
@@ -13,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -36,7 +39,15 @@ public class HomeMvcController {
     }
 
     @GetMapping
-    public String showHomePage() {
+    public String showHomePage(Model model) {
+        long postCount = postService.getPostCount();
+        model.addAttribute("postCount", postCount);
+        long userCount = userService.getUserCount();
+        model.addAttribute("userCount", userCount);
+        List<Post> mostRecent = postService.get10MostRecentlyCreatedPosts();
+        model.addAttribute("recentlyAddedPosts", mostRecent);
+        List<Post> mostCommented = postService.getTop10MostCommentedPosts();
+        model.addAttribute("topCommented", mostCommented);
         return "index";
     }
 
@@ -44,13 +55,13 @@ public class HomeMvcController {
     public String showAdminPage(HttpSession session, Model model) {
         try {
             User user = authenticationHelper.tryGetCurrentUser(session);
-            if (user.isAdmin()){
+            if (user.isAdmin()) {
                 return "AdminPanel";
             }
             model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
             model.addAttribute("error", "Not authorized");
             return "ErrorView";
-        } catch (AuthorizationException e){
+        } catch (AuthorizationException e) {
             return "redirect:/auth/login";
         }
 
@@ -76,5 +87,9 @@ public class HomeMvcController {
         return "profile";
     }
 
+    @GetMapping("/posts")
+    public String showPostPage(){
+        return  "posts";
+    }
 
 }

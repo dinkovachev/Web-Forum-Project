@@ -31,4 +31,5 @@ public interface UserRepository {
 
     User unblockUser(int id);
 
+    long getUserCount();
 }

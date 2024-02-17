@@ -235,4 +235,18 @@ public class UserRepositoryImpl implements UserRepository {
         }
         return orderBy;
     }
+
+    @Override
+    public long getUserCount() {
+        try (Session session = sessionFactory.openSession()) {
+            String hql = "SELECT COUNT(*) FROM User";
+
+            Query<Long> query = session.createQuery(hql, Long.class);
+
+            List<Long> resultList = query.list();
+
+            return resultList.get(0);
+        }
+    }
+
 }
