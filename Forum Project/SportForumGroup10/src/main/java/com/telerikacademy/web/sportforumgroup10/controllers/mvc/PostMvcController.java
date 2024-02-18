@@ -91,6 +91,36 @@ public class PostMvcController {
         return "CreatePost";
     }
 
+@PostMapping("/new")
+public String createPost(@Valid @ModelAttribute("post") PostDto postDto,
+                         BindingResult result,
+                         Model model,
+                         HttpSession httpSession) {
+    User user;
+    try {
+        user = authenticationHelper.tryGetCurrentUser(httpSession);
+    } catch (AuthorizationException e) {
+        return "redirect:/auth/login";
+    }
+    if (result.hasErrors()) {
+        return "CreatePost";
+    }
+
+    try {
+        Post post = postMapper.fromDto(postDto);
+        postService.create(post, user);
+        return "redirect:/posts";
+    } catch (EntityNotFoundException e) {
+        model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+        model.addAttribute("error", e.getMessage());
+        return "ErrorView";
+    } catch (AuthorizationException e) {
+        return "redirect:/auth/login";
+    }
+}
+
+
+
     @PostMapping("/{id}/update")
     public String updatePost(@PathVariable int id,
             @Valid @ModelAttribute("post") PostDto postDto,
