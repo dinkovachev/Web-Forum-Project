@@ -6,10 +6,10 @@ import com.telerikacademy.web.sportforumgroup10.exceptions.UnauthorizedOperation
 import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
 import com.telerikacademy.web.sportforumgroup10.helpers.CommentMapper;
 import com.telerikacademy.web.sportforumgroup10.helpers.PostMapper;
-
+import com.telerikacademy.web.sportforumgroup10.models.Dto.PostDto;
 import com.telerikacademy.web.sportforumgroup10.models.Comment;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.CommentDto;
-import com.telerikacademy.web.sportforumgroup10.models.Dto.PostDto;
+//import com.telerikacademy.web.sportforumgroup10.models.Dto.PostFilterDto;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.PostFilterDto;
 import com.telerikacademy.web.sportforumgroup10.models.Post;
 import com.telerikacademy.web.sportforumgroup10.models.PostFilterOptions;
@@ -72,6 +72,7 @@ public class PostMvcController {
     public String showSinglePost(@PathVariable int id, Model model) {
         try {
             model.addAttribute("post", postService.getById(id));
+            model.addAttribute("comment", new CommentDto());
             return "SinglePostView";
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
@@ -93,7 +94,7 @@ public class PostMvcController {
 
     @PostMapping("/{id}/update")
     public String updatePost(@PathVariable int id,
-            @Valid @ModelAttribute("post") PostDto postDto,
+                             @Valid @ModelAttribute("post") PostDto postDto,
                              BindingResult result,
                              Model model,
                              HttpSession httpSession) {
@@ -108,7 +109,7 @@ public class PostMvcController {
             return "CreatePost";
         }
         try {
-            Post post = postMapper.fromDto(id,postDto);
+            Post post = postMapper.fromDto(id, postDto);
             postService.create(post, user);
             return "redirect:/posts";
         } catch (EntityNotFoundException e) {
@@ -119,10 +120,11 @@ public class PostMvcController {
             return "redirect:/auth/login";
         }
     }
+
     @GetMapping("/{id}/delete")
-    public  String deletePost(@PathVariable int id,
-                              Model model,
-                              HttpSession httpSession) {
+    public String deletePost(@PathVariable int id,
+                             Model model,
+                             HttpSession httpSession) {
         User user;
         try {
             user = authenticationHelper.tryGetCurrentUser(httpSession);
@@ -145,121 +147,124 @@ public class PostMvcController {
             model.addAttribute("error", e.getMessage());
             return "ErrorView";
         }
+//    }
+//    @PostMapping("/comment:{id}")
+//    public String addComment(@PathVariable int id,
+//                             @Valid @ModelAttribute CommentDto commentDto,
+//                             Model model,
+//                             HttpSession httpSession) {
+//        User user;
+//        Post post;
+//       Comment comment;
+//        try {
+//
+//            user = authenticationHelper.tryGetCurrentUser(httpSession);
+//            comment = commentMapper.fromDto(commentDto);
+//            post = postService.getById(id);
+//
+//            comment.setPost(post);
+//            comment.setAuthor(user);
+//
+//
+//            commentService.create(id, comment, user);
+//            return "redirect:/posts/" + id;
+//        } catch (AuthorizationException e) {
+//            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
+//            model.addAttribute("error", e.getMessage());
+//            return "redirect:/auth/login";
+//        } catch (UnauthorizedOperationException e) {
+//            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
+//            model.addAttribute("error", e.getMessage());
+//            return "ErrorView";
+//        }
+//    }
+//    @PostMapping("/{id}/comment/{commentId}/update")
+//    public String updateComment(@PathVariable int id,
+//                                @PathVariable int commentId,
+//                                @Valid @ModelAttribute CommentDto commentDto,
+//                                Model model,
+//                                BindingResult result,
+//                                HttpSession httpSession) {
+//
+//        User user;
+//        Comment comment;
+//
+//        try {
+//            user = authenticationHelper.tryGetCurrentUser(httpSession);
+//        } catch (AuthorizationException e) {
+//            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
+//            model.addAttribute("error", e.getMessage());
+//            return "redirect:/auth/login";
+//        }
+//        if (result.hasErrors()) {
+//            return "CommentUpdateView";
+//        }
+//
+//        try {
+//            comment = commentMapper.fromDto(commentId, commentDto);
+//            commentService.update(comment, user);
+//            return "redirect:/posts/{id}";
+//        } catch (UnauthorizedOperationException e) {
+//            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
+//            model.addAttribute("error", e.getMessage());
+//            return "ErrorView";
+//        }
+//    }
+//    @GetMapping("/{id}/comment/{commentId}/update")
+//    public String showCommentEditPage(@PathVariable int id,
+//                                      @PathVariable int commentId,
+//                                      Model model,
+//                                      HttpSession httpSession) {
+//        try {
+//            authenticationHelper.tryGetCurrentUser(httpSession);
+//        } catch (AuthorizationException e) {
+//            return "redirect:/auth/login";
+//        }
+//        try {
+//            Comment comment = commentService.getById(commentId);
+//            CommentDto commentDto = commentMapper.toDto(comment);
+//            model.addAttribute("commentId", commentId);
+//            model.addAttribute("comment", commentDto);
+//            return "CommentUpdateView";
+//        } catch (EntityNotFoundException e) {
+//            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+//            model.addAttribute("error", e.getMessage());
+//            return "ErrorView";
+//        }
+//    }
+//    @GetMapping("/{id}/comment/{commentId}/delete")
+//    public String deleteComment(@PathVariable int id,
+//                                @PathVariable int commentId,
+//                                Model model,
+//                                HttpSession httpSession) {
+//        User user;
+//        Comment comment = commentService.getById(commentId);
+//        try {
+//            user = authenticationHelper.tryGetCurrentUser(httpSession);
+//        } catch (AuthorizationException e) {
+//            return "redirect:/auth/login";
+//        }
+//        try {
+//            commentService.delete(commentId, user);
+//            return "redirect:/posts/" + id;
+//        } catch (EntityNotFoundException e) {
+//            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+//            model.addAttribute("error", e.getMessage());
+//            return "ErrorView";
+//        } catch (AuthorizationException e) {
+//            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
+//            model.addAttribute("error", e.getMessage());
+//            return "redirect:/auth/login";
+//        } catch (UnauthorizedOperationException e) {
+//            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
+//            model.addAttribute("error", e.getMessage());
+//            return "ErrorView";
+//        }
+//    }
+//
+
+
     }
-    @PostMapping("/{id}/comment")
-    public String addComment(@PathVariable int id,
-                             @Valid @ModelAttribute CommentDto commentDto,
-                             Model model,
-                             HttpSession httpSession) {
-        User user;
-        Post post;
-       Comment comment;
-        try {
-            user = authenticationHelper.tryGetCurrentUser(httpSession);
-            comment = commentMapper.fromDto(commentDto);
-            post = postService.getById(id);
-
-            comment.setPost(post);
-            comment.setAuthor(user);
-
-            commentService.create(id, comment, user);
-            return "redirect:/posts/" + id;
-        } catch (AuthorizationException e) {
-            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
-            model.addAttribute("error", e.getMessage());
-            return "redirect:/auth/login";
-        } catch (UnauthorizedOperationException e) {
-            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
-            model.addAttribute("error", e.getMessage());
-            return "ErrorView";
-        }
-    }
-    @PostMapping("/{id}/comment/{commentId}/update")
-    public String updateComment(@PathVariable int id,
-                                @PathVariable int commentId,
-                                @Valid @ModelAttribute CommentDto commentDto,
-                                Model model,
-                                BindingResult result,
-                                HttpSession httpSession) {
-
-        User user;
-        Comment comment;
-
-        try {
-            user = authenticationHelper.tryGetCurrentUser(httpSession);
-        } catch (AuthorizationException e) {
-            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
-            model.addAttribute("error", e.getMessage());
-            return "redirect:/auth/login";
-        }
-        if (result.hasErrors()) {
-            return "CommentUpdateView";
-        }
-
-        try {
-            comment = commentMapper.fromDto(commentId, commentDto);
-            commentService.update(comment, user);
-            return "redirect:/posts/{id}";
-        } catch (UnauthorizedOperationException e) {
-            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
-            model.addAttribute("error", e.getMessage());
-            return "ErrorView";
-        }
-    }
-    @GetMapping("/{id}/comment/{commentId}/update")
-    public String showCommentEditPage(@PathVariable int id,
-                                      @PathVariable int commentId,
-                                      Model model,
-                                      HttpSession httpSession) {
-        try {
-            authenticationHelper.tryGetCurrentUser(httpSession);
-        } catch (AuthorizationException e) {
-            return "redirect:/auth/login";
-        }
-        try {
-            Comment comment = commentService.getById(commentId);
-            CommentDto commentDto = commentMapper.toDto(comment);
-            model.addAttribute("commentId", commentId);
-            model.addAttribute("comment", commentDto);
-            return "CommentUpdateView";
-        } catch (EntityNotFoundException e) {
-            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
-            model.addAttribute("error", e.getMessage());
-            return "ErrorView";
-        }
-    }
-    @GetMapping("/{id}/comment/{commentId}/delete")
-    public String deleteComment(@PathVariable int id,
-                                @PathVariable int commentId,
-                                Model model,
-                                HttpSession httpSession) {
-        User user;
-        Comment comment = commentService.getById(commentId);
-        try {
-            user = authenticationHelper.tryGetCurrentUser(httpSession);
-        } catch (AuthorizationException e) {
-            return "redirect:/auth/login";
-        }
-        try {
-            commentService.delete(commentId, user);
-            return "redirect:/posts/" + id;
-        } catch (EntityNotFoundException e) {
-            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
-            model.addAttribute("error", e.getMessage());
-            return "ErrorView";
-        } catch (AuthorizationException e) {
-            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
-            model.addAttribute("error", e.getMessage());
-            return "redirect:/auth/login";
-        } catch (UnauthorizedOperationException e) {
-            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
-            model.addAttribute("error", e.getMessage());
-            return "ErrorView";
-        }
-    }
-
-
-
 }
 
 

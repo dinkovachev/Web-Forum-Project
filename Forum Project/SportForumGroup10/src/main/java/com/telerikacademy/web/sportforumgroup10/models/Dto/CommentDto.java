@@ -23,8 +23,8 @@ public class CommentDto {
     }
 
 
-    public void setPostId(int postTitle) {
-        this.postId = postTitle;
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
 
 
