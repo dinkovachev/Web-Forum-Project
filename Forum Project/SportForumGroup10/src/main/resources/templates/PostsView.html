@@ -19,8 +19,7 @@
             <ul class="navbar-nav ms-auto py-4 py-lg-0">
                 <li class="nav-item"><a href="#" th:href="@{/}"
                                         class="nav-link px-lg-3 py-3 py-lg-4" th:text="#{navigation.home}">Home</a></li>
-                <li class="nav-item"><a href="#"
-                                        th:href="@{/posts}" class="nav-link px-lg-3 py-3 py-lg-4"
+                <li class="nav-item"><a href="#" th:href="@{/posts}" class="nav-link px-lg-3 py-3 py-lg-4"
                                         th:text="#{navigation.posts}">Browse Posts</a></li>
                 <li class="nav-item"><a href="#" th:unless="${isAuthenticated}"
                                         th:href="@{/auth/login}" class="nav-link px-lg-3 py-3 py-lg-4"
@@ -58,6 +57,48 @@
 </header>
 
 
+
+<div class="body-content">
+    <div th:if="${posts.isEmpty()}">
+        <h2 th:text="#{posts.title.empty}">No Posts</h2>
+    </div>
+    <div th:unless="${posts.isEmpty()}">
+        <h2 th:text="#{posts.title}"> All Posts</h2>
+    </div>
+
+    <div class="table">
+        <div class="header">
+            <div class="header-cell" th:text="#{post.label.title}"> Title</div>
+
+
+
+            <div class="header-cell" th:text="#{post.content}"> Content</div>
+
+            <div class="header-cell" th:text="#{post.comment}"> Comments</div>
+
+            <div class="header-cell" th:text="#{post.label.createdBy.username}"> Created By</div>
+            <div class="header-cell" th:text="#{post.likes}"> Likes</div>
+            <div th:if = "${session.isAdmin}" class="header-cell" th:text="#{post.activity}">Activity</div>
+        </div>
+
+        <div class="rowGroup" th:each="posts: ${posts}">
+            <div class="cell">
+                <a class="link-info" href="#" th:href="@{/posts/{id}(id=${posts.id})}"
+                   th:text="${posts.title}"> Title</a>
+
+
+
+            </div>
+            <div class="cell" th:text="${posts.getContent()}">Content</div>
+            <div class="cell" th:text="${posts.getAuthor()}">Created By</div>
+
+
+
+
+
+
+
+</div>
 <footer th:fragment="footer" class="border-top">
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -88,10 +129,13 @@
                         </a>
                     </li>
                 </ul>
-                <div class="small text-center text-muted fst-italic">Copyright &copy; Sport Forum 10 - 2024</div>
+                <div class="small text-center text-muted fst-italic">Copyright &copy; Sport Forum X - 2024</div>
             </div>
         </div>
     </div>
 </footer>
+    </div>
+</div>
+
 </body>
 </html>

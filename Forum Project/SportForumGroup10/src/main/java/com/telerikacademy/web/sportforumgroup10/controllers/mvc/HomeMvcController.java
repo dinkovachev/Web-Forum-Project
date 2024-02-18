@@ -3,6 +3,7 @@ package com.telerikacademy.web.sportforumgroup10.controllers.mvc;
 import com.telerikacademy.web.sportforumgroup10.exceptions.*;
 import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
 import com.telerikacademy.web.sportforumgroup10.helpers.UserMapper;
+import com.telerikacademy.web.sportforumgroup10.models.Dto.PostDto;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.ProfileDto;
 import com.telerikacademy.web.sportforumgroup10.models.Post;
 import com.telerikacademy.web.sportforumgroup10.models.User;
@@ -122,18 +123,13 @@ public class HomeMvcController {
         }
     }
 
-
-    @GetMapping("/posts")
-    public String showPostPage(){
-        return  "posts";
-    }
-
-//    @GetMapping("/profile")
-//    public String handleProfileDelete(@Valid @ModelAttribute("profileDelete") ProfileDto profileDto,
-//                                      BindingResult bindingResult, HttpSession session) {
-//        User user = authenticationHelper.tryGetCurrentUser(session);
-//        userService.delete(user.getId(), user);
-//        return "redirect:/";
+//
+//    @GetMapping("/posts")
+//    public String showPosts(Model model, HttpSession session) {
+//        authenticationHelper.tryGetCurrentUser(session);
+//        model.addAttribute("posts", new PostDto());
+//        return "PostView";
 //    }
+
 }
 

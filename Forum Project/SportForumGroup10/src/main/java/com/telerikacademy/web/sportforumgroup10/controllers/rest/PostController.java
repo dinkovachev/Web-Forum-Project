@@ -38,13 +38,9 @@ public class PostController {
     public List<Post> getAll(
             @RequestParam(required = false) String createdBy,
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) String content,
-            @RequestParam(required = false) String category,
-            @RequestParam(required = false) String minDate,
-            @RequestParam(required = false) String maxDate,
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String sortOrder) {
-        PostFilterOptions postFilterOptions = new PostFilterOptions(createdBy, title, content, category,minDate, maxDate, sortBy, sortOrder);
+        PostFilterOptions postFilterOptions = new PostFilterOptions(createdBy, title, sortBy, sortOrder);
         return service.getAll(postFilterOptions);
     }
 
