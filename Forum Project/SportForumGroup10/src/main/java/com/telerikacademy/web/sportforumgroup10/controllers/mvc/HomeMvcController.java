@@ -4,6 +4,7 @@ import com.telerikacademy.web.sportforumgroup10.exceptions.*;
 import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
 import com.telerikacademy.web.sportforumgroup10.helpers.UserMapper;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.ProfileDto;
+import com.telerikacademy.web.sportforumgroup10.models.Dto.UserDTO;
 import com.telerikacademy.web.sportforumgroup10.models.Post;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.PostService;
@@ -15,10 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -124,8 +122,8 @@ public class HomeMvcController {
 
 
     @GetMapping("/posts")
-    public String showPostPage(){
-        return  "posts";
+    public String showPostPage() {
+        return "posts";
     }
 
 //    @GetMapping("/profile")
@@ -135,5 +133,7 @@ public class HomeMvcController {
 //        userService.delete(user.getId(), user);
 //        return "redirect:/";
 //    }
+
+
 }
 
