@@ -31,20 +31,22 @@
                                          th:text="#{navigation.createPost}"> Create Post </a></li>
 
 
-                <li class="nav-item"><a href="#" th:unless="${isAuthenticated}"
-                                        th:href="@{/auth/login}" class="nav-link px-lg-3 py-3 py-lg-4"
-                                        th:text="#{navigation.login}">Login</a></li>
-                <li class="nav-item"><a href="#" th:if="${isAuthenticated}"
 
-                                        th:href="@{/auth/logout}" class="nav-link px-lg-3 py-3 py-lg-4"
-                                        th:text="#{navigation.logout}">Logout</a></li>
-                <li class="nav-item"><a href="#" th:unless="${isAuthenticated}"
-                                        th:href="@{/auth/register}" class="nav-link px-lg-3 py-3 py-lg-4"
-                                        th:text="#{navigation.register}">Register</a></li>
+
+
                 <li class="nav-item"><a href="#" th:if="${isAuthenticated}" th:href="@{/profile}" class="nav-link px-lg-3 py-3 py-lg-4"
                                         th:text="#{navigation.profile}">Profile</a></li>
                 <li class="nav-item"><a href="#" th:href="@{/about}" class="nav-link px-lg-3 py-3 py-lg-4"
                                         th:text="#{navigation.about}">About</a></li>
+                <li class="nav-item"><a href="#" th:unless="${isAuthenticated}"
+                                        th:href="@{/auth/register}" class="nav-link px-lg-3 py-3 py-lg-4"
+                                        th:text="#{navigation.register}">Register</a></li>
+                <li class="nav-item"><a href="#" th:unless="${isAuthenticated}"
+                                        th:href="@{/auth/login}" class="nav-link px-lg-3 py-3 py-lg-4"
+                                        th:text="#{navigation.login}">Login</a></li>
+                <li class="nav-item"><a href="#" th:if="${isAuthenticated}"
+                                        th:href="@{/auth/logout}" class="nav-link px-lg-3 py-3 py-lg-4"
+                                        th:text="#{navigation.logout}">Logout</a></li>
                 <li class="nav-item">
                     <div th:if="${isAuthenticated}">
                         <img th:src="'https://icons.veryicon.com/png/o/miscellaneous/8atour/people-23.png'"
