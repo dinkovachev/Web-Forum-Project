@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<form th:replace="~{UserForm.html::head('User Posts')}"></form>
+<form th:replace="~{UserForm.html::head('User Comments')}"></form>
 <body>
 <form th:replace="~{UserForm.html::navigation}"></form>
 <form th:replace="~{UserForm.html::header}"></form>
@@ -19,8 +19,9 @@
         <div class="rowGroup" th:each="comment : ${comments}">
             <div class="cell">
                 <!-- //TODO it doesn't redirect me to the required information-->
-                <a class="link-info" href="#" th:href="@{/users/userComments:{id}(id=${user.id})}"
-                   th:text="${comment.content}">Comments content</a>
+                <h6 th:text="#{post.label.title}">Post Title</h6>
+                <a class="link-info" href="#" th:href="@{/posts/{id}(id=${comment.id})}"
+                   th:text="${comment.title}">Post Title</a>
             </div>
         </div>
     </div>
