@@ -16,9 +16,28 @@
                 <a class="link-info" href="#" th:href="@{/users/userComments:{id}(id=${user.id})}"
                    th:text="#{user.comments}">User comments</a>
             </div>
+
         </div>
+    <h4 th:if="${isAuthenticated && session.isAdmin}" th:text="#{user.admin.operations}">
+        Admin Operations/div>
+    </h4>
+    <form action="#" th:action="@{/users/block:{id}(id=${user.id})}" th:object="${block}" method="post">
+    <input th:if="${isAuthenticated && session.isAdmin}" type="submit" value="Block"/>
+    </form>
+    <form action="#" th:action="@{/users/unblock:{id}(id=${user.id})}" th:object="${unblock}" method="post">
+    <input th:if="${isAuthenticated && session.isAdmin}" type="submit" value="Unblock"/>
+    </form>
+    <form action="#" th:action="@{/users/makeAdmin:{id}(id=${user.id})}" th:object="${makeAdmin}" method="post">
+    <input th:if="${isAuthenticated && session.isAdmin}" type="submit" value="Make Admin"/>
+    </form>
+    <form action="#" th:action="@{/users/unmakeAdmin:{id}(id=${user.id})}" th:object="${unmakeAdmin}" method="post">
+    <input th:if="${isAuthenticated && session.isAdmin}" type="submit" value="Unmake Admin"/>
+    </form>
+    <form action="#" th:action="@{/users/delete:{id}(id=${user.id})}" th:object="${delete}" method="post">
+    <input th:if="${isAuthenticated && session.isAdmin}" type="submit" value="Delete"/>
+    </form>
     </div>
-</div>
+
 <footer th:fragment="footer" class="border-top">
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">

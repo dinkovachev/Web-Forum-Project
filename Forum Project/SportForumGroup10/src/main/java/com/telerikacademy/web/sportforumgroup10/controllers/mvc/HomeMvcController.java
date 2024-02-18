@@ -5,6 +5,7 @@ import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
 import com.telerikacademy.web.sportforumgroup10.helpers.UserMapper;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.PostDto;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.ProfileDto;
+import com.telerikacademy.web.sportforumgroup10.models.Dto.UserDTO;
 import com.telerikacademy.web.sportforumgroup10.models.Post;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.PostService;
@@ -16,10 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -123,6 +121,11 @@ public class HomeMvcController {
         }
     }
 
+
+//    @GetMapping("/posts")
+//    public String showPostPage() {
+//        return "posts";
+//    }
 //
 //    @GetMapping("/posts")
 //    public String showPosts(Model model, HttpSession session) {
@@ -130,6 +133,15 @@ public class HomeMvcController {
 //        model.addAttribute("posts", new PostDto());
 //        return "PostView";
 //    }
+
+//    @GetMapping("/profile")
+//    public String handleProfileDelete(@Valid @ModelAttribute("profileDelete") ProfileDto profileDto,
+//                                      BindingResult bindingResult, HttpSession session) {
+//        User user = authenticationHelper.tryGetCurrentUser(session);
+//        userService.delete(user.getId(), user);
+//        return "redirect:/";
+//    }
+
 
 }
 

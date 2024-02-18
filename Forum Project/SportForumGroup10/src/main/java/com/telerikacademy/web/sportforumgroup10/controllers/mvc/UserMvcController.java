@@ -1,5 +1,6 @@
 package com.telerikacademy.web.sportforumgroup10.controllers.mvc;
 
+import com.telerikacademy.web.sportforumgroup10.exceptions.AuthorizationException;
 import com.telerikacademy.web.sportforumgroup10.exceptions.EntityNotFoundException;
 import com.telerikacademy.web.sportforumgroup10.helpers.AuthenticationHelper;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.UserFilterDto;
@@ -9,14 +10,12 @@ import com.telerikacademy.web.sportforumgroup10.services.Contracts.PostService;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/users")
@@ -97,6 +96,76 @@ public class UserMvcController {
         } catch (EntityNotFoundException e){
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
+            return "ErrorView";
+        }
+    }
+
+    @PostMapping("/block:{id}")
+    public String handleUserBlock(@PathVariable int id, @ModelAttribute("block") User user, Model model,
+                                  HttpSession session) {
+        User userModifier = authenticationHelper.tryGetCurrentUser(session);
+        try {
+            userService.blockUser(id, userModifier);
+            return "redirect:/users";
+        } catch (AuthorizationException e) {
+            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
+            model.addAttribute("error", "Not authorized");
+            return "ErrorView";
+        }
+    }
+
+    @PostMapping("/unblock:{id}")
+    public String handleUserUnblock(@PathVariable int id, @ModelAttribute("unblock") User user, Model model,
+                                  HttpSession session) {
+        User userModifier = authenticationHelper.tryGetCurrentUser(session);
+        try {
+            userService.unblockUser(id, userModifier);
+            return "redirect:/users";
+        } catch (AuthorizationException e) {
+            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
+            model.addAttribute("error", "Not authorized");
+            return "ErrorView";
+        }
+    }
+
+    @PostMapping("/makeAdmin:{id}")
+    public String handleUserMakeAdmin(@PathVariable int id, @ModelAttribute("makeAdmin") User user, Model model,
+                                    HttpSession session) {
+        User userModifier = authenticationHelper.tryGetCurrentUser(session);
+        try {
+            userService.makeUserAdmin(id, userModifier);
+            return "redirect:/users";
+        } catch (AuthorizationException e) {
+            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
+            model.addAttribute("error", "Not authorized");
+            return "ErrorView";
+        }
+    }
+
+    @PostMapping("/unmakeAdmin:{id}")
+    public String handleUserUnMakeAdmin(@PathVariable int id, @ModelAttribute("unmakeAdmin") User user, Model model,
+                                      HttpSession session) {
+        User userModifier = authenticationHelper.tryGetCurrentUser(session);
+        try {
+            userService.unmakeUserAdmin(id, userModifier);
+            return "redirect:/users";
+        } catch (AuthorizationException e) {
+            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
+            model.addAttribute("error", "Not authorized");
+            return "ErrorView";
+        }
+    }
+
+    @PostMapping("/delete:{id}")
+    public String handleUserDelete(@PathVariable int id, @ModelAttribute("delete") User user, Model model,
+                                      HttpSession session) {
+        User userModifier = authenticationHelper.tryGetCurrentUser(session);
+        try {
+            userService.delete(id, userModifier);
+            return "redirect:/users";
+        } catch (AuthorizationException e) {
+            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
+            model.addAttribute("error", "Not authorized");
             return "ErrorView";
         }
     }

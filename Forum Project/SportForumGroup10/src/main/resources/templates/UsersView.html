@@ -52,30 +52,32 @@
         <h2 th:text="#{users.title}">All Users</h2>
     </div>
 
-    <!-- TODO update the logic when the user is admin to see all this but if it is not admin to see only FirstName, LastName, Username-->
+
     <div class="table">
         <div class="header">
             <div class="header-cell" th:text="#{user.username}">Username</div>
             <div class="header-cell" th:text="#{user.firstName}">First Name</div>
             <div class="header-cell" th:text="#{user.lastName}">Last Name</div>
             <div class="header-cell" th:text="#{user.email}">Email</div>
-            <div th:if = "${session.isAdmin}" class="header-cell" th:text="#{user.blocked}">Blocked</div>
-            <div th:if = "${session.isAdmin}" class="header-cell" th:text="#{user.deleted}">Deleted</div>
-            <div th:if = "${session.isAdmin}" class="header-cell" th:text="#{user.admin}">Admin</div>
+            <div th:if="${isAuthenticated && session.isAdmin}" class="header-cell" th:text="#{user.blocked}">Blocked
+            </div>
+            <div th:if="${isAuthenticated && session.isAdmin}" class="header-cell" th:text="#{user.deleted}">Deleted
+            </div>
+            <div th:if="${isAuthenticated && session.isAdmin}" class="header-cell" th:text="#{user.admin}">Admin</div>
         </div>
 
-        <div class="rowGroup" th:each="user : ${users}">
-            <div class="cell">
-                <a class="link-info" href="#" th:href="@{/users/{id}(id=${user.id})}"
-                   th:text="${user.username}">Username</a>
-
+            <div class="rowGroup" th:each="user : ${users}">
+                <div class="cell">
+                    <a class="link-info" href="#" th:href="@{/users/{id}(id=${user.id})}"
+                       th:text="${user.username}">Username</a>
+                </div>
+                <div class="cell" th:text="${user.firstName}">First Name</div>
+                <div class="cell" th:text="${user.lastName}">Last Name</div>
+                <div class="cell" th:text="${user.email}">Email</div>
+                <div th:if="${isAuthenticated && session.isAdmin}" class="cell" th:text="${user.blocked}">Blocked</div>
+                <div th:if="${isAuthenticated && session.isAdmin}" class="cell" th:text="${user.deleted}">Deleted</div>
+                <div th:if="${isAuthenticated && session.isAdmin}" class="cell" th:text="${user.admin}">Admin</div>
             </div>
-            <div class="cell" th:text="${user.firstName}">First Name</div>
-            <div class="cell" th:text="${user.lastName}">Last Name</div>
-            <div class="cell" th:text="${user.email}">Email</div>
-            <div th:if = "${session.isAdmin}" class="cell" th:text="${user.blocked}">Blocked</div>
-            <div th:if = "${session.isAdmin}" class="cell" th:text="${user.deleted}">Deleted</div>
-            <div th:if = "${session.isAdmin}" class="cell" th:text="${user.admin}">Admin</div>
         </div>
     </div>
 </div>
