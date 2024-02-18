@@ -1,35 +1,40 @@
 package com.telerikacademy.web.sportforumgroup10.models;
 
 import java.util.Optional;
+
 public class PostFilterOptions {
     private Optional<String> createdBy;
     private Optional<String> title;
     private Optional<String> content;
-    private Optional<String> category;
-    private Optional<String> minDate;
-    private Optional<String> maxDate;
+    private Optional<String> comment;
     private Optional<String> sortBy;
-    private Optional<String> sortOrder;
+    private Optional<String> orderBy;
 
     public PostFilterOptions(
             String createdBy,
             String title,
             String content,
-            String category,
-            String minDate,
-            String maxDate,
             String sortBy,
-            String sortOrder
+            String orderBy
     ) {
         this.createdBy = Optional.ofNullable(createdBy);
         this.title = Optional.ofNullable(title);
         this.content = Optional.ofNullable(content);
-        this.category=Optional.ofNullable(category);
-        this.minDate=Optional.ofNullable(minDate);
-        this.maxDate=Optional.ofNullable(maxDate);
         this.sortBy = Optional.ofNullable(sortBy);
-        this.sortOrder = Optional.ofNullable(sortOrder);
+        this.orderBy = Optional.ofNullable(orderBy);
     }
+
+    public PostFilterOptions(
+            String title,
+            String createdBy,
+            String sortBy,
+            String orderBy) {
+        this.createdBy = Optional.ofNullable(createdBy);
+        this.title = Optional.ofNullable(title);
+        this.sortBy = Optional.ofNullable(sortBy);
+        this.orderBy = Optional.ofNullable(orderBy);
+    }
+
 
     public Optional<String> getCreatedBy() {
         return createdBy;
@@ -43,23 +48,11 @@ public class PostFilterOptions {
         return content;
     }
 
-    public Optional<String> getCategory() {
-        return category;
-    }
-
-    public Optional<String> getMinDate() {
-        return minDate;
-    }
-
-    public Optional<String> getMaxDate() {
-        return maxDate;
-    }
-
     public Optional<String> getSortBy() {
         return sortBy;
     }
 
-    public Optional<String> getSortOrder() {
-        return sortOrder;
+    public Optional<String> getOrderBy() {
+        return orderBy;
     }
 }

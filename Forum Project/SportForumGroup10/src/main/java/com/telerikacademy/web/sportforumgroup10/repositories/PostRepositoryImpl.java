@@ -32,60 +32,29 @@ public class PostRepositoryImpl implements PostRepository {
         try (Session session = sessionFactory.openSession()) {
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
-
-            DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-                    .appendPattern("yyyy-MM-dd[ HH:mm:ss]")
-                    .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
-                    .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
-                    .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
-                    .toFormatter();
+            StringBuilder queryString = new StringBuilder("FROM Post");
 
             postFilterOptions.getTitle().ifPresent(value -> {
                 filters.add("title like :title");
                 params.put("title", String.format("%%%s%%", value));
             });
 
-
-            postFilterOptions.getContent().ifPresent(value -> {
-                filters.add("content like :content");
-                params.put("content", String.format("%%%s%%", value));
-            });
-
-
             postFilterOptions.getCreatedBy().ifPresent(value -> {
                 filters.add("createdBy.username like :createdBy");
                 params.put("createdBy", String.format("%%%s%%", value));
             });
 
-            postFilterOptions.getMinDate().ifPresent(value -> {
-                if (!value.isEmpty()) {
-                    filters.add("createdAt >= :minDate");
-                    params.put("minDate", LocalDateTime.parse(value, formatter));
-                }
-            });
-
-            postFilterOptions.getMaxDate().ifPresent(value -> {
-                if (!value.isEmpty()) {
-                    filters.add("createdAt <= :maxDate");
-                    params.put("maxDate", LocalDateTime.parse(value, formatter));
-                }
-            });
-
-
-            StringBuilder queryString = new StringBuilder("FROM Post");
 
             if (!filters.isEmpty()) {
                 queryString.append(" where ").append(String.join(" and ", filters));
             }
+            queryString.append(generateOrderBy(postFilterOptions));
 
-            if (postFilterOptions.getSortBy().isPresent()) {
-                if (!postFilterOptions.getSortBy().get().isEmpty()) {
-                    queryString.append(generateOrderBy(postFilterOptions));
-                }
-            }
             Query<Post> query = session.createQuery(queryString.toString(), Post.class);
             query.setProperties(params);
             return query.list();
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException("Post not found");
         }
     }
 
@@ -99,14 +68,18 @@ public class PostRepositoryImpl implements PostRepository {
             case "title":
                 orderBy = "title";
                 break;
-            case "content":
-                orderBy = "content";
+            case "username":
+                orderBy = "username";
+                break;
+            default:
+                return "";
 
         }
 
         orderBy = String.format(" order by %s", orderBy);
 
-        if (postFilterOptions.getSortOrder().isPresent() && postFilterOptions.getSortOrder().get().equalsIgnoreCase("desc")) {
+        if (postFilterOptions.getOrderBy().isPresent()
+                && postFilterOptions.getOrderBy().get().equalsIgnoreCase("desc")) {
             orderBy = String.format("%s desc", orderBy);
         }
 

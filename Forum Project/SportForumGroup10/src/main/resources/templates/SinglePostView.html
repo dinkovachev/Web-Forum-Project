@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<form th:replace="~{UserForm.html::head('Username')}"></form>
+<body>
+<form th:replace="~{UserForm.html::navigation}"></form>
+<form th:replace="~{UserForm.html::header}"></form>
+
+
+
+<div class="body-content" th:text="${post.title}"></div>
+        <p class="margin12" th:text="#{post.label.createdBy.username} + ': ' + ${post.getAuthor().getUsername()}">
+            created by</p>
+
+<section class="page-section bg-light" id="about">
+    <div class="container">
+        <div class="text-center-content">
+            <span th:text="${post.content}"></span>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <div class="body-content">
+                <div class="table-all">
+<!--                    <h3>-->
+<!--                        <a class="btn btn-primary btn-xl text-uppercase"-->
+<!--                           th:if="${session.currentUser eq post.getAuthor().getUsername() or session.isAdmin}"-->
+<!--                           th:href="@{__${requestURI}__/update}">Update</a>-->
+<!--                        <a class="btn btn-primary btn-xl text-uppercase"-->
+<!--                           th:if="${session.currentUser eq post.getAuthor().getUsername() or session.isAdmin}"-->
+<!--                           th:href="@{__${requestURI}__/delete}">Delete</a>-->
+<!--                    </h3>-->
+<!--                   -->
+                    <script>
+                        var btnvar = document.getElementById('btnh');
+
+                        function Toggle() {
+                            if (btnvar.style.color === "red") {
+                                btnvar.style.color = "grey"
+                            } else {
+                                btnvar.style.color = "red"
+                            }
+                        }
+                    </script>
+                </div>
+                <p class="replies" th:text="'Replies: ' + ${post.getComments().size()}"></p>
+                <p class="data-published" th:text="'Published on: ' + ${post.getCreatedAt()}"></p>
+            </div>
+        </div>
+        <div th:if="${post.comments.isEmpty()}">
+            <h2 th:text="#{post.comment.empty}">No Comments</h2>
+        </div>
+        <div th:unless="${post.comments.isEmpty()}">
+            <h2 class="replies">Replies</h2>
+        </div>
+        <div class="row-tables" th:each="comment : ${post.comments}">
+
+            <div class="text-center-comment bg-dark">
+                <div class="comment-createdBy">
+                    <h4 class="subheading text-primary"
+                        th:text="${comment.getAuthor().getFirstName()} +' '+ ${ comment.getAuthor().getLastName()}"></h4>
+                </div>
+                <p class="comment-leave text-light" th:text="${comment.getContent()}"></p>
+                <h3>
+                    <a class="btn btn-primary btn-xl text-uppercase" href="#"
+                       th:if="${session.currentUser eq comment.getAuthor().getUsername()}"
+                       th:href="@{{id}/comment/{commentId}/update(id=${post.id}, commentId=${comment.id})}">Update</a>
+                    <a class="btn btn-primary btn-xl text-uppercase" href="#"
+                       th:if="${session.currentUser eq comment.getAuthor().getUsername() or session.isAdmin}"
+                       th:href="@{{id}/comment/{commentId}/delete(id=${post.id}, commentId=${comment.id})}">Delete</a>
+                </h3>
+            </div>
+        </div>
+
+
+</div>
+<footer th:fragment="footer" class="border-top">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <ul class="list-inline text-center">
+                    <li class="list-inline-item">
+                        <a href="#">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                                    </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="small text-center text-muted fst-italic">Copyright &copy; Sport Forum X - 2024</div>
+            </div>
+        </div>
+    </div>
+</footer>
+</section>
+</body>
+</html>

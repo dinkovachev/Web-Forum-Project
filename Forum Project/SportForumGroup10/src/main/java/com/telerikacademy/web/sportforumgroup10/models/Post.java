@@ -52,8 +52,17 @@ public class Post {
         return content;
     }
 
+
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 
     public LocalDateTime getCreatedAt() {

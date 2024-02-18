@@ -46,7 +46,8 @@ public class UserMvcController {
 
     @GetMapping
     public String showAllUsers(@ModelAttribute("userFilterOptions") UserFilterDto userFilterDto, Model model) {
-        UserFilterOptions userFilterOptions = new UserFilterOptions(userFilterDto.getFirstName(),
+        UserFilterOptions userFilterOptions = new UserFilterOptions(
+                userFilterDto.getFirstName(),
                 userFilterDto.getUsername(), userFilterDto.getEmail(),
                 userFilterDto.getSortBy(), userFilterDto.getOrderBy());
         model.addAttribute("users", userService.getAllUsers(userFilterOptions));
