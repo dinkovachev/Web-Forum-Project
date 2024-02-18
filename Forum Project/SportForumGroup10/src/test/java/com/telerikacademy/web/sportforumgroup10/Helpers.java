@@ -4,6 +4,7 @@ import com.telerikacademy.web.sportforumgroup10.models.Post;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.models.UserFilterOptions;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Helpers {
@@ -33,7 +34,7 @@ public class Helpers {
         mockPost.setId(1);
         mockPost.setTitle("MockTitle");
         mockPost.setContent("MockContent");
-        mockPost.setCreatedAt(LocalDateTime.parse("15.02.2024"));
+        mockPost.setCreatedAt(Timestamp.valueOf(LocalDateTime.parse("15.02.2024")));
         mockPost.setDeleted(false);
         mockPost.setAuthor(mockUser);
         return mockPost;

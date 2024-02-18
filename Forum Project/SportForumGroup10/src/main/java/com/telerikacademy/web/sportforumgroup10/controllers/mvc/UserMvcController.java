@@ -87,7 +87,6 @@ public class UserMvcController {
         try {
             User user = userService.getById(id);
             model.addAttribute("user", user);
-
             model.addAttribute("comments",user.getUsersComments());
             return "UserCommentsView";
 
