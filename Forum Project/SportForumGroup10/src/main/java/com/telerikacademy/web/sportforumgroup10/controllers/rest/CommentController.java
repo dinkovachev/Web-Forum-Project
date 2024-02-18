@@ -57,14 +57,15 @@ public class CommentController {
         }
     }
 
-    @PostMapping()
-    public Comment create(@RequestHeader HttpHeaders headers, @Valid @RequestBody CommentDto commentDto) {
+    @PostMapping("/{id}")
+    public Comment create(@RequestHeader HttpHeaders headers, @Valid @RequestBody CommentDto commentDto,
+                          @PathVariable int id) {
         try {
             User user =  authenticationHelper.tryGetUser(headers);
             checkIsUserBlocked(user);
-            Comment comment = commentMapper.fromDtoIn(commentDto);
+            Comment comment = commentMapper.fromDto(commentDto);
             comment.setAuthor(user);
-            return commentService.create(comment, user);
+            return commentService.create(id,comment, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (EntityDuplicateException e) {
@@ -75,11 +76,14 @@ public class CommentController {
     }
 
     @PutMapping("/{commentId}")
-    public Comment update(@RequestHeader HttpHeaders headers, @Valid @RequestBody CommentDto commentDto, @PathVariable int commentId) {
+    public Comment update(@RequestHeader HttpHeaders headers,
+                          @Valid @RequestBody CommentDto commentDto,
+                          @PathVariable int commentId) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
+            Comment comment = commentMapper.fromDto(commentId, commentDto);
             checkIsUserBlocked(user);
-            return commentService.update(commentDto, user, commentId);
+            return commentService.update(comment, user);
         } catch (EntityNotFoundException e) {
            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {
