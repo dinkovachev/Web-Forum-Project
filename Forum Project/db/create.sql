@@ -39,7 +39,7 @@ create table posts
         primary key,
     title      varchar(64)   not null,
     content    varchar(8192) not null,
-    time_stamp datetime      not null,
+    time_stamp timestamp      not null,
     is_deleted tinyint(1)    not null,
     author_id  int           not null,
     constraint author_id

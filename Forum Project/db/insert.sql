@@ -18,8 +18,12 @@ INSERT INTO forum.admins (admin_id, user_id, phone_number) VALUES (1, 1, '087712
 INSERT INTO forum.admins (admin_id, user_id, phone_number) VALUES (2, 8, null);
 INSERT INTO forum.admins (admin_id, user_id, phone_number) VALUES (3, 11, '0887649598');
 
+INSERT INTO forum.posts (post_id, title, content, time_stamp, is_deleted, author_id) VALUES (1, 'Will Leeds be relegated?', 'Leeds are beginning the season very strongly.
+It reminds me Olympique de Marseille with Bielsa. They were on top of the french league for months and they finished exhausted and finally finished in 3rd place.
+I can\'t imagine Leeds being that strong all season. I think they will get exhausted and will have a very difficult second part of the season.
+They may be relegated...
 
-INSERT INTO forum.posts (post_id, title, content, time_stamp, is_deleted, author_id) VALUES (1, 'Post 1 Title', 'Content of post 1...', '2024-01-24 11:45:52', 0, 8);
+What do you think?', '2024-01-24 11:45:52', 0, 8);
 INSERT INTO forum.posts (post_id, title, content, time_stamp, is_deleted, author_id) VALUES (2, 'Post 2 Title', 'Content of post 2...', '2024-01-23 10:46:52', 0, 11);
 INSERT INTO forum.posts (post_id, title, content, time_stamp, is_deleted, author_id) VALUES (3, 'Post 3 Title', 'Content of post 3...', '2024-01-22 15:47:52', 0, 10);
 INSERT INTO forum.posts (post_id, title, content, time_stamp, is_deleted, author_id) VALUES (4, 'Post 4 Title', 'Content of post 4...', '2024-01-21 16:48:52', 0, 6);
@@ -31,10 +35,8 @@ INSERT INTO forum.posts (post_id, title, content, time_stamp, is_deleted, author
 INSERT INTO forum.posts (post_id, title, content, time_stamp, is_deleted, author_id) VALUES (10, 'Post 10 Title', 'Content of post 10...', '2023-12-29 08:05:37', 1, 4);
 INSERT INTO forum.posts (post_id, title, content, time_stamp, is_deleted, author_id) VALUES (11, 'Post 11 Title', 'Content of post 11...', '2024-01-25 12:06:05', 0, 1);
 INSERT INTO forum.posts (post_id, title, content, time_stamp, is_deleted, author_id) VALUES (12, 'Post 12 Title', 'Content of post 11...', '2023-02-07 11:06:34', 0, 5);
-
-
-INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (1, 'Comment 1 for post 1...', '2024-01-24 11:45:52', 0, 11, 7);
-INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (2, 'Comment 2 for post 1...', '2024-01-24 11:45:52', 0, 3, 8);
+INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (1, 'Think they will finish midtable personally. Bielsa\'s teams have tired as the season goes on and others will wisen up to how they play.', '2024-01-24 11:45:52', 1, 11, 1);
+INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (2, 'No chance, they are way too good.', '2024-01-24 11:45:52', 0, 3, 1);
 INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (3, 'Comment 1 for post 2...', '2024-01-24 11:45:52', 0, 12, 9);
 INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (4, 'Comment 2 for post 2...', '2024-01-24 11:45:52', 0, 1, 10);
 INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (5, 'Comment 1 for post 3...', '2024-01-24 11:45:52', 0, 11, 11);
@@ -44,7 +46,7 @@ INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_
 INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (9, 'Comment 1 for post 5...', '2024-01-24 11:45:52', 0, 5, 9);
 INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (10, 'Comment 2 for post 5...', '2024-01-24 11:45:52', 0, 7, 10);
 INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (11, 'Comment 1 for post 6...', '2024-01-24 11:45:52', 0, 9, 1);
-INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (12, 'Comment 2 for post 6...', '2024-01-24 11:45:52', 0, 10, 1);
+INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (12, 'Comment 2 for post 6...', '2024-01-24 11:45:52', 1, 10, 1);
 
 INSERT INTO forum.users_posts(user_id, post_id) VALUES(1,11);
 INSERT INTO forum.users_posts(user_id, post_id) VALUES(2,7);

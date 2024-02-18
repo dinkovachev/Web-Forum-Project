@@ -7,6 +7,8 @@ import com.telerikacademy.web.sportforumgroup10.services.Contracts.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Component
@@ -25,7 +27,7 @@ public class PostMapper {
          post.setTitle(postDto.getTitle());
          post.setContent(postDto.getContent());
          post.setAuthor(creator);
-         post.setCreatedAt(LocalDateTime.now());
+         post.setCreatedAt(Timestamp.from(Instant.now()));
          return post;
 
      }
@@ -36,6 +38,14 @@ public class PostMapper {
         post.setContent(dto.getContent());
 
         return post;
+    }
+    public Post fromDto(int id, PostDto dto) {
+        Post existingPost = postService.getById(id);
+
+        existingPost.setTitle(dto.getTitle());
+        existingPost.setContent(dto.getContent());
+
+        return existingPost;
     }
 
     public PostDto toDto(Post post) {

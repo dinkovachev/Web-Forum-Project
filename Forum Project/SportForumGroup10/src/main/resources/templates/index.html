@@ -95,10 +95,10 @@
                                 <!-- Add header information if needed -->
                                 </thead>
                                 <tbody>
-                                <div class="divider"></div>
+                                <div class="divider">
                                 <tr th:each="post : ${recentlyAddedPosts}" class="row-tables">
                                     <td class="cell">
-                                        <a href="#" th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}">Post</a>
+                                        <a href="#" th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.getTitle()}">Post</a>
                                     </td>
                                     <td class="cell">
                                         <img th:src="'https://icons.veryicon.com/png/o/miscellaneous/8atour/people-23.png'"
@@ -106,6 +106,7 @@
                                         <span th:text="${post.getAuthor().getUsername()}">user@gmail.com</span>
                                     </td>
                                 </tr>
+                                </div>
                                 </tbody>
                             </table>
                         </div>

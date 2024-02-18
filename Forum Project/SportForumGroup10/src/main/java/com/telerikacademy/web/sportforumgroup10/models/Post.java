@@ -1,6 +1,8 @@
 package com.telerikacademy.web.sportforumgroup10.models;
 
+import com.sun.jna.platform.win32.Sspi;
 import jakarta.persistence.*;
+import java.sql.Timestamp;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -19,7 +21,7 @@ public class Post {
     @Column(name="content")
     private String content;
     @Column(name = "time_stamp")
-    private LocalDateTime createdAt;
+    private Timestamp createdAt;
     @Column(name = "is_deleted")
     private boolean isDeleted;
     @ManyToOne
@@ -65,11 +67,11 @@ public class Post {
         this.comments = comments;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAdd) {
+    public void setCreatedAt(Timestamp createdAdd) {
         this.createdAt = createdAdd;
     }
 
