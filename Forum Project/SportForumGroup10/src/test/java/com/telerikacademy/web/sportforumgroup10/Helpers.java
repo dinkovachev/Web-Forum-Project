@@ -36,7 +36,6 @@ public class Helpers {
         mockPost.setId(1);
         mockPost.setTitle("MockTitle");
         mockPost.setContent("MockContent");
-        mockPost.setCreatedAt(Timestamp.valueOf("15.02.2024"));
         mockPost.setDeleted(false);
         mockPost.setAuthor(mockUser);
         return mockPost;

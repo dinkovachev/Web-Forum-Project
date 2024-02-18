@@ -42,6 +42,7 @@ public class AuthenticationMvcController {
 
     @GetMapping("/login")
     public String showLoginPage(Model model) {
+
         model.addAttribute("login", new LoginDto());
         return "LoginView";
     }
@@ -50,19 +51,25 @@ public class AuthenticationMvcController {
     public String handleLogin(@Valid @ModelAttribute("login") LoginDto loginDto,
                               BindingResult bindingResult,
                               HttpSession session) {
+
         if (bindingResult.hasErrors()) {
             return "LoginView";
         }
+
         try {
-            User user = authenticationHelper.verifyAuthentication(loginDto.getUsername(), loginDto.getPassword());
-            session.setAttribute("currentUser", user.getUsername());
-            session.setAttribute("userId", user.getId());
-            session.setAttribute("firstName", user.getFirstName());
-            session.setAttribute("lastName", user.getLastName());
-            session.setAttribute("email", user.getEmail());
-            session.setAttribute("isAdmin", user.isAdmin());
-            session.setAttribute("isBlocked", user.isBlocked());
-            session.setAttribute("isDeleted",user.isDeleted());
+           User user = authenticationHelper.verifyAuthentication(loginDto.getUsername(), loginDto.getPassword());
+            if (user.isDeleted() || user.isBlocked()){
+                return "redirect:/";
+            } else {
+                session.setAttribute("currentUser", user.getUsername());
+                session.setAttribute("userId", user.getId());
+                session.setAttribute("firstName", user.getFirstName());
+                session.setAttribute("lastName", user.getLastName());
+                session.setAttribute("email", user.getEmail());
+                session.setAttribute("isAdmin", user.isAdmin());
+                session.setAttribute("isBlocked", user.isBlocked());
+                session.setAttribute("isDeleted", user.isDeleted());
+            }
             return "redirect:/";
             //ToDo should be authentication exception
         } catch (AuthorizationException e) {
