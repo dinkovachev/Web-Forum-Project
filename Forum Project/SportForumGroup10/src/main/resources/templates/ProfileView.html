@@ -35,8 +35,12 @@
         <label class="label-error" th:errors="*{password}">Password error placeholder</label>
         <br/><br/>
         <input type="submit" value="Update" />
+    </form>
+    <br/>
+    <form action="#" th:action="@{/profileDelete}" th:object="${profileDelete}" method="get">
         <input type="submit" value="Delete Account" />
     </form>
+
 </div>
 <footer th:fragment="footer" class="border-top">
     <div class="container px-4 px-lg-5">
