@@ -10,7 +10,6 @@ import com.telerikacademy.web.sportforumgroup10.services.Contracts.PostService;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -88,7 +87,6 @@ public class UserMvcController {
         try {
             User user = userService.getById(id);
             model.addAttribute("user", user);
-
             model.addAttribute("comments",user.getUsersComments());
             return "UserCommentsView";
 
@@ -169,6 +167,4 @@ public class UserMvcController {
             return "ErrorView";
         }
     }
-
-
 }

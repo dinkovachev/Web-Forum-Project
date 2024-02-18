@@ -157,7 +157,7 @@ Provide a link to a GitHub repository with the following information in the READ
 
 · Project description
 
-· Link to the Swagger documentation (must)
+· Link to the Swagger documentation - http://localhost:8080/swagger-ui/index.html#/
 
 · Link to the hosted project (if hosted online)
 

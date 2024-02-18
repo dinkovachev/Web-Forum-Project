@@ -30,11 +30,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.getAllUsers(filterOptions);
     }
 
-    //TODO maybe no need only admins to search by id, firstName, email, username
-    // as it is mentioned in the requirements admin section
     @Override
     public User getById(int id) {
-//        checkAccessPermissionId(id, user);
         return userRepository.getById(id);
     }
 
@@ -86,9 +83,6 @@ public class UserServiceImpl implements UserService {
         validateEmail(user, userToUpdate);
         validatePassword(user, userToUpdate);
 
-//        userToUpdate.setLastName(user.getLastName());
-//        userToUpdate.setEmail(user.getEmail());
-//        userToUpdate.setPassword(user.getPassword());
         //        TODO double check how to do the phone number field
 //        userToUpdate.setPhoneNumber(user.getPhoneNumber);
         return userRepository.update(userToUpdate);
@@ -187,6 +181,7 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public long getUserCount() {
+
         return userRepository.getUserCount();
     }
 
