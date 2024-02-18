@@ -18,11 +18,7 @@
                                 <p th:text="${post.getTitle()}">Title</p>
                                 </strong>
 
-                                <div class="tx-22 text-muted">
-                                    <img th:src="'https://icons.veryicon.com/png/o/miscellaneous/8atour/people-23.png'"
-                                         alt="Creator Icon" width="20" height="20">
-                                    <span th:text="${post.getAuthor().username}">Author</span>
-                                </div>
+
 
                             </div>
                         </div>
@@ -31,7 +27,7 @@
                                      th:if="${post.author.equals(post.getAuthor())==true ||post.getAuthor().isAdmin() ==true }">
 
                                         <form action="#" th:action="@{/{id}/update}" th:object="${update}" method="post">
-                                            <input type="submit" value="Update" />
+                                            <input type="submit" value="  Edit  " />
                                         </form>
 
                                     <form action="#" th:action="@{/{id}/delete}" th:object="${delete}" method="get">
@@ -39,7 +35,13 @@
                                     </form>
 
 
+
                                     </div>
+                                     <div class="tx-22 text-muted">
+                                    <img th:src="'https://icons.veryicon.com/png/o/miscellaneous/8atour/people-23.png'"
+                                         alt="Creator Icon" width="20" height="20">
+                                    <span th:text="${post.getAuthor().username}">Author</span>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -51,6 +53,13 @@
                             <p class="mb-3 tx-14" th:text="${post.content}">Content</p>
                         </div>
 
+            <div class="tx-22 text-muted">
+                <p th:text="${#dates.format(post.createdAt, 'dd-MM-yyyy HH:mm  ')}">CreatedAt</p>
+
+
+
+
+
                    <div class="card-footer" th:if="${isAuthenticated}">
                     <div class="d-flex post-actions">
                         <form th:action="@{/posts/{postId}/like(postId=${post.getId()})}"
@@ -58,15 +67,6 @@
                             <input type="hidden" th:value="'posts/' + ${post.getId()}" name="path">
                             <button type="submit" class="d-flex align-items-center text-muted me-4"
                                     style="background: none; padding: 0; border: none">
-
-
-
-
-
-
-                                <div class="tx-22 text-muted">
-                                    <p th:text="${#dates.format(post.createdAt, 'dd-MM-yyyy HH:mm  ')}">CreatedAt</p>
-
 
 
                             </button>
