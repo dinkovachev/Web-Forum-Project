@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="posts")
@@ -59,8 +60,10 @@ public class Post {
         this.content = content;
     }
 
+
     public Set<Comment> getComments() {
-        return comments;
+        //todo remove dirty fix
+        return comments.stream().filter(comment -> !comment.isDeleted()).collect(Collectors.toSet());
     }
 
     public void setComments(Set<Comment> comments) {

@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@RequestMapping("/comment")
+@RequestMapping("/post/{postId}/comment")
 public class CommentMvcController {
 
     private final PostService postService;
@@ -56,8 +56,8 @@ public class CommentMvcController {
     }
 
 
-    @PostMapping("/{id}")
-    public String addComment(@PathVariable int id,
+    @PostMapping
+    public String addComment(@PathVariable int postId,
                              @Valid @ModelAttribute CommentDto commentDto,
                              Model model,
                              HttpSession httpSession) {
@@ -68,15 +68,15 @@ public class CommentMvcController {
         try {
             user = authenticationHelper.tryGetCurrentUser(httpSession);
             //todo fix next line in html
-            commentDto.setPostId(id);
+            commentDto.setPostId(postId);
             comment = commentMapper.fromDto(commentDto);
-            post = postService.getById(id);
+            post = postService.getById(postId);
 
             comment.setPost(post);
             comment.setAuthor(user);
 
-            commentService.create(id, comment, user);
-            return "redirect:/posts/" + id;
+            commentService.create(postId, comment, user);
+            return "redirect:/posts/" + postId;
         } catch (AuthorizationException e) {
             model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
@@ -141,8 +141,8 @@ public class CommentMvcController {
             return "ErrorView";
         }
     }
-    @GetMapping("/{id}/comment/{commentId}/delete")
-    public String deleteComment(@PathVariable int id,
+    @GetMapping("/{commentId}/delete")
+    public String deleteComment(@PathVariable int postId,
                                 @PathVariable int commentId,
                                 Model model,
                                 HttpSession httpSession) {
@@ -155,7 +155,7 @@ public class CommentMvcController {
         }
         try {
             commentService.delete(commentId, user);
-            return "redirect:/posts/" + id;
+            return "redirect:/posts/" + postId;
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());

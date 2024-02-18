@@ -72,7 +72,7 @@ public class PostMvcController {
     public String showSinglePost(@PathVariable int id, Model model) {
         try {
             model.addAttribute("post", postService.getById(id));
-            model.addAttribute("comment", new CommentDto());
+            model.addAttribute("newComment", new CommentDto());
             return "SinglePostView";
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());

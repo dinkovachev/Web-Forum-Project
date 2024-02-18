@@ -47,6 +47,9 @@ public class PostRepositoryImpl implements PostRepository {
 
             if (!filters.isEmpty()) {
                 queryString.append(" where ").append(String.join(" and ", filters));
+                queryString.append(" isDeleted=false ");
+            } else {
+                queryString.append(" where isDeleted=false ");
             }
             queryString.append(generateOrderBy(postFilterOptions));
 
@@ -141,6 +144,7 @@ public class PostRepositoryImpl implements PostRepository {
         try (Session session = sessionFactory.openSession()) {
             Query<Post> query = session.createQuery("SELECT p " +
                     "FROM Post p " +
+                    "WHERE  p.isDeleted=false " +
                     "ORDER BY SIZE(p.comments) DESC", Post.class
             );
 
@@ -154,6 +158,7 @@ public class PostRepositoryImpl implements PostRepository {
         try (Session session = sessionFactory.openSession()) {
             Query<Post> query = session.createQuery("SELECT p " +
                     "FROM Post p " +
+                    "WHERE  p.isDeleted=false " +
                     "ORDER BY p.createdAt DESC", Post.class
             );
             query.setMaxResults(10);
@@ -172,10 +177,8 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public long getPostCount() {
         try (Session session = sessionFactory.openSession()) {
-            String hql = "SELECT COUNT(*) FROM Post";
-
+            String hql = "SELECT COUNT(*) FROM Post WHERE isDeleted=false ";
             Query<Long> query = session.createQuery(hql, Long.class);
-
             List<Long> resultList = query.list();
 
             return resultList.get(0);

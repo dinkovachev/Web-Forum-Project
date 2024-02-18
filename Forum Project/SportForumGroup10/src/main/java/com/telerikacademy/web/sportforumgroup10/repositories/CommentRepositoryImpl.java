@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Repository
@@ -42,15 +43,14 @@ public class CommentRepositoryImpl implements CommentRepository {
     @Override
     public List<Comment> getByPost(int id) {
         try (Session session = sessionFactory.openSession()) {
-            Query<Comment> query = session.createQuery("from Comment where post.id =:id", Comment.class);
+            Query<Comment> query = session.createQuery("from Comment where post.id =:id and isDeleted=false", Comment.class);
             query.setParameter("id", id);
             List<Comment> result = query.list();
             if (result.isEmpty()) {
                 throw new EntityNotFoundException("Comment", id);
             }
-
-
-            return result;
+            //todo fix filter in query
+            return result.stream().filter(comment -> !comment.isDeleted()).collect(Collectors.toList());
         }
     }
 

@@ -2,6 +2,7 @@ package com.telerikacademy.web.sportforumgroup10.models.Dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.apache.catalina.User;
 
 public class CommentDto {
 
@@ -13,6 +14,8 @@ public class CommentDto {
     @Size(min = 32, max = 8192, message = "Content should be between 32 and 8192 symbols.")
     private String content;
 
+
+//    private User author;
 
     public CommentDto() {
     }
@@ -36,4 +39,12 @@ public class CommentDto {
     public void setContent(String content) {
         this.content = content;
     }
+
+//    public User getAuthor() {
+//        return author;
+//    }
+//
+//    public void setAuthor(User author) {
+//        this.author = author;
+//    }
 }
