@@ -45,16 +45,14 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public Comment create(Comment comment, User user) {
+    public Comment create(int postId,Comment comment, User user) {
         return commentRepository.create(comment);
     }
 
 
     @Override
-    public Comment update(CommentDto commentDto, User user, int commentId) {
-        Comment comment = getById(commentId);
+    public Comment update(Comment comment, User user) {
         checkModifyPermission(comment, user);
-        comment.setContent(commentDto.getContent());
         return commentRepository.update(comment);
     }
 
