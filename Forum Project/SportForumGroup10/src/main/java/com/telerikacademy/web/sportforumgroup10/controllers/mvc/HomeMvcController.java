@@ -122,10 +122,10 @@ public class HomeMvcController {
     }
 
 
-    @GetMapping("/posts")
-    public String showPostPage() {
-        return "posts";
-    }
+//    @GetMapping("/posts")
+//    public String showPostPage() {
+//        return "posts";
+//    }
 //
 //    @GetMapping("/posts")
 //    public String showPosts(Model model, HttpSession session) {
