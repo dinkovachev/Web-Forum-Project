@@ -92,8 +92,10 @@
                 <a class="link-info" href="#" th:href="@{/posts/{id}(id=${posts.id})}"
                    th:text="${posts.title}"> Title</a>
             </div>
+            <p style="max-width: 500px;text-overflow: ellipsis; white-space: nowrap;
+                                            overflow: hidden" class="text-muted tx-13"
+               th:text="${posts.getContent()}">Content
 
-            <div class="cell" th:text="${posts.getContent()}">Content</div>
 
             <div class="cell" th:text="${posts.getComments().size()}"> Comments</div>
 
@@ -108,8 +110,9 @@
 
 
 
-
+            </span>
         </div>
+
 <footer th:fragment="footer" class="border-top">
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -140,8 +143,6 @@
                         </a>
                     </li>
                 </ul>
-                <div class="small text-center text-muted fst-italic">Copyright &copy; Sport Forum X - 2024</div>
-            </div>
         </div>
     </div>
 </footer>
