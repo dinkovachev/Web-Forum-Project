@@ -121,7 +121,21 @@ public class HomeMvcController {
         }
     }
 
-
+    @GetMapping("/profileDelete")
+    public String handleProfileDelete(@Valid @ModelAttribute("profileDelete") ProfileDto profileDto, Model model,
+                                      BindingResult bindingResult, HttpSession session) {
+        User user = authenticationHelper.tryGetCurrentUser(session);
+        try {
+            userService.delete(user.getId(), user);
+            session.removeAttribute("currentUser");
+            return "redirect:/";
+        } catch (AuthorizationException e) {
+            model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
+            model.addAttribute("error", "Not authorized");
+            return "ErrorView";
+        }
+    }
+}
 //    @GetMapping("/posts")
 //    public String showPostPage() {
 //        return "posts";
@@ -134,14 +148,5 @@ public class HomeMvcController {
 //        return "PostView";
 //    }
 
-//    @GetMapping("/profile")
-//    public String handleProfileDelete(@Valid @ModelAttribute("profileDelete") ProfileDto profileDto,
-//                                      BindingResult bindingResult, HttpSession session) {
-//        User user = authenticationHelper.tryGetCurrentUser(session);
-//        userService.delete(user.getId(), user);
-//        return "redirect:/";
-//    }
 
-
-}
 
