@@ -14,7 +14,6 @@ INSERT INTO forum.users (user_id, first_name, last_name, email, username, passwo
 INSERT INTO forum.users (user_id, first_name, last_name, email, username, password, is_blocked, is_deleted, is_admin) VALUES (12, 'Georgi', 'Asparuhov', 'georgi.asparuhov@example', 'georgi_asparuhov', 'pass12', 0, 0, 0);
 
 
-
 INSERT INTO forum.posts (post_id, title, content, time_stamp, is_deleted, author_id) VALUES (1, 'Will Leeds be relegated?', 'Leeds are beginning the season very strongly.
 It reminds me Olympique de Marseille with Bielsa. They were on top of the french league for months and they finished exhausted and finally finished in 3rd place.
 I can\'t imagine Leeds being that strong all season. I think they will get exhausted and will have a very difficult second part of the season.
@@ -71,6 +70,16 @@ INSERT INTO forum.posts (post_id, title, content, time_stamp, is_deleted, author
 Derby (H) - Never know what to expect with City nowadays, would take a point, but know all 3 could well be ours if the defence shows up.
 Don\'t need strikers as we just get own goals and massive deflections for us.', '2024-01-25 12:06:05', 0, 1);
 INSERT INTO forum.posts (post_id, title, content, time_stamp, is_deleted, author_id) VALUES (12, 'Worst team in the league', 'Who is the worst team in L1 so far this season in your opinion?', '2023-02-07 11:06:34', 0, 5);
+INSERT INTO forum.posts (post_id, title, content, time_stamp, is_deleted, author_id) VALUES (13, 'football hooliganism survey', 'HI,
+I am a student currently studying football business management and have been tasked to make a survey in a chosen topic.
+i would greatly appreciate it if you took the time out of your day to take part in this.
+many thanks', '2024-02-18 18:17:51', 0, 1);
+INSERT INTO forum.posts (post_id, title, content, time_stamp, is_deleted, author_id) VALUES (14, 'The Cricket Thread', 'So then England have beaten India over this summer and now head to play a 5 match ODI series. Not sure I like the balance of the side with Cook/Ballance/Tredwell playing, there are better ODI players in the county domestic scene at the moment. Taylor, Vince, Roy, Hales (who finally has his chance).', '2024-02-18 22:25:50', 0, 1);
+INSERT INTO forum.posts (post_id, title, content, time_stamp, is_deleted, author_id) VALUES (15, 'Sports Personality of the Year', 'Another cyclist winning - they all seem to do quite well apart from Chris Froome who is the most successful British (maybe the people who vote don\'t see him as that) rider of them all.
+
+Hamilton 2nd (he can win next year after another title) and Kane 3rd (suspect they didn\'t want to see a footballer win anyway - never seem to do that well)
+
+Netball got more awards than the England football team which some might find strange but it was all a public vote.', '2024-02-18 22:43:42', 0, 1);
 
 
 
