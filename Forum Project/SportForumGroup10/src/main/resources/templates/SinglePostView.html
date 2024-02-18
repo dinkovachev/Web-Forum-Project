@@ -6,7 +6,6 @@
 <form th:replace="~{UserForm.html::header}"></form>
 
 
-
 <div class="body-content" th:text="${post.title}"></div>
 <img th:src="'https://icons.veryicon.com/png/o/miscellaneous/8atour/people-23.png'"
      alt="Creator Icon" width="30" height="30"/> <span th:text="${post.getAuthor().getUsername()}">
@@ -34,27 +33,29 @@
         </div>
 
         <div th:unless="${post.comments.isEmpty()}">
-        <div class="row-tables" th:each="comment : ${post.comments}">
+            <div class="row-tables" th:each="comment : ${post.comments}">
 
-            <div class="text-lg-centert">
-                <div class="preview-comment">
-                    <h5 class="text-primary"
-                        th:text="${comment.getAuthor().getFirstName()} +' '+ ${ comment.getAuthor().getLastName()}"></h5>
+                <div class="text-lg-centert">
+                    <div class="preview-comment">
+                        <h5 class="text-primary"
+                            th:text="${comment.getAuthor().getFirstName()} +' '+ ${ comment.getAuthor().getLastName()}"></h5>
+                    </div>
+                    <p class="preview-comment" th:text="${comment.getContent()}"></p>
+                    <h3>
+                        <a class="btn btn-primary btn-xl text-uppercase" href="#"
+                           th:if="${session.currentUser eq comment.getAuthor().getUsername()}"
+                           th:href="@{{id}/comment/{commentId}/update(id=${post.id}, commentId=${comment.id})}">Update</a>
+                        <a class="btn btn-primary btn-xl text-uppercase" href="#"
+                           th:if="${session.currentUser eq comment.getAuthor().getUsername() or
+                       (session.isAdmin != null and session.isAdmin)}"
+                           th:href="@{{id}/comment/{commentId}/delete(id=${post.id}, commentId=${comment.id})}">Delete</a>
+                    </h3>
                 </div>
-                <p class="preview-comment" th:text="${comment.getContent()}"></p>
-                <h3>
-                    <a class="btn btn-primary btn-xl text-uppercase" href="#"
-                       th:if="${session.currentUser eq comment.getAuthor().getUsername()}"
-                       th:href="@{{id}/comment/{commentId}/update(id=${post.id}, commentId=${comment.id})}">Update</a>
-                    <a class="btn btn-primary btn-xl text-uppercase" href="#"
-                       th:if="${session.currentUser eq comment.getAuthor().getUsername() or session.isAdmin}"
-                       th:href="@{{id}/comment/{commentId}/delete(id=${post.id}, commentId=${comment.id})}">Delete</a>
-                </h3>
             </div>
         </div>
 
+        <div th:if="${isAuthenticated}">
             <div class="comment-box">
-                <h3>Leave a comment</h3>
                 <form th:action="@{/posts/{id}/comment(id=${post.id})}" method="post" th:object="${content}"
                       class="comment-form">
                     <div style="display: flex; flex-direction: column;">
@@ -63,48 +64,43 @@
                     </div>
                 </form>
             </div>
+        </div>
 
-
-
-
-
-
-</div>
-<footer th:fragment="footer" class="border-top">
-    <div class="container px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                <ul class="list-inline text-center">
-                    <li class="list-inline-item">
-                        <a href="#">
+        <footer th:fragment="footer" class="border-top">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <ul class="list-inline text-center">
+                            <li class="list-inline-item">
+                                <a href="#">
                                     <span class="fa-stack fa-lg">
                                         <i class="fas fa-circle fa-stack-2x"></i>
                                         <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
                                     </span>
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#">
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">
                                     <span class="fa-stack fa-lg">
                                         <i class="fas fa-circle fa-stack-2x"></i>
                                         <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
                                     </span>
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#">
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">
                                     <span class="fa-stack fa-lg">
                                         <i class="fas fa-circle fa-stack-2x"></i>
                                         <i class="fab fa-github fa-stack-1x fa-inverse"></i>
                                     </span>
-                        </a>
-                    </li>
-                </ul>
-                <div class="small text-center text-muted fst-italic">Copyright &copy; Sport Forum X - 2024</div>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="small text-center text-muted fst-italic">Copyright &copy; Sport Forum X - 2024</div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</footer>
+        </footer>
     </div>
 </section>
 </body>
