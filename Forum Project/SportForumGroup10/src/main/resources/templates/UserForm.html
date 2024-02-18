@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head(title)">
     <meta charset="UTF-8">
-    <title th:text="'Sport Forum |' + ${title}">Title</title>
+    <title th:text="'Sport Forum X |' + ${title}">Title</title>
     <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
@@ -19,13 +19,21 @@
             <ul class="navbar-nav ms-auto py-4 py-lg-0">
                 <li class="nav-item"><a href="#" th:href="@{/}"
                                         class="nav-link px-lg-3 py-3 py-lg-4" th:text="#{navigation.home}">Home</a></li>
-                <li class="nav-item"><a href="#"
-                                        th:href="@{/posts}" class="nav-link px-lg-3 py-3 py-lg-4"
+
+                <li class="nav-item"><a href="#" th:unless="${isAuthenticated}"
+                                        th:href="@{/auth/login}" class="nav-link px-lg-3 py-3 py-lg-4"
                                         th:text="#{navigation.posts}">Browse Posts</a></li>
+
+                <li class="nav-item"> <a href="#" th:unless="${isAuthenticated}"
+                                         th:href="@{.../posts/new}" class="nav-link px-lg-3 py-3 py-lg-4"
+                                         th:text="#{navigation.createPost}"> Create Post </a></li>
+
+
                 <li class="nav-item"><a href="#" th:unless="${isAuthenticated}"
                                         th:href="@{/auth/login}" class="nav-link px-lg-3 py-3 py-lg-4"
                                         th:text="#{navigation.login}">Login</a></li>
                 <li class="nav-item"><a href="#" th:if="${isAuthenticated}"
+
                                         th:href="@{/auth/logout}" class="nav-link px-lg-3 py-3 py-lg-4"
                                         th:text="#{navigation.logout}">Logout</a></li>
                 <li class="nav-item"><a href="#" th:unless="${isAuthenticated}"

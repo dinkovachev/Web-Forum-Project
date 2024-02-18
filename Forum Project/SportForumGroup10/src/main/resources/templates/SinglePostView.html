@@ -8,9 +8,11 @@
 
 
 <div class="body-content" th:text="${post.title}"></div>
-        <p class="margin12" th:text="#{post.label.createdBy.username} + ': ' + ${post.getAuthor().getUsername()}">
-            created by</p>
-
+<img th:src="'https://icons.veryicon.com/png/o/miscellaneous/8atour/people-23.png'"
+     alt="Creator Icon" width="30" height="30"/> <span th:text="${post.getAuthor().getUsername()}">
+</span>
+<br>
+<br>
 <section class="page-section bg-light" id="about">
     <div class="container">
         <div class="text-center-content">
@@ -21,45 +23,25 @@
             <br/>
             <div class="body-content">
                 <div class="table-all">
-<!--                    <h3>-->
-<!--                        <a class="btn btn-primary btn-xl text-uppercase"-->
-<!--                           th:if="${session.currentUser eq post.getAuthor().getUsername() or session.isAdmin}"-->
-<!--                           th:href="@{__${requestURI}__/update}">Update</a>-->
-<!--                        <a class="btn btn-primary btn-xl text-uppercase"-->
-<!--                           th:if="${session.currentUser eq post.getAuthor().getUsername() or session.isAdmin}"-->
-<!--                           th:href="@{__${requestURI}__/delete}">Delete</a>-->
-<!--                    </h3>-->
-<!--                   -->
-                    <script>
-                        var btnvar = document.getElementById('btnh');
 
-                        function Toggle() {
-                            if (btnvar.style.color === "red") {
-                                btnvar.style.color = "grey"
-                            } else {
-                                btnvar.style.color = "red"
-                            }
-                        }
-                    </script>
                 </div>
-                <p class="replies" th:text="'Replies: ' + ${post.getComments().size()}"></p>
+                <p class="ui-icon-comment" th:text="'Comments: ' + ${post.getComments().size()}"></p>
                 <p class="data-published" th:text="'Published on: ' + ${post.getCreatedAt()}"></p>
             </div>
         </div>
         <div th:if="${post.comments.isEmpty()}">
             <h2 th:text="#{post.comment.empty}">No Comments</h2>
         </div>
+
         <div th:unless="${post.comments.isEmpty()}">
-            <h2 class="replies">Replies</h2>
-        </div>
         <div class="row-tables" th:each="comment : ${post.comments}">
 
-            <div class="text-center-comment bg-dark">
-                <div class="comment-createdBy">
-                    <h4 class="subheading text-primary"
-                        th:text="${comment.getAuthor().getFirstName()} +' '+ ${ comment.getAuthor().getLastName()}"></h4>
+            <div class="text-lg-centert">
+                <div class="preview-comment">
+                    <h5 class="text-primary"
+                        th:text="${comment.getAuthor().getFirstName()} +' '+ ${ comment.getAuthor().getLastName()}"></h5>
                 </div>
-                <p class="comment-leave text-light" th:text="${comment.getContent()}"></p>
+                <p class="preview-comment" th:text="${comment.getContent()}"></p>
                 <h3>
                     <a class="btn btn-primary btn-xl text-uppercase" href="#"
                        th:if="${session.currentUser eq comment.getAuthor().getUsername()}"
@@ -70,6 +52,21 @@
                 </h3>
             </div>
         </div>
+
+            <div class="comment-box">
+                <h3>Leave a comment</h3>
+                <form th:action="@{/posts/{id}/comment(id=${post.id})}" method="post" th:object="${content}"
+                      class="comment-form">
+                    <div style="display: flex; flex-direction: column;">
+
+                        <button type="submit" class="btn btn-primary btn-xl">POST COMMENT</button>
+                    </div>
+                </form>
+            </div>
+
+
+
+
 
 
 </div>
@@ -108,6 +105,7 @@
         </div>
     </div>
 </footer>
+    </div>
 </section>
 </body>
 </html>
