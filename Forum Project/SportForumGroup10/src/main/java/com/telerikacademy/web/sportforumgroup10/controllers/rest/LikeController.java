@@ -43,12 +43,12 @@ public class LikeController {
         }
     }
 
-    @DeleteMapping("/{likeId}")
-    public Like removeLike(@PathVariable int likeId, @RequestHeader HttpHeaders headers) {
+    @DeleteMapping("/{postId}")
+    public Like removeLike(@PathVariable int postId, @RequestHeader HttpHeaders headers) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             checkIsUserBlocked(user);
-            return likeService.removeLike(likeId, user);
+            return likeService.removeLike(postId, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }

@@ -10,13 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class LikeServiceImpl implements LikeService {
 
     private final PostService postService;
     private final LikeRepository likeRepository;
 
-    public static final String LIKE_POST = "Only registered user can like the post.";
+    public static final String REMOVE_LIKE_ERROR_MSG = "Only like author can remove like from the post.";
 
 
     @Autowired
@@ -29,16 +30,16 @@ public class LikeServiceImpl implements LikeService {
     @Override
     public Like createLike(int postId, User user) {
         Like like = new Like();
-        like.setAuthor_id(user);
+        like.setAuthor(user);
         like.setLikedPost(postService.getById(postId));
         return likeRepository.save(like);
     }
 
 
     @Override
-    public Like removeLike(int likeId, User user){
-    Like like = getById(likeId);
-    checkModifyPermission(like, user);
+    public Like removeLike(int postId, User user) {
+        Like like = likeRepository.getByPostAndAuthor(postId, user.getId());
+        checkModifyPermission(like, user);
         return likeRepository.remove(like);
     }
 
@@ -51,19 +52,19 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public int countLikes(int postId) {
-        return  likeRepository.countByPost(postId);
+        return likeRepository.countByPost(postId);
     }
 
 
     @Override
     public List<Like> allPostLikes(int postId) {
-        return  likeRepository.getPostLikes(postId);
+        return likeRepository.getPostLikes(postId);
     }
 
 
     private void checkModifyPermission(Like like, User requestUser) {
-        if (!requestUser.isAdmin() && like.getAuthor_id().getId() != requestUser.getId()) {
-            throw new AuthorizationException(LIKE_POST);
+        if (like.getAuthor().getId() != requestUser.getId()) {
+            throw new AuthorizationException(REMOVE_LIKE_ERROR_MSG);
         }
     }
 }

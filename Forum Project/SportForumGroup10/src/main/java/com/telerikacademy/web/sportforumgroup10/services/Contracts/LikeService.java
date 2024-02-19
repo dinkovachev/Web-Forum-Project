@@ -10,7 +10,7 @@ public interface LikeService {
 
     Like createLike(int postId, User user);
 
-    Like removeLike(int like, User user);
+    Like removeLike(int postId, User user);
 
     Like getById(int likeId);
 

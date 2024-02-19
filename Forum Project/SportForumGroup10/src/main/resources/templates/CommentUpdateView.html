@@ -11,7 +11,7 @@
     <br>
 
     <div th:fragment="post-form(title)">
-        <form action="#" th:action="@{/post/{postId}/comment/{commentId}/update
+        <form action="#" th:action="@{/posts/{postId}/comment/{commentId}/update
         (commentId=${commentId},postId=${comment.getPostId()})}" th:object="${updatedComment}" method="post">
 
             <div class="form-group form-group-textarea mb-md-0">

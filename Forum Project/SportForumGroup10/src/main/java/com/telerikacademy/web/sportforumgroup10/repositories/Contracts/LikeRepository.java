@@ -13,8 +13,9 @@ public interface LikeRepository {
 
     Like getById(int id);
 
-
     int countByPost(int postId);
 
     Like remove(Like like);
+
+    Like getByPostAndAuthor(int postId, int userId);
 }

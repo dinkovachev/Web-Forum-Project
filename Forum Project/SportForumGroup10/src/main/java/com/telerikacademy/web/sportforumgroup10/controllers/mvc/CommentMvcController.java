@@ -8,7 +8,6 @@ import com.telerikacademy.web.sportforumgroup10.helpers.CommentMapper;
 import com.telerikacademy.web.sportforumgroup10.helpers.PostMapper;
 import com.telerikacademy.web.sportforumgroup10.models.Comment;
 import com.telerikacademy.web.sportforumgroup10.models.Dto.CommentDto;
-import com.telerikacademy.web.sportforumgroup10.models.Dto.PostDto;
 import com.telerikacademy.web.sportforumgroup10.models.Post;
 import com.telerikacademy.web.sportforumgroup10.models.User;
 import com.telerikacademy.web.sportforumgroup10.services.Contracts.CommentService;
@@ -25,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@RequestMapping("/post/{postId}/comment")
+@RequestMapping("/posts/{postId}/comment")
 public class CommentMvcController {
 
     private final PostService postService;

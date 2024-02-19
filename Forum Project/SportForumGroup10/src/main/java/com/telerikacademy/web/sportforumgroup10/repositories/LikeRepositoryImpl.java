@@ -53,6 +53,20 @@ public class LikeRepositoryImpl implements LikeRepository {
         return like;
     }
 
+    @Override
+    public Like getByPostAndAuthor(int postId, int userId) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Like> query = session.createQuery("FROM Like where likedPost.id = :postId and author.id = :userId ", Like.class);
+            query.setParameter("postId", postId);
+            query.setParameter("userId", userId);
+            List<Like> result = query.list();
+            if (result.isEmpty()) {
+                throw new EntityNotFoundException("Like", "likedPostId", postId);
+            }
+            return result.get(0);
+        }
+    }
+
 
     @Override
     public List<Like> getPostLikes(int postId) {
