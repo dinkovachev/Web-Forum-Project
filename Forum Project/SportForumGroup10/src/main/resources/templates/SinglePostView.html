@@ -104,11 +104,14 @@
     </div>
 
     <div class="email-list" th:if="${post.comments != null && !post.comments.isEmpty()}">
-        <div class="card">
+        <div class="card rounded">
             <div class="card-body">
+                <strong>
+                    <p>Comments</p>
+                </strong>
                 <div class="email-list-item" th:each="comment : ${post.comments}">
-                    <div class="content">
-                        <div class="mb-0" style="display: flex ; justify-content: end">
+                    <div class="content card rounded">
+                        <div class="mb-0" style=" justify-content: end">
                             <div>
                                 <div style="display: flex ; justify-content: space-between">
                                         <span class="from" style="font-size: medium"
@@ -131,39 +134,43 @@
                                 <!--                                        <i class="icon-lg pb-3px" data-feather="more-horizontal"></i>-->
                                 <!--                                    </a>-->
                                 <!--                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">-->
-                                <form th:action="@{/post/{postId}/comment/{commentId}/update
+                                <div>
+                                    <form th:action="@{/post/{postId}/comment/{commentId}/update
                                 (commentId=${comment.getId()}, postId=${post.getId()})}"
-                                      method="get">
+                                          method="get">
 
-                                    <button type="submit"
-                                            class="d-flex align-items-center text-muted me-4"
-                                            style="background: none; padding: 0; border: none">
-<!--                                        <input type="hidden" value="" name="path">-->
+                                        <button type="submit"
+                                                class="d-flex align-items-center text-muted me-4"
+                                                style="background: none; padding: 0; border: none">
+                                            <!--                                        <input type="hidden" value="" name="path">-->
 
-                                        <a class="dropdown-item d-flex align-items-center"
-                                           href="javascript:">
-                                            <i data-feather="edit" class="icon-sm me-2"></i> <span
-                                                class="">Edit</span></a>
-                                    </button>
-                                </form>
-
-                                <form th:action="@{/post/{postId}/comment/{commentId}/delete
+                                            <a class="dropdown-item d-flex align-items-center"
+                                               href="javascript:">
+                                                <i data-feather="edit" class="icon-sm me-2"></i> <span
+                                                    class="">Edit</span></a>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div style="align-self: end">
+                                    <form th:action="@{/post/{postId}/comment/{commentId}/delete
                                         (commentId=${comment.getId()},postId=${post.getId()})}"
-                                      method="get">
-                                    <!--                                    <div class="ms-3">-->
-                                    <!--                                        <button type="submit" class="btn btn-primary btn-xl">DELETE COMMENT</button>-->
-                                    <!--                                    </div>-->
-                                    <button type="submit"
-                                            class="d-flex align-items-center text-muted me-4"
-                                            style="background: none; padding: 0; border: none">
-                                        <input type="hidden" value="" name="path">
+                                          method="get">
+                                        <!--                                    <div class="ms-3">-->
+                                        <!--                                        <button type="submit" class="btn btn-primary btn-xl">DELETE COMMENT</button>-->
+                                        <!--                                    </div>-->
+                                        <button type="submit"
+                                                class="d-flex align-items-center text-muted me-4"
+                                                style="background: none; padding: 0; border: none">
+                                            <input type="hidden" value="" name="path">
 
-                                        <a class="dropdown-item d-flex align-items-center"
-                                           href="javascript:">
-                                            <i data-feather="delete" class="icon-sm me-2"></i> <span
-                                                class="">Remove</span></a>
-                                    </button>
-                                </form>
+                                            <a class="dropdown-item d-flex align-items-center"
+                                               href="javascript:">
+                                                <i data-feather="delete" class="icon-sm me-2"></i> <span
+                                                    class="">Remove</span></a>
+                                        </button>
+                                    </form>
+                                </div>
+                                </br>
                                 <!--                                    </div>-->
                                 <!--                                </div>-->
                             </div>
