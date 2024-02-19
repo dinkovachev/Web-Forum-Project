@@ -60,8 +60,11 @@
                 </div>
                 <div class="tx-22 text-muted">
                     <p th:text="${#dates.format(post.createdAt, 'dd-MM-yyyy HH:mm  ')}">CreatedAt</p>
-
-
+                    <div>
+                    <span>Likes count:</span>
+                    <span th:text="${post.getLikes().size()}"></span>
+                    </div>
+                    </br>
                     <div th:if="${isAuthenticated}">
                         <div class="d-flex post-actions">
                             <div th:unless="${currentUserHasLike}">
@@ -137,10 +140,12 @@
                             </div>
 
 
-                            <div th:if="${isAuthenticated==true}">
+                            <div th:if="${isAuthenticated==true
+                            && (session.currentUser eq comment.getAuthor().getUsername()
+                             || (session.isAdmin != null && session.isAdmin))}">
                                 <div>
                                     <form th:action="@{/posts/{postId}/comment/{commentId}/update
-                                (commentId=${comment.getId()}, postId=${post.getId()})}"
+                                                                (commentId=${comment.getId()}, postId=${post.getId()})}"
                                           method="get">
                                         <button type="submit"
                                                 class="d-flex align-items-center text-muted me-4"
@@ -154,7 +159,7 @@
                                 </div>
                                 <div style="align-self: end">
                                     <form th:action="@{/posts/{postId}/comment/{commentId}/delete
-                                        (commentId=${comment.getId()},postId=${post.getId()})}"
+                                                                        (commentId=${comment.getId()},postId=${post.getId()})}"
                                           method="get">
                                         <button type="submit"
                                                 class="d-flex align-items-center text-muted me-4"
@@ -232,7 +237,8 @@
 
 <div th:if="${isAuthenticated==true}">
     <div class="comment-box">
-        <form th:action="@{/posts/{id}/comment(id=${post.id})}" method="post" th:object="${content}"
+        <form th:action="@{/posts/{id}/comment(id=${post.id})}" method="post"
+              th:object="${content}"
               class="comment-form">
             <div style="display: flex; flex-direction: column;">
 
@@ -271,7 +277,9 @@
                         </a>
                     </li>
                 </ul>
-                <div class="small text-center text-muted fst-italic">Copyright &copy; Sport Forum X - 2024</div>
+                <div class="small text-center text-muted fst-italic">Copyright &copy;
+                    Sport Forum X - 2024
+                </div>
             </div>
         </div>
     </div>
