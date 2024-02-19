@@ -239,11 +239,13 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public long getUserCount() {
         try (Session session = sessionFactory.openSession()) {
-            String hql = "SELECT COUNT(*) FROM User";
+            String hql = "SELECT COUNT(*) FROM User where isDeleted=false ";
 
             Query<Long> query = session.createQuery(hql, Long.class);
 
             List<Long> resultList = query.list();
+
+
 
             return resultList.get(0);
         }

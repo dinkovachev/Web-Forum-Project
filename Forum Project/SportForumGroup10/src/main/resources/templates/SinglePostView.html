@@ -33,7 +33,7 @@
                                 <div class="dropdown"
                                      th:if="${post.author.equals(post.getAuthor())==true ||post.getAuthor().isAdmin() ==true }">
 
-                                    <form action="#" th:action="@{/{id}/update}" th:object="${update}" method="post">
+                                    <form action="#" th:action="@{/{id}/update}" th:object="${post}" method="post">
                                         <input type="submit" value="  Edit  "/>
                                     </form>
 

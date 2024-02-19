@@ -9,6 +9,7 @@ import org.checkerframework.common.aliasing.qual.Unique;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -176,6 +177,10 @@ public class User {
     public void setUsersComments(Set<Post> usersComments) {
         this.usersComments = usersComments;
     }
+
+//    public Set<Comment> getComments() {
+//        return comments.stream().filter(comment -> !comment.isDeleted()).collect(Collectors.toSet());
+//    }
 
     @Override
     public boolean equals(Object o) {
