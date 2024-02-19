@@ -14,7 +14,7 @@ public interface PostService {
     Post getById(int id);
     void create (Post post, User creator);
 
-    Post update(Post post, User user);
+    Post update(PostDto postDto, User user, int postId);
 
     void delete(int id, User user);
 
