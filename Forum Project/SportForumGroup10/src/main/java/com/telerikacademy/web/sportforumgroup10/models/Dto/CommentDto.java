@@ -15,8 +15,6 @@ public class CommentDto {
     private String content;
 
 
-//    private User author;
-
     public CommentDto() {
     }
 

@@ -38,6 +38,7 @@ public class CommentMapper {
     public CommentDto toDto(Comment comment) {
         CommentDto dto = new CommentDto();
         dto.setContent(comment.getContent());
+        dto.setPostId(comment.getPost());
         return dto;
     }
 

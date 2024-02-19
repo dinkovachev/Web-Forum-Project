@@ -15,7 +15,7 @@
 
                             <div class="ms-2 text-center">
                                 <strong>
-                                <p th:text="${post.getTitle()}">Title</p>
+                                    <p th:text="${post.getTitle()}">Title</p>
                                 </strong>
 
                                 <div class="tx-22 text-muted">
@@ -33,35 +33,33 @@
                                 <div class="dropdown"
                                      th:if="${post.author.equals(post.getAuthor())==true ||post.getAuthor().isAdmin() ==true }">
 
-                                        <form action="#" th:action="@{/{id}/update}" th:object="${update}" method="post">
-                                            <input type="submit" value="  Edit  " />
-                                        </form>
+                                    <form action="#" th:action="@{/{id}/update}" th:object="${update}" method="post">
+                                        <input type="submit" value="  Edit  "/>
+                                    </form>
 
                                     <form action="#" th:action="@{/{id}/delete}" th:object="${delete}" method="get">
-                                        <input type="submit" value="Delete" />
+                                        <input type="submit" value="Delete"/>
                                     </form>
 
 
-
-                                    </div>
-                                     <div class="tx-22 text-muted">
+                                </div>
+                                <div class="tx-22 text-muted">
                                     <img th:src="'https://icons.veryicon.com/png/o/miscellaneous/8atour/people-23.png'"
                                          alt="Creator Icon" width="20" height="20">
                                     <span th:text="${post.getAuthor().username}">Author</span>
                                 </div>
-                                </div>
                             </div>
                         </div>
-
                     </div>
 
+                </div>
 
-                        <div class="card-body">
-                            <p class="mb-3 tx-14" th:text="${post.content}">Content</p>
-                        </div>
+
+                <div class="card-body">
+                    <p class="mb-3 tx-14" th:text="${post.content}">Content</p>
+                </div>
                 <div class="tx-22 text-muted">
                     <p th:text="${#dates.format(post.createdAt, 'dd-MM-yyyy HH:mm  ')}">CreatedAt</p>
-
 
 
                     <div class="card-footer" th:if="${isAuthenticated}">
@@ -133,12 +131,15 @@
                                 <!--                                        <i class="icon-lg pb-3px" data-feather="more-horizontal"></i>-->
                                 <!--                                    </a>-->
                                 <!--                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">-->
-                                <form th:action="@{/posts/comment/{commentId}/update(commentId=${comment.getId()})}"
+                                <form th:action="@{/post/{postId}/comment/{commentId}/update
+                                (commentId=${comment.getId()}, postId=${post.getId()})}"
                                       method="get">
 
                                     <button type="submit"
                                             class="d-flex align-items-center text-muted me-4"
                                             style="background: none; padding: 0; border: none">
+<!--                                        <input type="hidden" value="" name="path">-->
+
                                         <a class="dropdown-item d-flex align-items-center"
                                            href="javascript:">
                                             <i data-feather="edit" class="icon-sm me-2"></i> <span
@@ -149,19 +150,19 @@
                                 <form th:action="@{/post/{postId}/comment/{commentId}/delete
                                         (commentId=${comment.getId()},postId=${post.getId()})}"
                                       method="get">
-<!--                                    <div class="ms-3">-->
-<!--                                        <button type="submit" class="btn btn-primary btn-xl">DELETE COMMENT</button>-->
-<!--                                    </div>-->
-                                                                                <button type="submit"
-                                                                                        class="d-flex align-items-center text-muted me-4"
-                                                                                        style="background: none; padding: 0; border: none">
-                                                                                    <input type="hidden" value="" name="path">
+                                    <!--                                    <div class="ms-3">-->
+                                    <!--                                        <button type="submit" class="btn btn-primary btn-xl">DELETE COMMENT</button>-->
+                                    <!--                                    </div>-->
+                                    <button type="submit"
+                                            class="d-flex align-items-center text-muted me-4"
+                                            style="background: none; padding: 0; border: none">
+                                        <input type="hidden" value="" name="path">
 
-                                                                                    <a class="dropdown-item d-flex align-items-center"
-                                                                                       href="javascript:">
-                                                                                        <i data-feather="delete" class="icon-sm me-2"></i> <span
-                                                                                            class="">Remove</span></a>
-                                                                                </button>
+                                        <a class="dropdown-item d-flex align-items-center"
+                                           href="javascript:">
+                                            <i data-feather="delete" class="icon-sm me-2"></i> <span
+                                                class="">Remove</span></a>
+                                    </button>
                                 </form>
                                 <!--                                    </div>-->
                                 <!--                                </div>-->

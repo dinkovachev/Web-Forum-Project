@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<form th:replace="~{UserForm.html::head('Username')}"></form>
 <body>
+<form th:replace="~{UserForm.html::navigation}"></form>
+<form th:replace="~{UserForm.html::header}"></form>
+<div class="body-content">
+</div>
+<div class="body-content">
+    <h1>Edit comment </h1>
+    <br>
 
+    <div th:fragment="post-form(title)">
+        <form action="#" th:action="@{/post/{postId}/comment/{commentId}/update
+        (commentId=${commentId},postId=${comment.getPostId()})}" th:object="${updatedComment}" method="post">
+
+            <div class="form-group form-group-textarea mb-md-0">
+                <label th:text="${comment.content}">Content</label>
+                <br/>
+                <textarea th:field="*{content}" style="width: 300px; height: 300px; border-radius: 10px;"></textarea>
+
+            </div>
+
+            <label class="error"
+                   style="color: red" th:errors="*{content}">Content error placeholder</label>
+            <br/><br/>
+
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 text-white">
+                    Edit
+                </button>
+            </div>
+        </form>
+
+
+    </div>
+</div>
 </body>
 </html>

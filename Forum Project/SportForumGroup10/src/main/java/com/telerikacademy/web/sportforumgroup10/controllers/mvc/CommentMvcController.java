@@ -87,8 +87,8 @@ public class CommentMvcController {
             return "ErrorView";
         }
     }
-    @PostMapping("/{id}/comment/{commentId}/update")
-    public String updateComment(@PathVariable int id,
+    @PostMapping("/{commentId}/update")
+    public String updateComment(@PathVariable int postId,
                                 @PathVariable int commentId,
                                 @Valid @ModelAttribute CommentDto commentDto,
                                 Model model,
@@ -112,15 +112,15 @@ public class CommentMvcController {
         try {
             comment = commentMapper.fromDto(commentId, commentDto);
             commentService.update(comment, user);
-            return "redirect:/posts/{id}";
+            return "redirect:/posts/{postId}";
         } catch (UnauthorizedOperationException e) {
             model.addAttribute("statusCode", HttpStatus.UNAUTHORIZED.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
             return "ErrorView";
         }
     }
-    @GetMapping("/{id}/comment/{commentId}/update")
-    public String showCommentEditPage(@PathVariable int id,
+    @GetMapping("/{commentId}/update")
+    public String showCommentEditPage(@PathVariable int postId,
                                       @PathVariable int commentId,
                                       Model model,
                                       HttpSession httpSession) {
@@ -134,6 +134,7 @@ public class CommentMvcController {
             CommentDto commentDto = commentMapper.toDto(comment);
             model.addAttribute("commentId", commentId);
             model.addAttribute("comment", commentDto);
+            model.addAttribute("updatedComment",new CommentDto());
             return "CommentUpdateView";
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
