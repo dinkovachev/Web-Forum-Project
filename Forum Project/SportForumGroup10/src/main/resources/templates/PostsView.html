@@ -81,7 +81,6 @@
             <div class="header-cell" th:text="#{post.label.createdBy.username}"> Created By</div>
 
             <div class="header-cell" th:text="#{post.likes}"> Likes</div>
-            <div th:if="${session.isAdmin}" class="header-cell" th:text="#{post.activity}">Activity</div>
         </div>
 
         <div class="rowGroup" th:each="post: ${posts}">

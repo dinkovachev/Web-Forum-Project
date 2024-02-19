@@ -70,10 +70,12 @@ public class PostController {
     }
 
     @PutMapping("/{postId}")
-    public Post update(@RequestHeader HttpHeaders headers, @PathVariable int postId, @Valid @RequestBody PostDto postDto) {
+    public Post update(@RequestHeader HttpHeaders headers,
+                       @PathVariable int postId, @Valid @RequestBody PostDto postDto) {
         try {
             User user = helper.tryGetUser(headers);
-            return service.update(postDto, user, postId);
+            Post post =postMapper.fromDto(postId,postDto);
+            return service.update(post, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {

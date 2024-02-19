@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<form th:replace="~{UserForm.html::head('Username')}"></form>
+<form th:replace="~{UserForm.html::head('')}"></form>
 <body>
 <form th:replace="~{UserForm.html::navigation}"></form>
 <form th:replace="~{UserForm.html::header}"></form>
@@ -29,26 +29,22 @@
 
                                 </div>
                             </div>
-                            <div th:if="${isAuthenticated==true}">
-                                <div class="dropdown"
-                                     th:if="${post.author.equals(post.getAuthor())==true ||post.getAuthor().isAdmin() ==true }">
+                                <div th:if="${isAuthenticated==true
+                            && (session.currentUser eq post.getAuthor().getUsername()
+                             || (session.isAdmin != null && session.isAdmin))}">
+                                    <div>
 
-                                    <form action="#" th:action="@{/{id}/update}" th:object="${update}" method="post">
+                                    <form th:action="@{/posts/{id}/update(id=${post.getId()})}" th:object="post"
+                                          method="post">
                                         <input type="submit" value="  Edit  "/>
                                     </form>
 
-                                    <form action="#" th:action="@{/{id}/delete}" th:object="${delete}" method="get">
-                                        <input type="submit" value="Delete"/>
+                                    <form th:action="@{/posts/{id}/delete(id=${post.id})}"
+                                          method="get">
+                                        <input type="submit" value="  Remove  "/>
                                     </form>
 
-
                                 </div>
-                                <div class="tx-22 text-muted">
-                                    <img th:src="'https://icons.veryicon.com/png/o/miscellaneous/8atour/people-23.png'"
-                                         alt="Creator Icon" width="20" height="20">
-                                    <span th:text="${post.getAuthor().username}">Author</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -61,7 +57,7 @@
                 <div class="tx-22 text-muted">
                     <p th:text="${#dates.format(post.createdAt, 'dd-MM-yyyy HH:mm  ')}">CreatedAt</p>
                     <div>
-                    <span>Likes count:</span>
+                    <span>Likes: </span>
                     <span th:text="${post.getLikes().size()}"></span>
                     </div>
                     </br>

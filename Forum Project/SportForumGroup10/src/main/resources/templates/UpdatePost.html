@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<form th:replace="~{UserForm.html::head('')}"></form>
+<body>
+<form th:replace="~{UserForm.html::navigation}"></form>
+<form th:replace="~{UserForm.html::header}"></form>
+<div class="body-content">
+    </div>
+<div class="body-content">
+    <h1> EDIT POST </h1>
+    <br>
+
+<!--        <div th:fragment="post-form(title)">-->
+<!--            <h2 th:text="${title}">Title</h2>-->
+<!--            <form action="#" th:action="@{/posts/new}" th:object="${post}" method="post">-->
+<!--                <label th:text="#{post.label.title}">Update Post</label>-->
+<!--                <br/>-->
+<!--                <input type="text" th:field="*{title}" style="width: 300px; border-radius: 10px;"/>-->
+<!--                <br>-->
+<!--                <label class="error"  style="color: red" th:errors="*{title}">Title error placeholder</label>-->
+<!--                <br/><br/>-->
+
+<!--                <div class="form-group form-group-textarea mb-md-0">-->
+<!--                    <label th:text="#{post.content}">Content</label>-->
+<!--                    <br/>-->
+<!--                    <textarea th:field="*{content}" style="width: 300px; height: 300px; border-radius: 10px;"></textarea>-->
+
+<!--                </div>-->
+
+<!--                <label class="error"-->
+<!--                       style="color: red" th:errors="*{content}">Content error placeholder</label>-->
+<!--                <br/><br/>-->
+
+
+<!--                <div class="text-center">-->
+<!--                    <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 text-white">-->
+<!--                        Create-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </form>-->
+    <h4 class="card-title">Update Post</h4>
+    <form th:action="@{/posts/{postId}/update(postId=${postId})}" th:object="${postDto}" method="post">
+        <div class="row mb-3">
+            <div class="col-lg-3">
+                <label for="defaultconfig" class="col-form-label">Title</label>
+            </div>
+            <div class="col-lg-8">
+                <input th:field="*{title}" class="form-control" maxlength="64"
+                       name="defaultconfig"
+                       id="defaultconfig" type="text" placeholder="Title">
+                <label class="error" style="color: red" th:errors="*{title}">Title should be
+                    between 16 and 64 symbols</label>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-lg-3">
+                <label class="col-form-label">Content of
+                    post</label>
+            </div>
+            <div class="col-lg-8">
+                                        <textarea th:field="*{content}" id="maxlength-textarea1" class="form-control"
+                                                  maxlength="8192" rows="16"
+                                                  placeholder="Content a limit of 8192 chars.">
+                                        </textarea>
+                <label class="error" style="color: red" th:errors="*{content}">Content
+                    should be up to 8192 symbols.</label>
+
+
+                <button type="submit"
+                        class="d-flex align-items-center text-muted me-4"
+                        style="background: none; padding: 0; border: none">
+                    <input type="Submit" value="" name="Update">
+
+        </div>
+
+
+
+
+
+</div>
+
+</html>

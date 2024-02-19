@@ -121,10 +121,12 @@ public class PostRepositoryImpl implements PostRepository {
 
     @Override
     public void delete(int id) {
+        Post post = getById(id);
+        post.setDeleted(true);
         try (Session session = sessionFactory.openSession()) {
             deleteComments(id);
-            session.getTransaction();
-            session.remove(id);
+            session.beginTransaction();
+            session.merge(post);
             session.getTransaction().commit();
         }
     }

@@ -43,12 +43,10 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post update(PostDto postDto, User user, int postId) {
+    public Post update(Post post, User user) {
+        int postId = post.getId();
         checkModifyPermission(postId, user);
 
-        Post post = getById(postId);
-        post.setTitle(postDto.getTitle());
-        post.setContent(postDto.getContent());
         return repository.update(post);
     }
 
