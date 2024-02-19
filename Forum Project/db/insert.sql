@@ -85,16 +85,25 @@ Netball got more awards than the England football team which some might find str
 
 INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (1, 'Think they will finish midtable personally. Bielsa\'s teams have tired as the season goes on and others will wisen up to how they play.', '2024-01-24 11:45:52', 1, 11, 1);
 INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (2, 'No chance, they are way too good.', '2024-01-24 11:45:52', 0, 3, 1);
-INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (3, 'Comment 1 for post 2...', '2024-01-24 11:45:52', 0, 12, 9);
-INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (4, 'Comment 2 for post 2...', '2024-01-24 11:45:52', 0, 1, 10);
-INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (5, 'Comment 1 for post 3...', '2024-01-24 11:45:52', 0, 11, 11);
-INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (6, 'Comment 2 for post 3...', '2024-01-24 11:45:52', 0, 10, 12);
-INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (7, 'Comment 1 for post 4...', '2024-01-24 11:45:52', 0, 4, 7);
-INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (8, 'Comment 2 for post 4...', '2024-01-24 11:45:52', 0, 6, 8);
-INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (9, 'Comment 1 for post 5...', '2024-01-24 11:45:52', 0, 5, 9);
-INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (10, 'Comment 2 for post 5...', '2024-01-24 11:45:52', 0, 7, 10);
-INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (11, 'Comment 1 for post 6...', '2024-01-24 11:45:52', 0, 9, 1);
-INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (12, 'Comment 2 for post 6...', '2024-01-24 11:45:52', 1, 10, 1);
+INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (3, 'Bury took 321 fans to Wycombe today, a 400 mile round trip, never stopped singing, amazing away support as ever!', '2024-01-24 11:45:52', 0, 12, 9);
+INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (4, 'Wycombe not a great team for us as my preview stated, happy with a point, sounded like a good game though, we should have more than enough to go up this year, although only 6 subs today, inc GK and a youth player, I can see a few loans coming in.', '2024-01-24 11:45:52', 0, 1, 10);
+INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (5, 'Welcome back my friend
+Hope you’re better
+Can you help to get this stickied?
+Ta ever so ..', '2024-01-24 11:45:52', 0, 11, 11);
+INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (6, 'Yep i played las season and won it easily mate.', '2024-01-24 11:45:52', 0, 10, 12);
+INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (7, 'Got a suspicion we might feature in this thread too.', '2024-01-24 11:45:52', 0, 4, 7);
+INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (8, 'Yeah, another big 6 pointer that.
+
+Although today was meant to be a big ‘un too, but no one seemed to have told our players that.', '2024-01-24 11:45:52', 0, 6, 8);
+INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (9, 'Patriotic Patriots Rule the Roost
+', '2024-01-24 11:45:52', 0, 5, 9);
+INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (10, 'The New Orleans Saints have unarguably the most putrid guard strategies in the league, while the Houston boys encompass the finest. Speaking of a solitary player’s performance, the trio of Whitney Mercilus, Jadeveon Clowney and Watt have taken the Texans to the top-slots of the roster. After the injury of New England’s player Rob Gronkowski during the second week, Boston Globe’s Jim McBride considered it as “nothing serious” since injuries can be complicated. Furthermore, Rob’s account of injuries could have given head trainer Bill Belichick all the reasons for apprehension to assign him any further tasks.', '2024-01-24 11:45:52', 0, 7, 10);
+INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (11, 'I watch it yeah (and occasionally play it actually!), it\'s really good fun to watch and the NFL is such a perfect rounded franchise!', '2024-01-24 11:45:52', 1, 9, 1);
+INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (12, 'Being on sky and channel 4 now shows how big it\'s getting, would love to go to the games at Wembley.', '2024-01-24 11:45:52', 1, 10, 1);
+INSERT INTO forum.comments (comment_id, content, time_stamp, is_deleted, author_id, post_id) VALUES (13, 'Really surprised by the Netball awards. Maybe it didn\'t receive as much publicity but first I\'d heard of it was last night?', '2024-02-19 13:25:14', 0, 1, 15);
+
+
 
 INSERT INTO forum.users_posts(user_id, post_id) VALUES(1,11);
 INSERT INTO forum.users_posts(user_id, post_id) VALUES(2,7);
@@ -121,3 +130,24 @@ INSERT INTO forum.users_comments(user_id, comment_id) VALUES(10,12);
 INSERT INTO forum.users_comments(user_id, comment_id) VALUES(11,1);
 INSERT INTO forum.users_comments(user_id, comment_id) VALUES(11,5);
 INSERT INTO forum.users_comments(user_id, comment_id) VALUES(12,3);
+
+
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (1, 1, 1);
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (2, 1, 2);
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (3, 1, 3);
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (4, 1, 4);
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (5, 2, 1);
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (6, 2, 2);
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (7, 2, 3);
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (8, 2, 4);
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (9, 2, 5);
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (10, 2, 6);
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (11, 2, 7);
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (12, 3, 8);
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (13, 3, 9);
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (14, 3, 10);
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (15, 3, 12);
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (16, 3, 1);
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (17, 3, 2);
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (18, 3, 3);
+INSERT INTO forum.likes (like_id, liked_post_id, author_id) VALUES (19, 3, 5);

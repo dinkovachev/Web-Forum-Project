@@ -38,9 +38,15 @@
                                         th:text="#{navigation.profile}">Profile</a></li>
                 <li class="nav-item"><a href="#" th:href="@{/about}" class="nav-link px-lg-3 py-3 py-lg-4"
                                         th:text="#{navigation.about}">About</a></li>
-                <li class="nav-item"><a href="#" th:if="${isAuthenticated && session.isAdmin}"
-                                        th:href="@{/admin}" class="nav-link px-lg-3 py-3 py-lg-4"
-                                        th:text="#{home.welcome.admin}">Admin Panel</a></li>
+<!--                <li class="nav-item"><a href="#" th:if="${isAuthenticated && session.isAdmin}"-->
+<!--                                        th:href="@{/admin}" class="nav-link px-lg-3 py-3 py-lg-4"-->
+<!--                                        th:text="#{home.welcome.admin}">Admin Panel</a></li>-->
+                <li class="nav-item">
+                    <div th:if="${isAuthenticated}">
+                        <img th:src="'https://icons.veryicon.com/png/o/miscellaneous/8atour/people-23.png'"
+                             alt="Creator Icon"  width="50" height="50"/>
+                        <h6 th:text="${session.currentUser}">Username</h6>
+                    </div>
             </ul>
         </div>
     </div>
@@ -81,7 +87,7 @@
             <div class="header-cell" th:text="#{post.label.createdBy.username}"> Created By</div>
 
             <div class="header-cell" th:text="#{post.likes}"> Likes</div>
-            <div th:if="${session.isAdmin}" class="header-cell" th:text="#{post.activity}">Activity</div>
+
         </div>
 
         <div class="rowGroup" th:each="post: ${posts}">
