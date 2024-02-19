@@ -26,6 +26,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/posts")
@@ -33,16 +35,16 @@ public class PostMvcController {
 
     private final PostService postService;
     private final PostMapper postMapper;
-    private final CommentService commentService;
-    private final CommentMapper commentMapper;
+//    private final CommentService commentService;
+//    private final CommentMapper commentMapper;
     private final AuthenticationHelper authenticationHelper;
 
     @Autowired
     public PostMvcController(PostService postService, PostMapper postMapper, CommentService commentService, CommentMapper commentMapper, AuthenticationHelper authenticationHelper) {
         this.postService = postService;
         this.postMapper = postMapper;
-        this.commentService = commentService;
-        this.commentMapper = commentMapper;
+//        this.commentService = commentService;
+//        this.commentMapper = commentMapper;
         this.authenticationHelper = authenticationHelper;
     }
 

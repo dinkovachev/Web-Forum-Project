@@ -32,6 +32,10 @@ public class Post {
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     private Set<Comment> comments = new HashSet<>();
 
+    @OneToMany(mappedBy = "likedPost", fetch = FetchType.EAGER)
+    private Set<Like> likes = new HashSet<>();
+
+
     public Post() {
     }
 
@@ -66,9 +70,10 @@ public class Post {
         return comments.stream().filter(comment -> !comment.isDeleted()).collect(Collectors.toSet());
     }
 
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
+    public Set<Like> getLikes() {
+        return likes;
     }
+
 
     public Timestamp getCreatedAt() {
         return createdAt;
