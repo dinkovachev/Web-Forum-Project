@@ -124,19 +124,8 @@ public class PostRepositoryImpl implements PostRepository {
         Post post = getById(id);
         post.setDeleted(true);
         try (Session session = sessionFactory.openSession()) {
-            deleteComments(id);
             session.beginTransaction();
             session.merge(post);
-            session.getTransaction().commit();
-        }
-    }
-
-    private void deleteComments(int id) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            Query<?> query = session.createNativeQuery("delete from comments where post_id= :id", Post.class);
-            query.setParameter("id", id);
-            query.executeUpdate();
             session.getTransaction().commit();
         }
     }

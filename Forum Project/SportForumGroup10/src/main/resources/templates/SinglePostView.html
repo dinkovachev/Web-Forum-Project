@@ -34,7 +34,7 @@
                              || (session.isAdmin != null && session.isAdmin))}">
                                     <div>
 
-                                    <form th:action="@{/posts/{id}/update(id=${post.getId()})}" th:object="post"
+                                    <form th:action="@{/posts/{id}/update(id=${post.getId()})}"
                                           method="post">
                                         <input type="submit" value="  Edit  "/>
                                     </form>
